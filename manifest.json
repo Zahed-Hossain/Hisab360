@@ -1,7 +1,7 @@
 {
   "id": "com.aistudio.bengali.math.calculator.v2",
-  "name": "গাণিতিক ক্যালকুলেটর (Version 2.0)",
-  "short_name": "ক্যালকুলেটর",
+  "name": "Calculator",
+  "short_name": "Calculator",
   "description": "বাংলা ভাষায় অল-ইন-ওয়ান ম্যাথ ও ইউটিলিটি ক্যালকুলেটর। শতভাগ অফলাইন ও দ্রুততম গাণিতিক হিসাব।",
   "start_url": "./index.html",
   "scope": "./",

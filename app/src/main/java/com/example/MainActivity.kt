@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.PermissionRequest
@@ -75,6 +76,9 @@ class MainActivity : ComponentActivity() {
                 0,
                 1.0f
             )
+
+            // Use software rendering to avoid Mesa DRM rendernode error on container/emulator environments
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
             @Suppress("DEPRECATION")
             settings.apply {

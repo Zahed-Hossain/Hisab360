@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "গাণিতিক ক্যালকুলেটর"
+rootProject.name = "Calculator"
 
 include(":app")

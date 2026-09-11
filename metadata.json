@@ -1,5 +1,5 @@
 {
-  "name": "গাণিতিক ক্যালকুলেটর",
+  "name": "Calculator",
   "description": "বাংলা ভাষায় অল-ইন-ওয়ান ম্যাথ ও ইউটিলিটি ক্যালকুলেটর (Version 2.0)",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
