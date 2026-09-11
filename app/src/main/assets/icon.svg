@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#4338CA" />
+    </linearGradient>
+  </defs>
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  
+  <!-- Screen Display -->
+  <rect x="96" y="90" width="320" height="96" rx="20" fill="#E0F2FE" />
+  <rect x="220" y="126" width="164" height="24" rx="6" fill="#0369A1" />
+  
+  <!-- Buttons -->
+  <!-- Plus Button -->
+  <rect x="96" y="220" width="140" height="100" rx="20" fill="#FFFFFF" />
+  <path d="M166 244 v52 M140 270 h52" stroke="#1D4ED8" stroke-width="14" stroke-linecap="round" />
+  
+  <!-- Minus Button -->
+  <rect x="276" y="220" width="140" height="100" rx="20" fill="#FFFFFF" />
+  <path d="M320 270 h52" stroke="#1D4ED8" stroke-width="14" stroke-linecap="round" />
+  
+  <!-- Multiply Button -->
+  <rect x="96" y="344" width="140" height="100" rx="20" fill="#FFFFFF" />
+  <path d="M142 368 L190 416 M190 368 L142 416" stroke="#1D4ED8" stroke-width="14" stroke-linecap="round" />
+  
+  <!-- Equals Button -->
+  <rect x="276" y="344" width="140" height="100" rx="20" fill="#F59E0B" />
+  <path d="M320 380 h52 M320 408 h52" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" />
+</svg>
