@@ -38,8 +38,52 @@ class MainActivity : ComponentActivity() {
     private var adView: AdView? = null
     private var interstitialAd: InterstitialAd? = null
 
+    private var pendingPermissionRequest: PermissionRequest? = null
+
+    private val speechRecognizerLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                val matches = result.data?.getStringArrayListExtra(android.speech.RecognizerIntent.EXTRA_RESULTS)
+                if (!matches.isNullOrEmpty()) {
+                    val text = matches[0].replace("\\", "\\\\").replace("'", "\\'").replace("\"", "\\\"")
+                    webView?.evaluateJavascript("if(typeof window.onVoiceSearchResult === 'function') { window.onVoiceSearchResult('$text'); }", null)
+                }
+            } else {
+                webView?.evaluateJavascript("if(typeof window.onVoiceSearchDismissed === 'function') { window.onVoiceSearchDismissed(); }", null)
+            }
+        }
+
+    fun startNativeVoiceSearch() {
+        try {
+            val intent = android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE, "bn-BD")
+                putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "bn-BD")
+                putExtra(android.speech.RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, false)
+                putExtra(android.speech.RecognizerIntent.EXTRA_PROMPT, "আপনার গাণিতিক হিসাব বা প্রশ্নটি বলুন...")
+            }
+            speechRecognizerLauncher.launch(intent)
+        } catch (e: Exception) {
+            Log.w("VoiceSearch", "Native voice recognition not available, fallback to web", e)
+            webView?.evaluateJavascript("if(typeof window.fallbackWebSpeech === 'function') { window.fallbackWebSpeech(); }", null)
+        }
+    }
+
     private val requestCameraPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ -> }
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                pendingPermissionRequest?.grant(pendingPermissionRequest?.resources)
+            } else {
+                pendingPermissionRequest?.deny()
+            }
+            pendingPermissionRequest = null
+        }
+
+    fun requestCamera() {
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +99,6 @@ class MainActivity : ComponentActivity() {
             }
         } catch (e: Exception) {
             Log.e("AdMob", "Failed to initialize AdMob SDK", e)
-        }
-
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
 
         val rootLayout = LinearLayout(this).apply {
@@ -102,7 +142,14 @@ class MainActivity : ComponentActivity() {
 
             webChromeClient = object : WebChromeClient() {
                 override fun onPermissionRequest(request: PermissionRequest?) {
-                    request?.grant(request.resources)
+                    if (request == null) return
+                    val hasCameraPermission = checkSelfPermission(android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                    if (hasCameraPermission) {
+                        request.grant(request.resources)
+                    } else {
+                        pendingPermissionRequest = request
+                        requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                    }
                 }
             }
             webViewClient = object : WebViewClient() {
@@ -297,6 +344,63 @@ class WebAppInterface(private val activity: Activity?, private val webView: WebV
     @JavascriptInterface
     fun isAdMobSupported(): Boolean {
         return true
+    }
+
+    @JavascriptInterface
+    fun shareApp(title: String, text: String) {
+        activity?.runOnUiThread {
+            try {
+                val sendIntent = android.content.Intent().apply {
+                    action = android.content.Intent.ACTION_SEND
+                    putExtra(android.content.Intent.EXTRA_TITLE, title)
+                    putExtra(android.content.Intent.EXTRA_TEXT, text)
+                    type = "text/plain"
+                }
+                val shareIntent = android.content.Intent.createChooser(sendIntent, title)
+                activity.startActivity(shareIntent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    @JavascriptInterface
+    fun rateOnPlayStore() {
+        activity?.runOnUiThread {
+            try {
+                val packageName = activity.packageName
+                val uri = android.net.Uri.parse("market://details?id=$packageName")
+                val goToMarket = android.content.Intent(android.content.Intent.ACTION_VIEW, uri)
+                activity.startActivity(goToMarket)
+            } catch (e: Exception) {
+                try {
+                    val packageName = activity?.packageName ?: "com.example"
+                    val uri = android.net.Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                    val goToMarket = android.content.Intent(android.content.Intent.ACTION_VIEW, uri)
+                    activity?.startActivity(goToMarket)
+                } catch (e2: Exception) {
+                    e2.printStackTrace()
+                }
+            }
+        }
+    }
+
+    @JavascriptInterface
+    fun requestCameraPermission() {
+        activity?.runOnUiThread {
+            if (activity is MainActivity) {
+                activity.requestCamera()
+            }
+        }
+    }
+
+    @JavascriptInterface
+    fun startVoiceRecognition() {
+        activity?.runOnUiThread {
+            if (activity is MainActivity) {
+                activity.startNativeVoiceSearch()
+            }
+        }
     }
 }
 

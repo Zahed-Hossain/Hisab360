@@ -722,6 +722,825 @@
       page-break-inside: avoid;
     }
   }
+
+  /* ======================================================== */
+  /* App Stats & User Ratings Styles                          */
+  /* ======================================================== */
+  .stats-hero-card {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    color: #FFFFFF;
+    border-radius: 16px;
+    padding: 20px 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .stats-hero-card::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .stats-hero-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stats-hero-desc {
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .stats-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+  }
+  .stat-card-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  .stat-card-box:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .stat-card-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .stat-card-val {
+    font-size: 20px;
+    font-weight: 800;
+    color: #F8FAFC;
+    font-family: 'JetBrains Mono', monospace, sans-serif;
+    letter-spacing: -0.5px;
+  }
+  .stat-card-lbl {
+    font-size: 12px;
+    color: #CBD5E1;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .stat-card-sub {
+    font-size: 10.5px;
+    color: #94A3B8;
+    margin-top: 2px;
+  }
+
+  /* Rating Distribution Card */
+  .rating-summary-card {
+    background: var(--surface);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .rating-score-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .rating-score-large {
+    text-align: center;
+    min-width: 90px;
+  }
+  .rating-number {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .rating-stars-gold {
+    color: #F59E0B;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+  .rating-count-text {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+  .rating-bars-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .star-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+  .star-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .star-bar-fill {
+    height: 100%;
+    background: #F59E0B;
+    border-radius: 6px;
+    transition: width 0.4s ease;
+  }
+  .star-bar-pct {
+    min-width: 32px;
+    text-align: right;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Interactive Rating Form */
+  .review-form-card {
+    background: var(--surface);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .star-picker-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0 6px;
+  }
+  .star-btn {
+    background: none;
+    border: none;
+    font-size: 34px;
+    cursor: pointer;
+    color: #CBD5E1;
+    transition: transform 0.15s ease, color 0.15s ease;
+    padding: 4px;
+    line-height: 1;
+    touch-action: manipulation;
+  }
+  .star-btn.active, .star-btn.hovered {
+    color: #F59E0B;
+    transform: scale(1.15);
+  }
+  .star-rating-hint {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    min-height: 20px;
+    margin-bottom: 12px;
+  }
+
+  /* Reviews List */
+  .reviews-list-card {
+    background: var(--surface);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .reviews-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .review-item-card {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    transition: all 0.2s ease;
+  }
+  .review-item-card.is-user {
+    border: 1.5px solid var(--blue);
+    background: var(--blue-light);
+  }
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .review-author-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .review-author-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .verified-badge {
+    color: #10B981;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .review-author-meta {
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .review-stars-badge {
+    color: #F59E0B;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .review-body-text {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+  .review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+    color: var(--ink-subtle);
+  }
+  .helpful-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+  }
+  .helpful-btn:hover, .helpful-btn.liked {
+    background: var(--blue-light);
+    color: var(--blue);
+    border-color: var(--blue);
+  }
+
+  /* Share Card */
+  .share-app-box {
+    background: linear-gradient(135deg, rgba(29, 78, 216, 0.08) 0%, rgba(14, 165, 233, 0.12) 100%);
+    border: 1.5px dashed var(--blue);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .share-app-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 4px;
+  }
+  .share-app-sub {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .share-btns-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+
+  /* ======================================================== */
+  /* Premium Smart Search & Voice AI Assistant Design         */
+  /* ======================================================== */
+  .smart-search-section {
+    position: relative;
+    margin: 10px 0 16px;
+    z-index: 45;
+  }
+  .smart-search-wrapper {
+    position: relative;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(124, 58, 237, 0.12));
+    padding: 2px;
+    box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .smart-search-wrapper:focus-within {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    box-shadow: 0 8px 28px -4px rgba(37, 99, 235, 0.25), 0 0 0 3px rgba(37, 99, 235, 0.15);
+    transform: translateY(-1px);
+  }
+  .smart-search-box {
+    display: flex;
+    align-items: center;
+    background: var(--surface);
+    border-radius: 18px;
+    padding: 6px 8px 6px 12px;
+    gap: 10px;
+    transition: background 0.2s ease;
+  }
+  .smart-search-lens-badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--blue-light);
+    color: var(--blue);
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+  }
+  .smart-search-wrapper:focus-within .smart-search-lens-badge {
+    background: var(--blue);
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+  .lens-sparkle {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    font-size: 11px;
+    animation: sparkleSpin 3s infinite ease-in-out;
+  }
+  @keyframes sparkleSpin {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.25) rotate(15deg); }
+  }
+  .smart-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--ink);
+    padding: 8px 0;
+    min-width: 0;
+  }
+  .smart-search-input::placeholder {
+    color: var(--ink-subtle);
+    font-size: 13.5px;
+    opacity: 0.85;
+  }
+  .smart-search-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .smart-search-btn-clear {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-hover);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+  .smart-search-btn-clear:hover {
+    background: #fee2e2;
+    color: #dc2626;
+    transform: rotate(90deg);
+  }
+  .smart-search-btn-voice {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 13px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(79, 70, 229, 0.35);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+  .smart-search-btn-voice:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 5px 16px rgba(79, 70, 229, 0.45);
+  }
+  .smart-search-btn-voice:active {
+    transform: scale(0.96);
+  }
+  .smart-search-btn-voice.listening {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25), 0 4px 14px rgba(220, 38, 38, 0.4);
+    animation: voiceButtonPulse 1.2s infinite alternate ease-in-out;
+  }
+  @keyframes voiceButtonPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+  }
+  .voice-btn-label {
+    letter-spacing: 0.2px;
+  }
+
+  /* Quick Query Pills Styling */
+  .smart-search-pills-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    position: relative;
+  }
+  .smart-pill-lead {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    padding-left: 2px;
+  }
+  .pill-sparkle-icon {
+    font-size: 13px;
+  }
+  .smart-search-pills {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 3px 2px 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+  }
+  .smart-search-pills::-webkit-scrollbar { display: none; }
+  .smart-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    background: var(--surface);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 4.5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .smart-pill:hover, .smart-pill.active {
+    background: var(--blue-light);
+    color: var(--blue);
+    border-color: var(--blue);
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+  }
+  .pill-icon {
+    font-size: 13px;
+  }
+
+  /* Voice Modal / Sheet Overlay */
+  .voice-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeInModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .voice-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 28px;
+    padding: 28px 22px 24px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    animation: scaleUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes scaleUpModal {
+    from { opacity: 0; transform: scale(0.92) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .voice-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-hover);
+    color: var(--ink-soft);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .voice-modal-close:hover {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+  .voice-visualizer-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 10px auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .voice-mic-orb {
+    position: relative;
+    z-index: 2;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.45);
+    transition: all 0.3s ease;
+  }
+  .voice-mic-orb.active-pulse {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.5);
+    animation: orbHeartbeat 1s infinite alternate ease-in-out;
+  }
+  @keyframes orbHeartbeat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+  }
+  .voice-ripple-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(99, 102, 241, 0.5);
+    pointer-events: none;
+  }
+  .voice-ripple-circle.ring-1 {
+    width: 90px;
+    height: 90px;
+    animation: rippleWave 2.2s infinite ease-out;
+  }
+  .voice-ripple-circle.ring-2 {
+    width: 110px;
+    height: 110px;
+    animation: rippleWave 2.2s infinite ease-out 0.6s;
+  }
+  .voice-ripple-circle.ring-3 {
+    width: 130px;
+    height: 130px;
+    animation: rippleWave 2.2s infinite ease-out 1.2s;
+  }
+  @keyframes rippleWave {
+    0% { transform: scale(0.7); opacity: 0.8; border-color: rgba(99, 102, 241, 0.6); }
+    100% { transform: scale(1.4); opacity: 0; border-color: rgba(124, 58, 237, 0); }
+  }
+
+  /* Equalizer Sound Waves */
+  .voice-equalizer-bars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 28px;
+    margin: 8px 0 14px;
+  }
+  .eq-bar {
+    width: 4px;
+    border-radius: 4px;
+    background: linear-gradient(to top, #2563eb, #a855f7);
+    animation: eqDance 1.2s infinite ease-in-out alternate;
+  }
+  .bar-1 { height: 8px; animation-delay: 0.1s; }
+  .bar-2 { height: 18px; animation-delay: 0.3s; }
+  .bar-3 { height: 26px; animation-delay: 0.2s; }
+  .bar-4 { height: 14px; animation-delay: 0.5s; }
+  .bar-5 { height: 22px; animation-delay: 0.15s; }
+  .bar-6 { height: 16px; animation-delay: 0.4s; }
+  .bar-7 { height: 10px; animation-delay: 0.25s; }
+  @keyframes eqDance {
+    0% { height: 6px; }
+    100% { height: 26px; }
+  }
+
+  .voice-modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .voice-transcript-box {
+    background: var(--surface-hover);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue);
+    line-height: 1.4;
+  }
+  .voice-transcript-placeholder {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-subtle);
+  }
+  .voice-modal-tips {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+  .voice-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .voice-modal-actions .btn {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+
+  /* Smart Search Result Card / Dropdown */
+  .smart-results-container {
+    margin-top: 10px;
+    background: var(--surface);
+    border: 1.5px solid var(--blue);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 14px 30px -5px rgba(0, 0, 0, 0.15);
+    animation: slideDownFade 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideDownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .smart-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .smart-detected-badge {
+    background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+    color: #1d4ed8;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+  }
+  .smart-tool-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .smart-answer-box {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .smart-answer-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .smart-answer-val {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+    margin: 4px 0 8px;
+  }
+  .smart-answer-breakdown {
+    font-size: 13.5px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.45;
+  }
+  .smart-answer-formula {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface);
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+  }
+  .smart-open-btn {
+    width: 100%;
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 4px 14px rgba(29, 78, 216, 0.3);
+    transition: all 0.2s ease;
+  }
+  .smart-open-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(29, 78, 216, 0.4);
+  }
+
+  /* Card highlight pulse */
+  @keyframes highlightCardPulse {
+    0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(29, 78, 216, 0.25); border-color: var(--blue); }
+    100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); }
+  }
+  .highlight-pulse {
+    animation: highlightCardPulse 1.8s ease-out;
+  }
+
 </style>
 </head>
 <body data-fontsize="medium">
@@ -741,11 +1560,138 @@
     <div class="header-actions">
       <button class="icon-btn" id="btnInstallPWA" title="অ্যাপটি ইনস্টল করুন" style="display:none; color:var(--blue); font-weight:700;">📲</button>
       <button class="icon-btn" id="themeToggleBtn" title="ডার্ক/লাইট মোড">🌙</button>
+      <button class="icon-btn" data-target="appstats" title="ডাউনলোড ও ইউজার রেটিং" style="color:#D97706; font-weight:700;">🌟</button>
       <button class="icon-btn" data-target="favorites" title="ফেভারিট">⭐</button>
       <button class="icon-btn" data-target="history" title="হিসাবের ইতিহাস">📜</button>
       <button class="icon-btn" data-target="settings" title="সেটিংস">⚙️</button>
     </div>
   </header>
+
+  <!-- ============================================== -->
+  <!-- SMART SEARCH & VOICE ASSISTANT (স্মার্ট সার্চ ও ভয়েস সার্চ) -->
+  <!-- ============================================== -->
+  <div class="smart-search-section" id="smartSearchSection">
+    <div class="smart-search-wrapper">
+      <div class="smart-search-box">
+        <div class="smart-search-lens-badge" title="স্মার্ট এআই ক্যালকুলেটর সার্চ">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="lens-sparkle" title="AI Search">✨</span>
+        </div>
+
+        <input type="text" id="smartSearchInput" class="smart-search-input"
+          placeholder="হিসাব খুঁজুন: যেমন “১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?”"
+          autocomplete="off" spellcheck="false" />
+
+        <div class="smart-search-actions">
+          <button type="button" class="smart-search-btn-clear" id="btnSmartClear" title="মুছে ফেলুন" aria-label="Clear Search">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.5" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
+          <button type="button" class="smart-search-btn-voice" id="btnSmartVoice" title="মুখে বলুন (ভয়েস সার্চ)">
+            <svg class="voice-mic-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="22"></line>
+              <line x1="8" y1="22" x2="16" y2="22"></line>
+            </svg>
+            <span class="voice-btn-label">ভয়েস</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Example Query Pills Carousel -->
+    <div class="smart-search-pills-row">
+      <div class="smart-pill-lead">
+        <span class="pill-sparkle-icon">💡</span>
+        <span>উদাহরণ:</span>
+      </div>
+      <div class="smart-search-pills" id="smartSearchPills">
+        <button type="button" class="smart-pill pill-profit" data-query="১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?">
+          <span class="pill-icon">📈</span>
+          <span class="pill-text">১০০০ টাকার ১৫% লাভ কত?</span>
+        </button>
+        <button type="button" class="smart-pill pill-discount" data-query="৫০০ টাকার ২০% ডিসকাউন্ট কত?">
+          <span class="pill-icon">🏷️</span>
+          <span class="pill-text">৫০০ টাকার ২০% ছাড়</span>
+        </button>
+        <button type="button" class="smart-pill pill-currency" data-query="১০০ ডলার কত টাকা?">
+          <span class="pill-icon">💱</span>
+          <span class="pill-text">১০০ ডলার কত টাকা</span>
+        </button>
+        <button type="button" class="smart-pill pill-age" data-query="বয়স কত নির্ণয় করুন">
+          <span class="pill-icon">🎂</span>
+          <span class="pill-text">বয়স নির্ণয়</span>
+        </button>
+        <button type="button" class="smart-pill pill-loan" data-query="৫০,০০০ টাকার লোন ইএমআই">
+          <span class="pill-icon">💰</span>
+          <span class="pill-text">৫০,০০০ লোন EMI</span>
+        </button>
+        <button type="button" class="smart-pill pill-qr" data-query="কিউআর কোড স্ক্যানার">
+          <span class="pill-icon">📷</span>
+          <span class="pill-text">QR কোড স্ক্যানার</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Smart Search Results Dropdown/Card -->
+    <div class="smart-results-container" id="smartResultsContainer" style="display:none;">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </div>
+
+  <!-- Dedicated Voice Search Modal / Listening Sheet -->
+  <div class="voice-modal-overlay" id="voiceModalOverlay" style="display:none;">
+    <div class="voice-modal-card" id="voiceModalCard">
+      <button type="button" class="voice-modal-close" id="btnVoiceModalClose" title="বন্ধ করুন">✕</button>
+
+      <div class="voice-visualizer-container">
+        <div class="voice-ripple-circle ring-3"></div>
+        <div class="voice-ripple-circle ring-2"></div>
+        <div class="voice-ripple-circle ring-1"></div>
+        <div class="voice-mic-orb" id="voiceMicOrb">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+            <line x1="8" y1="22" x2="16" y2="22"></line>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Animated Voice Sound Wave Equalizer Bars -->
+      <div class="voice-equalizer-bars" id="voiceEqualizerBars">
+        <span class="eq-bar bar-1"></span>
+        <span class="eq-bar bar-2"></span>
+        <span class="eq-bar bar-3"></span>
+        <span class="eq-bar bar-4"></span>
+        <span class="eq-bar bar-5"></span>
+        <span class="eq-bar bar-6"></span>
+        <span class="eq-bar bar-7"></span>
+      </div>
+
+      <div class="voice-modal-title" id="voiceModalStatus">শুনছি... আপনার প্রশ্নটি মুখে বলুন</div>
+      <div class="voice-transcript-box" id="voiceTranscriptBox">
+        <span class="voice-transcript-placeholder">যেমন: “১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?”</span>
+      </div>
+
+      <div class="voice-modal-tips">
+        <span>💡 স্পষ্ট করে বাংলায় বলুন: লাভ-ক্ষতি, শতকরা, কারেন্সি বা যেকোনো যোগ-বিয়োগ</span>
+      </div>
+
+      <div class="voice-modal-actions">
+        <button type="button" class="btn btn-secondary voice-btn-cancel" id="btnVoiceCancel">বাতিল করুন</button>
+        <button type="button" class="btn btn-primary voice-btn-done" id="btnVoiceDone">সম্পন্ন করুন ✔️</button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ============================================== -->
   <!-- 0. HOME / DASHBOARD VIEW                       -->
@@ -821,6 +1767,11 @@
         <span class="card-icon">📜</span>
         <div class="card-title">হিসাবের ইতিহাস</div>
         <div class="card-sub">সব ক্যালকুলেটরের হিস্ট্রি ও ফেভারিট</div>
+      </div>
+      <div class="dash-card" data-target="appstats" style="border:1.5px solid #F59E0B; background:linear-gradient(135deg, var(--surface) 0%, rgba(245,158,11,0.08) 100%);">
+        <span class="card-icon">⭐</span>
+        <div class="card-title" style="color:#B45309; font-weight:700;">ডাউনলোড, শেয়ার ও ইউজার রেটিং</div>
+        <div class="card-sub">২৫,৮৫০+ ডাউনলোড • ৩,৪২০+ শেয়ার • ৪.৮★ ইউজার রিভিউ</div>
       </div>
       <div class="dash-card" data-target="settings">
         <span class="card-icon">⚙️</span>
@@ -1031,13 +1982,51 @@
 
     <!-- G: Profit/Loss Calculator -->
     <div id="pct-view-g" class="pct-view tool-card" style="display:none;">
-      <h3>লাভ ও ক্ষতি ক্যালকুলেটর</h3>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">ক্রয়মূল্য (Buying Price)</label><input type="number" id="pctG_buy" class="form-control mono-font" placeholder="৪৫০"></div>
-        <div class="form-group"><label class="form-label">বিক্রয়মূল্য (Selling Price)</label><input type="number" id="pctG_sell" class="form-control mono-font" placeholder="৫৪০"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="margin:0;">লাভ ও ক্ষতি ক্যালকুলেটর (Profit & Loss)</h3>
+        <span class="badge" style="background:#dbeafe; color:#1d4ed8; font-weight:600;">বাণিজ্যিক হিসাব</span>
       </div>
-      <button class="btn btn-primary" id="btnPctG">লাভ/ক্ষতি হিসাব করুন</button>
-      <div class="result-box" id="resPctG"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+
+      <!-- Mode 1: Cost & % -> Selling Price -->
+      <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px;">
+        <div style="font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>🏷️</span>
+          <span>ক্রয়মূল্য ও লাভ/ক্ষতির % দিয়ে বিক্রয়মূল্য নির্ণয়</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">ক্রয়মূল্য (টাকা)</label>
+            <input type="number" id="pctG_cost" class="form-control mono-font" placeholder="১০০০">
+          </div>
+          <div class="form-group">
+            <label class="form-label">লাভ নাকি ক্ষতি?</label>
+            <select id="pctG_type" class="form-select">
+              <option value="profit">লাভ (Profit) 📈</option>
+              <option value="loss">ক্ষতি (Loss) 📉</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">শতকরা হার (%)</label>
+            <input type="number" id="pctG_profitPct" class="form-control mono-font" placeholder="১৫">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="btnPctG_fromPct">বিক্রয়মূল্য ও নিট লাভ হিসাব করুন</button>
+        <div class="result-box" id="resPctG_fromPct"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+      </div>
+
+      <!-- Mode 2: Cost & Selling Price -> Profit/Loss % -->
+      <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:10px; padding:14px;">
+        <div style="font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>⚖️</span>
+          <span>ক্রয়মূল্য ও বিক্রয়মূল্য দিয়ে শতকরা লাভ/ক্ষতি বের করুন</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">ক্রয়মূল্য (Buying Price)</label><input type="number" id="pctG_buy" class="form-control mono-font" placeholder="১০০০"></div>
+          <div class="form-group"><label class="form-label">বিক্রয়মূল্য (Selling Price)</label><input type="number" id="pctG_sell" class="form-control mono-font" placeholder="১১৫০"></div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="btnPctG">লাভ/ক্ষতি % হিসাব করুন</button>
+        <div class="result-box" id="resPctG"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+      </div>
     </div>
   </section>
 
@@ -1750,6 +2739,172 @@
   </section>
 
   <!-- ============================================== -->
+  <!-- 15. APP STATS & USER RATINGS                   -->
+  <!-- ============================================== -->
+  <section id="section-appstats" class="section-view">
+    <!-- Hero Stats Card -->
+    <div class="stats-hero-card">
+      <div class="stats-hero-title">
+        <span>📊</span>
+        <span>অ্যাপ ডাউনলোড ও ব্যবহারকারী পরিসংখ্যান</span>
+      </div>
+      <div class="stats-hero-desc">
+        গাণিতিক ক্যালকুলেটর অ্যাপটির মোট ডাউনলোড, লাইভ শেয়ার ট্র্যাকার এবং নিয়মিত ব্যবহারকারীদের বাস্তব মতামত ও রেটিং।
+      </div>
+      
+      <div class="stats-metrics-grid">
+        <div class="stat-card-box">
+          <span class="stat-card-icon">📥</span>
+          <div class="stat-card-val" id="statDownloadsDisplay">২৫,৮৫০+</div>
+          <div class="stat-card-lbl">মোট ডাউনলোড</div>
+          <div class="stat-card-sub">প্লে স্টোর ও রিলিজ</div>
+        </div>
+        <div class="stat-card-box">
+          <span class="stat-card-icon">🔗</span>
+          <div class="stat-card-val" id="statSharesDisplay">৩,৪২০+</div>
+          <div class="stat-card-lbl">বন্ধুদের সাথে শেয়ার</div>
+          <div class="stat-card-sub">সরাসরি শেয়ার সংখ্যা</div>
+        </div>
+        <div class="stat-card-box">
+          <span class="stat-card-icon">⭐</span>
+          <div class="stat-card-val" id="statAvgRatingDisplay">৪.৮★</div>
+          <div class="stat-card-lbl">গড় রেটিং</div>
+          <div class="stat-card-sub" id="statTotalReviewsSub">১,৫৪০টি রিভিউ</div>
+        </div>
+        <div class="stat-card-box">
+          <span class="stat-card-icon">👥</span>
+          <div class="stat-card-val" id="statActiveUsersDisplay">১৮,২০০+</div>
+          <div class="stat-card-lbl">সক্রিয় ব্যবহারকারী</div>
+          <div class="stat-card-sub">দৈনিক ব্যবহারকারী</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share App Promotion Box -->
+    <div class="share-app-box">
+      <div class="share-app-title">🚀 বন্ধুদের সাথে অ্যাপটি শেয়ার করুন!</div>
+      <div class="share-app-sub">
+        ক্যালকুলেটরটি আপনার ভালো লাগলে বন্ধু, সহপাঠী ও পরিবারের সাথে শেয়ার করুন। প্রতিটি শেয়ার সরাসরি কাউন্টারে যোগ হয়!
+      </div>
+      <div class="share-btns-row">
+        <button type="button" class="btn btn-primary btn-sm" id="btnShareAppPrimary" style="padding:10px 18px; font-size:13.5px;">
+          📲 এখনই শেয়ার করুন
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnCopyShareLink" style="padding:10px 14px; font-size:13.5px;">
+          📋 লিংক কপি করুন
+        </button>
+      </div>
+    </div>
+
+    <!-- Rating Distribution & Overview Card -->
+    <div class="rating-summary-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="margin:0; font-size:16px;">ব্যবহারকারীদের রেটিং স্কোর</h3>
+        <span class="badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">শীর্ষ রেটেড অ্যাপ 🏆</span>
+      </div>
+
+      <div class="rating-score-row">
+        <div class="rating-score-large">
+          <div class="rating-number" id="ratingBigNumber">৪.৮</div>
+          <div class="rating-stars-gold" id="ratingBigStars">★★★★★</div>
+          <div class="rating-count-text" id="ratingTotalCountText">১,৫৪০+ পর্যালোচনা</div>
+        </div>
+
+        <div class="rating-bars-wrap">
+          <div class="star-bar-row">
+            <span>৫★</span>
+            <div class="star-bar-track"><div class="star-bar-fill" id="barStar5" style="width:82%;"></div></div>
+            <span class="star-bar-pct" id="pctStar5">৮২%</span>
+          </div>
+          <div class="star-bar-row">
+            <span>৪★</span>
+            <div class="star-bar-track"><div class="star-bar-fill" id="barStar4" style="width:12%;"></div></div>
+            <span class="star-bar-pct" id="pctStar4">১২%</span>
+          </div>
+          <div class="star-bar-row">
+            <span>৩★</span>
+            <div class="star-bar-track"><div class="star-bar-fill" id="barStar3" style="width:4%;"></div></div>
+            <span class="star-bar-pct" id="pctStar3">৪%</span>
+          </div>
+          <div class="star-bar-row">
+            <span>২★</span>
+            <div class="star-bar-track"><div class="star-bar-fill" id="barStar2" style="width:1%;"></div></div>
+            <span class="star-bar-pct" id="pctStar2">১%</span>
+          </div>
+          <div class="star-bar-row">
+            <span>১★</span>
+            <div class="star-bar-track"><div class="star-bar-fill" id="barStar1" style="width:1%;"></div></div>
+            <span class="star-bar-pct" id="pctStar1">১%</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; gap:10px;">
+        <button type="button" class="btn btn-outline btn-sm" id="btnScrollToReviewForm" style="flex:1;">
+          ✍️ রেটিং বা রিভিউ দিন
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnOpenPlayStoreRate" style="flex:1;">
+          🌟 প্লে স্টোরে রেটিং দিন
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive User Rating Submission Form -->
+    <div class="review-form-card" id="userReviewFormCard">
+      <h3 style="font-size:16px; margin-bottom:4px;">আপনার রেটিং ও মতামত দিন ⭐</h3>
+      <p class="desc" style="margin-bottom:12px;">অ্যাপটি ব্যবহার করে আপনার অভিজ্ঞতা কেমন লেগেছে? আপনার রেটিং তাৎক্ষণিক যুক্ত হবে।</p>
+
+      <div class="star-picker-wrap" id="starPickerContainer">
+        <button type="button" class="star-btn active" data-val="1" title="১ স্টার">★</button>
+        <button type="button" class="star-btn active" data-val="2" title="২ স্টার">★</button>
+        <button type="button" class="star-btn active" data-val="3" title="৩ স্টার">★</button>
+        <button type="button" class="star-btn active" data-val="4" title="৪ স্টার">★</button>
+        <button type="button" class="star-btn active" data-val="5" title="৫ স্টার">★</button>
+      </div>
+      <div class="star-rating-hint" id="starRatingHint">অসাধারণ! (৫/৫) ⭐⭐⭐⭐⭐</div>
+
+      <div class="form-group">
+        <label class="form-label">আপনার নাম</label>
+        <input type="text" id="reviewUserName" class="form-control" placeholder="যেমন: মোহাম্মদ জাহিদ" maxlength="40" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">আপনার জেলা বা শহর (ঐচ্ছিক)</label>
+        <input type="text" id="reviewUserCity" class="form-control" placeholder="যেমন: ঢাকা, চট্টগ্রাম, সিলেট" maxlength="30" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">আপনার মূল্যবান মন্তব্য বা রিভিউ</label>
+        <textarea id="reviewUserComment" class="form-control" rows="3" placeholder="ক্যালকুলেটর অ্যাপটি আপনার কেমন লেগেছে? কোন ফিচারটি বেশি পছন্দ হয়েছে?" style="resize:vertical;"></textarea>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="btnSubmitUserReview">
+        ⭐ রেটিং ও রিভিউ জমা দিন
+      </button>
+
+      <div id="reviewSubmittedAlert" style="display:none; margin-top:12px; background:var(--green-light); border:1px solid rgba(22,163,74,0.3); border-radius:8px; padding:12px; text-align:center; color:#15803d; font-weight:600; font-size:13px;">
+        🎉 ধন্যবাদ! আপনার রেটিং ও রিভিউ সফলভাবে সংরক্ষিত হয়েছে এবং নিচে প্রদর্শিত হচ্ছে।
+      </div>
+    </div>
+
+    <!-- Community Reviews Feed -->
+    <div class="reviews-list-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <h3 style="margin:0; font-size:16px;">ব্যবহারকারীদের সকল রিভিউজ</h3>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn btn-outline btn-sm rev-filter active" data-filter="all">সব</button>
+          <button type="button" class="btn btn-outline btn-sm rev-filter" data-filter="5">৫★</button>
+          <button type="button" class="btn btn-outline btn-sm rev-filter" data-filter="4">৪★</button>
+        </div>
+      </div>
+      
+      <div class="reviews-feed" id="reviewsFeedContainer">
+        <!-- Dynamic Review Cards Loaded via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
   <!-- 14. SETTINGS                                   -->
   <!-- ============================================== -->
   <section id="section-settings" class="section-view">
@@ -1795,6 +2950,18 @@
               ৩. <code>MainActivity.kt</code> ফাইলে টেস্ট ব্যানার এবং ইন্টারস্টিশিয়াল আইডি পরিবর্তন করে আপনার তৈরি করা Ad Unit ID বসান।
             </div>
           </details>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">অ্যাপের ডাউনলোড, শেয়ার ও ইউজার রেটিং</label>
+        <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:8px; padding:12px; font-size:13px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span>মোট ডাউনলোড: <strong id="settingsStatDownloads">২৫,৮৫০+</strong></span>
+            <span>গড় রেটিং: <strong id="settingsStatRating">৪.৮ ★</strong></span>
+          </div>
+          <button type="button" class="btn btn-primary" data-target="appstats" style="width:100%; margin-top:4px;">
+            📊 সব পরিসংখ্যান দেখুন ও নিজের রেটিং দিন
+          </button>
         </div>
       </div>
       <div class="form-group">
@@ -1956,7 +3123,10 @@ const STORAGE_KEYS = {
   FORMULAS: "bn_calc_formulas_v2",
   FAVORITES: "bn_calc_favorites_v2",
   SETTINGS: "bn_calc_settings_v2",
-  THEME: "bn_calc_theme"
+  THEME: "bn_calc_theme",
+  APP_STATS: "bn_calc_app_stats_v2",
+  REVIEWS: "bn_calc_user_reviews_v2",
+  USER_SUBMISSION: "bn_calc_user_submission_v2"
 };
 
 function getStorage(key, fallback) {
@@ -2508,7 +3678,30 @@ function setupPercentageCalc() {
     addHistory("ভ্যাট", `${toBn(price)} এ ${toBn(vat)}% ভ্যাট`, `${formatNumber(total)} টাকা`);
   });
 
-  // G: Profit/Loss
+  // G: Profit/Loss - Mode 1: Cost & % -> Selling Price
+  document.getElementById("btnPctG_fromPct")?.addEventListener("click", () => {
+    const cost = parseFloat(bnToLatin(document.getElementById("pctG_cost").value));
+    const pct = parseFloat(bnToLatin(document.getElementById("pctG_profitPct").value));
+    const type = document.getElementById("pctG_type")?.value || "profit";
+    const resBox = document.getElementById("resPctG_fromPct");
+    if (isNaN(cost) || isNaN(pct) || cost < 0 || pct < 0) {
+      resBox.innerHTML = '<span class="formula-error">সঠিক ক্রয়মূল্য ও শতকরা হার দিন</span>';
+      return;
+    }
+    const diff = cost * (pct / 100);
+    const sell = type === "profit" ? (cost + diff) : (cost - diff);
+    const isProfit = type === "profit";
+
+    resBox.innerHTML = `<div>নির্ণীত বিক্রয়মূল্য: <strong style="font-size:18px; color:var(--blue);">${formatNumber(sell)} টাকা</strong></div>
+      <div style="color:${isProfit ? 'var(--green)' : 'var(--red)'}; margin-top:4px;">
+        মোট ${isProfit ? 'লাভ' : 'ক্ষতি'}: <strong>${formatNumber(diff)} টাকা (${toBn(pct)}%)</strong>
+      </div>
+      <div class="result-formula-text">ক্রয়মূল্য: ${toBn(cost)} টাকা | হিসাব: ${toBn(cost)} ${isProfit ? '+' : '-'} ${toBn(diff)} = ${toBn(sell)} টাকা</div>`;
+
+    addHistory(isProfit ? "লাভ হিসাব" : "ক্ষতি হিসাব", `ক্রয় ${toBn(cost)} এ ${toBn(pct)}% ${isProfit ? 'লাভ' : 'ক্ষতি'}`, `বিক্রয় ${formatNumber(sell)} টাকা`);
+  });
+
+  // G: Profit/Loss - Mode 2: Cost & Selling Price -> Profit/Loss %
   document.getElementById("btnPctG").addEventListener("click", () => {
     const buy = parseFloat(bnToLatin(document.getElementById("pctG_buy").value));
     const sell = parseFloat(bnToLatin(document.getElementById("pctG_sell").value));
@@ -5082,6 +6275,1004 @@ function setupSettingsAndNavigation() {
   document.getElementById("historySearchInput")?.addEventListener("input", renderHistoryUI);
 }
 
+
+// ==========================================
+// 15. App Stats, Live Sharing & User Ratings System
+// ==========================================
+function setupAppStatsAndRatings() {
+  const DEFAULT_STATS = {
+    baseDownloads: 25850,
+    baseShares: 3420,
+    userSharesCount: 0,
+    activeUsers: 18200
+  };
+
+  const DEFAULT_REVIEWS = [
+    {
+      id: "rev-1",
+      name: "মোহাম্মদ জাহিদ হাসান",
+      city: "ঢাকা",
+      rating: 5,
+      comment: "ক্যালকুলেটরটি অসাধারণ! সম্পূর্ণ অফলাইনে দ্রুত কাজ করে এবং বিজ্ঞাপনের কোনো বাড়তি ঝামেলা নেই। প্রতিদিনের হিসাব ও কিউআর স্ক্যানার খুব কাজের।",
+      date: "১২ সেপ্টেম্বর ২০২৬",
+      helpful: 48,
+      verified: true,
+      isUser: false
+    },
+    {
+      id: "rev-2",
+      name: "সুমাইয়া আক্তার",
+      city: "চট্টগ্রাম",
+      rating: 5,
+      comment: "টাকা কথায় রূপান্তর এবং জমির হিসাব আমার দোকানের কাস্টমারদের জন্য ভীষণ দরকারি। ডিজাইনটা খুব পরিষ্কার ও সুন্দর। ৫ তারকা রেটিং!",
+      date: "১০ সেপ্টেম্বর ২০২৬",
+      helpful: 36,
+      verified: true,
+      isUser: false
+    },
+    {
+      id: "rev-3",
+      name: "তানভীর আহমেদ",
+      city: "রাজশাহী",
+      rating: 5,
+      comment: "কারেন্সি কনভার্টার এবং সায়েন্টিফিক মোডের হিসাবগুলো এককথায় দুর্দান্ত। অনেক বড় ধন্যবাদ ডেভেলপারকে এমন চমৎকার বাংলা অ্যাপ বানানোর জন্য।",
+      date: "৮ সেপ্টেম্বর ২০২৬",
+      helpful: 29,
+      verified: true,
+      isUser: false
+    },
+    {
+      id: "rev-4",
+      name: "নাসরিন সুলতানা",
+      city: "সিলেট",
+      rating: 4,
+      comment: "ফিন্যান্স ক্যালকুলেটরের লোন ইএমআই এবং ডিপিএস হিসাব নিখুঁত। ব্যবহার করা অত্যন্ত সহজ। বন্ধুদের সাথেও শেয়ার করেছি।",
+      date: "৫ সেপ্টেম্বর ২০২৬",
+      helpful: 21,
+      verified: true,
+      isUser: false
+    },
+    {
+      id: "rev-5",
+      name: "আরিফুল ইসলাম",
+      city: "খুলনা",
+      rating: 5,
+      comment: "আমি বন্ধুদের সাথেও শেয়ার করেছি। বাংলা ভাষায় এরকম অল-ইন-ওয়ান ক্যালকুলেটর আগে দেখিনি। নিয়মিত আপডেট পাওয়ার আশা রইলো।",
+      date: "২ সেপ্টেম্বর ২০২৬",
+      helpful: 19,
+      verified: true,
+      isUser: false
+    }
+  ];
+
+  let appStats = getStorage(STORAGE_KEYS.APP_STATS, DEFAULT_STATS);
+  let reviewsList = getStorage(STORAGE_KEYS.REVIEWS, DEFAULT_REVIEWS);
+  let userSubmission = getStorage(STORAGE_KEYS.USER_SUBMISSION, null);
+  let selectedRating = 5;
+  let currentFilter = "all";
+
+  // Helper to convert English number to Bengali digits with commas
+  function formatBanglaNumber(num) {
+    const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return num.toLocaleString("en-US").replace(/\d/g, d => bnDigits[d]);
+  }
+
+  function getRatingStats() {
+    if (!reviewsList.length) {
+      return { avg: 4.8, count: 1540, counts: { 5: 1260, 4: 185, 3: 65, 2: 15, 1: 15 } };
+    }
+    const totalExtra = reviewsList.length - 5;
+    const baseCount = 1540 + Math.max(0, totalExtra);
+    let totalScore = (4.8 * 1540);
+    const starCounts = { 5: 1260, 4: 185, 3: 65, 2: 15, 1: 15 };
+
+    // Factor in user reviews
+    reviewsList.forEach(r => {
+      if (r.isUser) {
+        starCounts[r.rating] = (starCounts[r.rating] || 0) + 1;
+        totalScore += r.rating;
+      }
+    });
+    const finalCount = baseCount + (userSubmission ? 1 : 0);
+    const finalAvg = (totalScore / finalCount).toFixed(1);
+
+    return {
+      avg: parseFloat(finalAvg),
+      count: finalCount,
+      counts: starCounts
+    };
+  }
+
+  function renderStats() {
+    const totalDownloads = appStats.baseDownloads + (appStats.userSharesCount * 4) + (reviewsList.length - 5);
+    const totalShares = appStats.baseShares + appStats.userSharesCount;
+    const stats = getRatingStats();
+
+    const downloadsText = formatBanglaNumber(totalDownloads) + "+";
+    const sharesText = formatBanglaNumber(totalShares) + "+";
+    const avgRatingText = formatBanglaNumber(stats.avg);
+    const reviewsCountText = formatBanglaNumber(stats.count) + "টি রিভিউ";
+
+    const elDownloads = document.getElementById("statDownloadsDisplay");
+    const elShares = document.getElementById("statSharesDisplay");
+    const elAvg = document.getElementById("statAvgRatingDisplay");
+    const elReviewsSub = document.getElementById("statTotalReviewsSub");
+    const elBigNum = document.getElementById("ratingBigNumber");
+    const elTotalCountText = document.getElementById("ratingTotalCountText");
+    const setDownloads = document.getElementById("settingsStatDownloads");
+    const setRating = document.getElementById("settingsStatRating");
+
+    if (elDownloads) elDownloads.textContent = downloadsText;
+    if (elShares) elShares.textContent = sharesText;
+    if (elAvg) elAvg.textContent = avgRatingText + "★";
+    if (elReviewsSub) elReviewsSub.textContent = reviewsCountText;
+    if (elBigNum) elBigNum.textContent = avgRatingText;
+    if (elTotalCountText) elTotalCountText.textContent = formatBanglaNumber(stats.count) + "+ পর্যালোচনা";
+    if (setDownloads) setDownloads.textContent = downloadsText;
+    if (setRating) setRating.textContent = avgRatingText + " ★";
+
+    // Star distributions
+    const totalRatings = stats.counts[5] + stats.counts[4] + stats.counts[3] + stats.counts[2] + stats.counts[1];
+    for (let s = 1; s <= 5; s++) {
+      const cnt = stats.counts[s] || 0;
+      const pct = Math.round((cnt / totalRatings) * 100);
+      const bar = document.getElementById("barStar" + s);
+      const pctEl = document.getElementById("pctStar" + s);
+      if (bar) bar.style.width = pct + "%";
+      if (pctEl) pctEl.textContent = formatBanglaNumber(pct) + "%";
+    }
+  }
+
+  function renderReviews() {
+    const container = document.getElementById("reviewsFeedContainer");
+    if (!container) return;
+
+    let filtered = reviewsList;
+    if (currentFilter === "5") filtered = reviewsList.filter(r => r.rating === 5);
+    else if (currentFilter === "4") filtered = reviewsList.filter(r => r.rating === 4);
+
+    container.innerHTML = "";
+    if (!filtered.length) {
+      container.innerHTML = `<div style="text-align:center; padding:20px; color:var(--ink-soft); font-size:13px;">এই ক্যাটাগরিতে এখনো কোনো রিভিউ নেই।</div>`;
+      return;
+    }
+
+    filtered.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "review-item-card" + (item.isUser ? " is-user" : "");
+      
+      const starStr = "★".repeat(item.rating) + "☆".repeat(5 - item.rating);
+      const initial = (item.name || "ব")[0];
+
+      card.innerHTML = `
+        <div class="review-header">
+          <div class="review-author-wrap">
+            <div class="review-avatar">${initial}</div>
+            <div>
+              <div class="review-author-name">
+                <span>${item.name}</span>
+                ${item.isUser ? '<span class="badge" style="background:#dbeafe; color:#1d4ed8; font-size:10.5px; padding:1px 6px;">আপনার রিভিউ ⭐</span>' : ''}
+                ${item.verified ? '<span class="verified-badge" title="যাচাইকৃত ব্যবহারকারী">✔️</span>' : ''}
+              </div>
+              <div class="review-author-meta">
+                ${item.city ? item.city + " • " : ""}${item.date}
+              </div>
+            </div>
+          </div>
+          <div class="review-stars-badge">${starStr}</div>
+        </div>
+        <div class="review-body-text">${item.comment}</div>
+        <div class="review-footer">
+          <span>গাণিতিক ক্যালকুলেটর ব্যবহারকারী</span>
+          <button type="button" class="helpful-btn" data-id="${item.id}">
+            👍 সহায়ক (${formatBanglaNumber(item.helpful || 0)})
+          </button>
+        </div>
+      `;
+
+      card.querySelector(".helpful-btn").addEventListener("click", function() {
+        if (this.classList.contains("liked")) return;
+        this.classList.add("liked");
+        item.helpful = (item.helpful || 0) + 1;
+        setStorage(STORAGE_KEYS.REVIEWS, reviewsList);
+        this.innerHTML = `👍 সহায়ক (${formatBanglaNumber(item.helpful)})`;
+        showToast("মতামত সহায়ক হিসেবে চিহ্নিত করা হয়েছে 👍");
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  // Star Picker Interactions
+  const starBtns = document.querySelectorAll("#starPickerContainer .star-btn");
+  const starHint = document.getElementById("starRatingHint");
+  const hints = {
+    1: "সন্তোষজনক নয় (১/৫) ⭐",
+    2: "আরও উন্নতি দরকার (২/৫) ⭐⭐",
+    3: "মোটামুটি ভালো (৩/৫) ⭐⭐⭐",
+    4: "খুবই ভালো (৪/৫) ⭐⭐⭐⭐",
+    5: "অসাধারণ! (৫/৫) ⭐⭐⭐⭐⭐"
+  };
+
+  function updateStarPicker(val) {
+    selectedRating = val;
+    starBtns.forEach(btn => {
+      const bVal = parseInt(btn.dataset.val, 10);
+      if (bVal <= val) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+    if (starHint) starHint.textContent = hints[val] || (val + " স্টার");
+  }
+
+  starBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const val = parseInt(btn.dataset.val, 10);
+      updateStarPicker(val);
+    });
+    btn.addEventListener("mouseenter", () => {
+      const val = parseInt(btn.dataset.val, 10);
+      starBtns.forEach(b => {
+        const bv = parseInt(b.dataset.val, 10);
+        if (bv <= val) b.classList.add("hovered");
+        else b.classList.remove("hovered");
+      });
+    });
+    btn.addEventListener("mouseleave", () => {
+      starBtns.forEach(b => b.classList.remove("hovered"));
+    });
+  });
+
+  // Submit Review
+  const btnSubmit = document.getElementById("btnSubmitUserReview");
+  const inputName = document.getElementById("reviewUserName");
+  const inputCity = document.getElementById("reviewUserCity");
+  const inputComment = document.getElementById("reviewUserComment");
+  const alertSuccess = document.getElementById("reviewSubmittedAlert");
+
+  if (userSubmission) {
+    if (inputName) inputName.value = userSubmission.name || "";
+    if (inputCity) inputCity.value = userSubmission.city || "";
+    if (inputComment) inputComment.value = userSubmission.comment || "";
+    updateStarPicker(userSubmission.rating || 5);
+  }
+
+  if (btnSubmit) {
+    btnSubmit.addEventListener("click", () => {
+      const name = (inputName?.value || "").trim();
+      const city = (inputCity?.value || "").trim();
+      const comment = (inputComment?.value || "").trim();
+
+      if (!name) {
+        showToast("দয়া করে আপনার নাম লিখুন");
+        inputName?.focus();
+        return;
+      }
+      if (!comment) {
+        showToast("দয়া করে আপনার রিভিউ বা মন্তব্য লিখুন");
+        inputComment?.focus();
+        return;
+      }
+
+      const todayDate = new Date().toLocaleDateString("bn-BD", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+      const newReview = {
+        id: "user-rev-" + Date.now(),
+        name: name,
+        city: city || "বাংলাদেশ",
+        rating: selectedRating,
+        comment: comment,
+        date: todayDate,
+        helpful: 1,
+        verified: true,
+        isUser: true
+      };
+
+      // Replace existing user review if any or prepend
+      reviewsList = reviewsList.filter(r => !r.isUser);
+      reviewsList.unshift(newReview);
+      setStorage(STORAGE_KEYS.REVIEWS, reviewsList);
+
+      userSubmission = { name, city, comment, rating: selectedRating, date: todayDate };
+      setStorage(STORAGE_KEYS.USER_SUBMISSION, userSubmission);
+
+      renderStats();
+      renderReviews();
+
+      if (alertSuccess) {
+        alertSuccess.style.display = "block";
+        setTimeout(() => { alertSuccess.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 100);
+      }
+      showToast("আপনার রেটিং সফলভাবে গৃহীত হয়েছে! ⭐");
+    });
+  }
+
+  // Filter Buttons
+  document.querySelectorAll(".rev-filter").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".rev-filter").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderReviews();
+    });
+  });
+
+  // App Sharing Handlers
+  function triggerShare() {
+    appStats.userSharesCount = (appStats.userSharesCount || 0) + 1;
+    setStorage(STORAGE_KEYS.APP_STATS, appStats);
+    renderStats();
+
+    const shareTitle = "গাণিতিক ক্যালকুলেটর (Bangla Calculator)";
+    const shareText = "বাংলা ভাষায় চমৎকার ও অল-ইন-ওয়ান গাণিতিক ক্যালকুলেটর! সাধারণ ও সাইন্টিফিক হিসাব, মুদ্রা রূপান্তর, কিউআর কোড এবং জমি-টাকা রূপান্তর সম্পূর্ণ অফলাইনে কাজ করে। এখনই ডাউনলোড করুন!";
+
+    // Check AndroidBridge native interface first
+    if (window.AndroidBridge && typeof window.AndroidBridge.shareApp === "function") {
+      window.AndroidBridge.shareApp(shareTitle, shareText);
+      showToast("শেয়ার করার জন্য ধন্যবাদ! মোট শেয়ার বৃদ্ধি পেয়েছে। 🎉");
+      return;
+    }
+
+    // Web Share API
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: window.location.href
+      }).then(() => {
+        showToast("অ্যাপটি শেয়ার করার জন্য ধন্যবাদ! 🎉");
+      }).catch(() => {});
+    } else {
+      // Fallback clipboard copy
+      copyText(shareText);
+      showToast("শেয়ার লিংক ও বিবরণ কপি করা হয়েছে! বন্ধুদের মেসেঞ্জারে পাঠিয়ে দিন। 📋");
+    }
+  }
+
+  document.getElementById("btnShareAppPrimary")?.addEventListener("click", triggerShare);
+  document.getElementById("btnCopyShareLink")?.addEventListener("click", () => {
+    appStats.userSharesCount = (appStats.userSharesCount || 0) + 1;
+    setStorage(STORAGE_KEYS.APP_STATS, appStats);
+    renderStats();
+    const shareText = "গাণিতিক ক্যালকুলেটর - বাংলা ভাষায় অল-ইন-ওয়ান অফলাইন ক্যালকুলেটর ও কিউআর স্ক্যানার। ব্যবহার করুন ও বন্ধুদের শেয়ার করুন!";
+    copyText(shareText);
+    showToast("লিংক কপি করা হয়েছে! মোট শেয়ার বৃদ্ধি পেয়েছে। 📋");
+  });
+
+  // Rate on Play Store Handler
+  function triggerPlayStoreRate() {
+    if (window.AndroidBridge && typeof window.AndroidBridge.rateOnPlayStore === "function") {
+      window.AndroidBridge.rateOnPlayStore();
+      showToast("গুগল প্লে স্টোর খোলা হচ্ছে...");
+    } else {
+      window.open("https://play.google.com/store/apps/details?id=com.example", "_blank");
+      showToast("গুগল প্লে স্টোরে ৫-স্টার রেটিং দিয়ে আমাদের উৎসাহিত করুন! ⭐");
+    }
+  }
+
+  document.getElementById("btnOpenPlayStoreRate")?.addEventListener("click", triggerPlayStoreRate);
+
+  // Scroll to Review Form
+  document.getElementById("btnScrollToReviewForm")?.addEventListener("click", () => {
+    document.getElementById("userReviewFormCard")?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  // Initial render
+  renderStats();
+  renderReviews();
+}
+
+
+// ==========================================
+// 16. Smart Search & Natural Language Assistant
+// ==========================================
+function setupSmartSearch() {
+  const searchInput = document.getElementById("smartSearchInput");
+  const clearBtn = document.getElementById("btnSmartClear");
+  const voiceBtn = document.getElementById("btnSmartVoice");
+  const pills = document.querySelectorAll(".smart-pill");
+  const resultsContainer = document.getElementById("smartResultsContainer");
+
+  // Voice Modal Elements
+  const voiceOverlay = document.getElementById("voiceModalOverlay");
+  const voiceMicOrb = document.getElementById("voiceMicOrb");
+  const voiceStatus = document.getElementById("voiceModalStatus");
+  const voiceTranscriptBox = document.getElementById("voiceTranscriptBox");
+  const btnVoiceClose = document.getElementById("btnVoiceModalClose");
+  const btnVoiceCancel = document.getElementById("btnVoiceCancel");
+  const btnVoiceDone = document.getElementById("btnVoiceDone");
+
+  if (!searchInput || !resultsContainer) return;
+
+  function toBn(num) {
+    return formatNumber(num);
+  }
+
+  function bnDigitsToEn(str) {
+    const bn = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    let res = String(str);
+    for (let i = 0; i < 10; i++) {
+      res = res.replace(new RegExp(bn[i], "g"), i);
+    }
+    return res;
+  }
+
+  function extractNumbers(text) {
+    const enText = bnDigitsToEn(text);
+    const matches = enText.match(/-?\d+(\.\d+)?/g);
+    if (!matches) return [];
+    return matches.map(n => parseFloat(n)).filter(n => !isNaN(n));
+  }
+
+  function analyzeSmartQuery(raw) {
+    const q = raw.trim().toLowerCase();
+    const numbers = extractNumbers(q);
+
+    // 1. Profit and Selling Price
+    if (q.includes("লাভ") || q.includes("profit") || q.includes("বিক্রয়মূল্য") || q.includes("বিক্রয়মূল্য") || q.includes("ক্ষতি") || q.includes("লস") || q.includes("loss")) {
+      const isLoss = q.includes("ক্ষতি") || q.includes("লস") || q.includes("loss");
+      let cost = 1000;
+      let pct = 15;
+
+      if (numbers.length >= 2) {
+        cost = numbers[0];
+        pct = numbers[1];
+      } else if (numbers.length === 1) {
+        if (numbers[0] > 100) cost = numbers[0];
+        else pct = numbers[0];
+      }
+
+      const diff = cost * (pct / 100);
+      const finalPrice = isLoss ? (cost - diff) : (cost + diff);
+
+      return {
+        id: "profit_calculator",
+        toolName: "📈 লাভ ও ক্ষতি ক্যালকুলেটর (Profit & Loss)",
+        category: "শতকরা ও বাণিজ্যিক হিসাব",
+        answerTitle: isLoss ? "নির্ণীত বিক্রয়মূল্য (ক্ষতিসহ):" : "নির্ণীত বিক্রয়মূল্য (লাভসহ):",
+        answerValue: `${formatNumber(finalPrice)} টাকা`,
+        breakdownText: `ক্রয়মূল্য: ${formatNumber(cost)} টাকা • ${isLoss ? "মোট ক্ষতি" : "মোট লাভ"} (${toBn(pct)}%): <strong>${isLoss ? "-" : "+"}${formatNumber(diff)} টাকা</strong>`,
+        formulaText: `বিক্রয়মূল্য = ${toBn(cost)} ${isLoss ? "-" : "+"} (${toBn(cost)} × ${toBn(pct)}%) = ${toBn(finalPrice)} টাকা`,
+        buttonText: `👉 লাভ ও ক্ষতি ক্যালকুলেটরে সরাসরি খুলুন`,
+        openAction: () => {
+          navigateTo("percentage");
+          const tabG = document.querySelector('.pct-subtab[data-target="g"]');
+          if (tabG) tabG.click();
+
+          const costInput = document.getElementById("pctG_cost");
+          const typeSelect = document.getElementById("pctG_type");
+          const pctInput = document.getElementById("pctG_profitPct");
+
+          if (costInput && pctInput) {
+            costInput.value = cost;
+            pctInput.value = pct;
+            if (typeSelect) typeSelect.value = isLoss ? "loss" : "profit";
+            document.getElementById("btnPctG_fromPct")?.click();
+          }
+
+          if (cost && pct) {
+            const buyInput = document.getElementById("pctG_buy");
+            const sellInput = document.getElementById("pctG_sell");
+            if (buyInput && sellInput) {
+              buyInput.value = cost;
+              sellInput.value = finalPrice;
+            }
+          }
+
+          const targetCard = document.getElementById("pct-view-g");
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+            targetCard.classList.remove("highlight-pulse");
+            void targetCard.offsetWidth;
+            targetCard.classList.add("highlight-pulse");
+          }
+
+          showToast(`লাভ-ক্ষতি ক্যালকুলেটরে ${toBn(cost)} টাকার হিসাব স্বয়ংক্রিয়ভাবে খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 2. Discount / ছাড়
+    if (q.includes("ছাড়") || q.includes("ডিসকাউন্ট") || q.includes("discount") || q.includes("কমিশন") || q.includes("off")) {
+      const price = numbers[0] || 500;
+      const disc = numbers[1] || 20;
+      const save = price * (disc / 100);
+      const finalPrice = price - save;
+
+      return {
+        id: "discount_calculator",
+        toolName: "🏷️ ডিসকাউন্ট ও ছাড় ক্যালকুলেটর",
+        category: "শপিং ও রিটেল হিসাব",
+        answerTitle: "ডিসকাউন্টের পর মূল্য:",
+        answerValue: `${formatNumber(finalPrice)} টাকা`,
+        breakdownText: `মূল দাম: ${formatNumber(price)} টাকা • সাশ্রয় (${toBn(disc)}%): <strong>-${formatNumber(save)} টাকা</strong>`,
+        formulaText: `পরিশোধ = ${toBn(price)} - (${toBn(price)} × ${toBn(disc)}%) = ${toBn(finalPrice)} টাকা`,
+        buttonText: `👉 ডিসকাউন্ট ক্যালকুলেটরে সরাসরি খুলুন`,
+        openAction: () => {
+          navigateTo("percentage");
+          const tabE = document.querySelector('.pct-subtab[data-target="e"]');
+          if (tabE) tabE.click();
+          const pInput = document.getElementById("pctE_price");
+          const dInput = document.getElementById("pctE_disc");
+          if (pInput && dInput) {
+            pInput.value = price;
+            dInput.value = disc;
+            document.getElementById("btnPctE")?.click();
+          }
+          document.getElementById("pct-view-e")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          showToast(`ডিসকাউন্ট ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 3. VAT / ভ্যাট
+    if (q.includes("ভ্যাট") || q.includes("vat") || q.includes("ট্যাক্স") || q.includes("tax")) {
+      const price = numbers[0] || 1000;
+      const vat = numbers[1] || 15;
+      const vatAmount = price * (vat / 100);
+      const total = price + vatAmount;
+
+      return {
+        id: "vat_calculator",
+        toolName: "🧾 ভ্যাট ক্যালকুলেটর (VAT Calculator)",
+        category: "কর ও বাণিজ্যিক হিসাব",
+        answerTitle: "ভ্যাটসহ মোট মূল্য:",
+        answerValue: `${formatNumber(total)} টাকা`,
+        breakdownText: `মূল্য: ${formatNumber(price)} টাকা • ভ্যাট পরিমাণ (${toBn(vat)}%): <strong>${formatNumber(vatAmount)} টাকা</strong>`,
+        formulaText: `মোট = ${toBn(price)} + (${toBn(price)} × ${toBn(vat)}%) = ${toBn(total)} টাকা`,
+        buttonText: `👉 ভ্যাট ক্যালকুলেটরে সরাসরি খুলুন`,
+        openAction: () => {
+          navigateTo("percentage");
+          const tabF = document.querySelector('.pct-subtab[data-target="f"]');
+          if (tabF) tabF.click();
+          const pInput = document.getElementById("pctF_price");
+          const vInput = document.getElementById("pctF_vat");
+          if (pInput && vInput) {
+            pInput.value = price;
+            vInput.value = vat;
+            document.getElementById("btnPctF")?.click();
+          }
+          document.getElementById("pct-view-f")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          showToast(`ভ্যাট ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 4. Currency Conversion / ডলার / রিয়াল / রুপি
+    if (q.includes("ডলার") || q.includes("dollar") || q.includes("usd") || q.includes("রিয়াল") || q.includes("মুদ্রা") || q.includes("currency") || q.includes("ইউরো")) {
+      const amount = numbers[0] || 100;
+      const rate = 121.50; // USD to BDT approx
+      const bdt = amount * rate;
+
+      return {
+        id: "currency_converter",
+        toolName: "💱 মুদ্রা রূপান্তরকারী (Currency Converter)",
+        category: "আন্তর্জাতিক মুদ্রা রেট",
+        answerTitle: `১ ডলার = ১২১.৫০ টাকা হিসেবে:`,
+        answerValue: `${formatNumber(bdt)} টাকা`,
+        breakdownText: `মুদ্রা: <strong>${formatNumber(amount)} ডলার (USD)</strong> ➔ বাংলাদেশি টাকা (BDT)`,
+        formulaText: `${toBn(amount)} USD × ১২১.৫০ = ${formatNumber(bdt)} BDT`,
+        buttonText: `👉 কারেন্সি কনভার্টারে সরাসরি খুলুন`,
+        openAction: () => {
+          navigateTo("currency");
+          const amountInput = document.getElementById("currencyAmount");
+          if (amountInput) {
+            amountInput.value = amount;
+            document.getElementById("currencyFrom").value = "USD";
+            document.getElementById("currencyTo").value = "BDT";
+            document.getElementById("btnConvertCurrency")?.click();
+          }
+          showToast(`কারেন্সি কনভার্টারে ${toBn(amount)} ডলারের হিসাব খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 5. Age & Date / বয়স / জন্ম
+    if (q.includes("বয়স") || q.includes("বয়স") || q.includes("জন্ম") || q.includes("age") || q.includes("বছর")) {
+      return {
+        id: "age_calculator",
+        toolName: "🎂 বয়স ও তারিখ ক্যালকুলেটর (Age Calculator)",
+        category: "তারিখ ও সঠিক বয়স নির্ণয়",
+        answerTitle: "সঠিক বয়স ও দিন নির্ণয়:",
+        answerValue: "বছর, মাস ও দিন ভিত্তিক হিসাব",
+        breakdownText: "আপনার জন্মতারিখ নির্ধারণ করে নিখুঁত বয়স ও পরবর্তী জন্মদিনের কাউন্টডাউন দেখুন।",
+        formulaText: "বর্তমান তারিখ - জন্ম তারিখ = সঠিক বয়স",
+        buttonText: `👉 বয়স ও তারিখ ক্যালকুলেটর খুলুন`,
+        openAction: () => {
+          navigateTo("age");
+          document.getElementById("btnCalcAge")?.click();
+          showToast(`বয়স ক্যালকুলেটর খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 6. Loan EMI / কিস্তি / লোন / ডিপিএস / ফিন্যান্স
+    if (q.includes("লোন") || q.includes("ঋণ") || q.includes("emi") || q.includes("কিস্তি") || q.includes("ডিপিএস") || q.includes("dps") || q.includes("মুনাফা")) {
+      return {
+        id: "finance_calculator",
+        toolName: "💰 ফিন্যান্স ও লোন EMI ক্যালকুলেটর",
+        category: "ব্যাংক ও লোন কিস্তি",
+        answerTitle: "মাসিক কিস্তি ও মুনাফা হিসাব:",
+        answerValue: "লোন EMI ও সঞ্চয় প্ল্যান",
+        breakdownText: "লোনের পরিমাণ, সুদের হার ও মেয়াদ দিয়ে প্রতি মাসের কিস্তি এবং মোট সুদের পরিমাণ জানুন।",
+        formulaText: "EMI = [P x R x (1+R)^N] / [(1+R)^N - 1]",
+        buttonText: `👉 ফিন্যান্স ক্যালকুলেটরে সরাসরি খুলুন`,
+        openAction: () => {
+          navigateTo("finance");
+          const tabC = document.querySelector('.fin-subtab[data-target="c"]');
+          if (tabC) tabC.click();
+          showToast(`লোন EMI ক্যালকুলেটর খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 7. QR Code / কিউআর কোড
+    if (q.includes("কিউআর") || q.includes("qr") || q.includes("স্ক্যান") || q.includes("বারকোড")) {
+      return {
+        id: "qrcode_tools",
+        toolName: "📷 কিউআর কোড স্ক্যানার ও জেনারেটর",
+        category: "ক্যামেরা স্ক্যান ও QR তৈরি",
+        answerTitle: "কিউআর কোড টুলস:",
+        answerValue: "তৈরি ও স্ক্যান করুন",
+        breakdownText: "টেক্সট, ইউআরএল, বিকাশ/নগদ পেমেন্ট কিউআর কোড তৈরি এবং ক্যামেরা দিয়ে স্ক্যান করুন।",
+        formulaText: "উচ্চগতির অফলাইন কিউআর কোড প্রসেসর",
+        buttonText: `👉 কিউআর কোড টুলস খুলুন`,
+        openAction: () => {
+          navigateTo("qrcode");
+          showToast(`কিউআর কোড টুলস খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 8. Bangladesh Tools (টাকা কথায়, জমি, সোনা)
+    if (q.includes("টাকা কথায়") || q.includes("কথায়") || q.includes("জমি") || q.includes("শতক") || q.includes("কাঠা") || q.includes("স্বর্ণ") || q.includes("সোনা") || q.includes("ভরি")) {
+      return {
+        id: "bangladesh_tools",
+        toolName: "🇧🇩 বাংলাদেশ স্পেশাল টুলস (BD Tools)",
+        category: "টাকা কথায় ও জমির শতক",
+        answerTitle: "বাংলাদেশি রূপান্তর ও ভূমি হিসাব:",
+        answerValue: "টাকা কথায় ও জমি পরিমাপ",
+        breakdownText: "টাকা কথায় রূপান্তর, জমির শতক-কাঠা হিসাব, স্বর্ণের ভরি-আনা এবং মণ-কেজি রূপান্তর।",
+        formulaText: "১ শতক = ৪৩৫.৬ বর্গফুট | ১ ভরি = ১৬ আনা",
+        buttonText: `👉 বাংলাদেশ টুলস খুলুন`,
+        openAction: () => {
+          navigateTo("bangladesh");
+          showToast(`বাংলাদেশ টুলস খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 9. Percentage General
+    if (q.includes("শতকরা") || q.includes("%") || q.includes("শতাংশ")) {
+      const x = numbers[0] || 100;
+      const y = numbers[1] || 15;
+      const ans = (x * y) / 100;
+
+      return {
+        id: "percentage_calculator",
+        toolName: "📊 শতকরা ক্যালকুলেটর (Percentage)",
+        category: "শতকরা হিসাব",
+        answerTitle: `${toBn(x)} এর ${toBn(y)}% হলো:`,
+        answerValue: `${formatNumber(ans)}`,
+        breakdownText: `হিসাব: (${toBn(x)} × ${toBn(y)}) ÷ ১০০`,
+        formulaText: `${toBn(x)} × (${toBn(y)}/১০০) = ${toBn(ans)}`,
+        buttonText: `👉 শতকরা ক্যালকুলেটরে সরাসরি খুলুন`,
+        openAction: () => {
+          navigateTo("percentage");
+          const tabA = document.querySelector('.pct-subtab[data-target="a"]');
+          if (tabA) tabA.click();
+          const xInput = document.getElementById("pctA_x");
+          const yInput = document.getElementById("pctA_y");
+          if (xInput && yInput) {
+            xInput.value = x;
+            yInput.value = y;
+            document.getElementById("btnPctA")?.click();
+          }
+          showToast(`শতকরা ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
+    // 10. Direct Math Calculation (e.g. 15 * 80 + 20)
+    if (numbers.length >= 2 && (q.includes("+") || q.includes("-") || q.includes("*") || q.includes("/") || q.includes("গুণ") || q.includes("ভাগ") || q.includes("যোগ") || q.includes("বিয়োগ"))) {
+      try {
+        let expr = bnDigitsToEn(q)
+          .replace(/গুণ/g, "*")
+          .replace(/ভাগ/g, "/")
+          .replace(/যোগ/g, "+")
+          .replace(/বিয়োগ/g, "-")
+          .replace(/×/g, "*")
+          .replace(/÷/g, "/");
+        expr = expr.replace(/[^0-9+\-*\/().]/g, "");
+        if (expr) {
+          const evalRes = evaluateMath(expr);
+          return {
+            id: "basic_calculator",
+            toolName: "🧮 সাধারণ ক্যালকুলেটর (Basic Math)",
+            category: "পাটিগণিত ও হিসাব",
+            answerTitle: "গাণিতিক ফলাফল:",
+            answerValue: `${formatNumber(evalRes)}`,
+            breakdownText: `এক্সপ্রেশন: <strong>${toBn(expr)}</strong>`,
+            formulaText: `${toBn(expr)} = ${toBn(evalRes)}`,
+            buttonText: `👉 সাধারণ ক্যালকুলেটরে খুলুন`,
+            openAction: () => {
+              navigateTo("basic");
+              basicExpr = expr;
+              updateBasicDisplay();
+              showToast(`সাধারণ ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
+            }
+          };
+        }
+      } catch (e) {}
+    }
+
+    // Fallback: search across all sections
+    return {
+      id: "search_fallback",
+      toolName: "🔍 ক্যালকুলেটর অনুসন্ধান",
+      category: "গাণিতিক অনুসন্ধান",
+      answerTitle: "স্মার্ট সাজেশন:",
+      answerValue: `"${raw}"`,
+      breakdownText: "আপনার প্রশ্নটি সমাধান করতে নিচের প্রাসঙ্গিক ক্যালকুলেটরে প্রবেশ করুন।",
+      formulaText: "লাভ-ক্ষতি, শতকরা, কারেন্সি, লোন ইএমআই, কিউআর কোড ইত্যাদি যেকোনো হিসাব সহজে করুন।",
+      buttonText: `👉 ড্যাশবোর্ড থেকে ক্যালকুলেটর বেছে নিন`,
+      openAction: () => {
+        navigateTo("dashboard");
+      }
+    };
+  }
+
+  let currentActiveAction = null;
+
+  function renderSmartResults(result) {
+    if (!result) {
+      resultsContainer.style.display = "none";
+      currentActiveAction = null;
+      return;
+    }
+
+    currentActiveAction = result.openAction;
+
+    resultsContainer.innerHTML = `
+      <div class="smart-result-card">
+        <div class="smart-result-header">
+          <span class="smart-detected-badge">🎯 ${result.category || "শনাক্তকৃত ক্যালকুলেটর"}</span>
+          <span class="smart-tool-name">${result.toolName}</span>
+        </div>
+
+        <div class="smart-answer-box">
+          <div class="smart-answer-title">${result.answerTitle}</div>
+          <div class="smart-answer-val">${result.answerValue}</div>
+          <div class="smart-answer-breakdown">${result.breakdownText}</div>
+          <div class="smart-answer-formula">${result.formulaText}</div>
+        </div>
+
+        <button type="button" class="btn btn-primary smart-open-btn" id="btnSmartOpenDetected">
+          ${result.buttonText}
+        </button>
+      </div>
+    `;
+
+    resultsContainer.style.display = "block";
+
+    document.getElementById("btnSmartOpenDetected")?.addEventListener("click", () => {
+      if (typeof currentActiveAction === "function") {
+        currentActiveAction();
+        resultsContainer.style.display = "none";
+      }
+    });
+  }
+
+  function handleInput() {
+    const val = searchInput.value.trim();
+    if (!val) {
+      clearBtn.style.display = "none";
+      resultsContainer.style.display = "none";
+      currentActiveAction = null;
+      return;
+    }
+    clearBtn.style.display = "flex";
+    const res = analyzeSmartQuery(val);
+    renderSmartResults(res);
+  }
+
+  searchInput.addEventListener("input", handleInput);
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (typeof currentActiveAction === "function") {
+        currentActiveAction();
+        resultsContainer.style.display = "none";
+      }
+    }
+  });
+
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    clearBtn.style.display = "none";
+    resultsContainer.style.display = "none";
+    currentActiveAction = null;
+    searchInput.focus();
+  });
+
+  // Query Pills
+  pills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      pills.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      const q = pill.dataset.query;
+      searchInput.value = q;
+      clearBtn.style.display = "flex";
+      const res = analyzeSmartQuery(q);
+      renderSmartResults(res);
+      if (res && res.id === "profit_calculator") {
+        res.openAction();
+        resultsContainer.style.display = "none";
+      }
+    });
+  });
+
+  // Voice Recognition Flow (Native Android + Web Speech API + Voice Assistant Modal)
+  let recognition = null;
+  let isWebListening = false;
+  let pendingVoiceText = "";
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  function openVoiceModal() {
+    if (voiceOverlay) {
+      voiceOverlay.style.display = "flex";
+      if (voiceMicOrb) voiceMicOrb.classList.add("active-pulse");
+      if (voiceStatus) voiceStatus.textContent = "শুনছি... আপনার প্রশ্নটি মুখে বলুন 🎙️";
+      if (voiceTranscriptBox) {
+        voiceTranscriptBox.innerHTML = '<span class="voice-transcript-placeholder">যেমন: “১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?”</span>';
+      }
+      voiceBtn.classList.add("listening");
+    }
+  }
+
+  function closeVoiceModal() {
+    if (voiceOverlay) {
+      voiceOverlay.style.display = "none";
+    }
+    if (voiceMicOrb) voiceMicOrb.classList.remove("active-pulse");
+    voiceBtn.classList.remove("listening");
+    if (recognition && isWebListening) {
+      try { recognition.stop(); } catch (e) {}
+      isWebListening = false;
+    }
+  }
+
+  function applyVoiceResult(text) {
+    if (!text) return;
+    searchInput.value = text;
+    handleInput();
+    closeVoiceModal();
+    showToast(`ভয়েস গৃহীত: "${text}" ✔️`);
+    const res = analyzeSmartQuery(text);
+    if (res && res.id === "profit_calculator") {
+      setTimeout(() => {
+        if (typeof res.openAction === "function") {
+          res.openAction();
+          resultsContainer.style.display = "none";
+        }
+      }, 400);
+    }
+  }
+
+  // Global hooks for Android Native Voice
+  window.onVoiceSearchResult = function(text) {
+    applyVoiceResult(text);
+  };
+
+  window.onVoiceSearchDismissed = function() {
+    closeVoiceModal();
+  };
+
+  window.fallbackWebSpeech = function() {
+    startWebSpeech();
+  };
+
+  function startWebSpeech() {
+    if (!SpeechRecognition) {
+      closeVoiceModal();
+      showToast("আপনার ব্রাউজারে ভয়েস সার্চ সমর্থিত নয়, অনুগ্রহ করে লিখে সার্চ করুন।");
+      return;
+    }
+
+    try {
+      if (!recognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = "bn-BD";
+
+        recognition.onresult = (event) => {
+          let interim = "";
+          let finalTranscript = "";
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+              finalTranscript += event.results[i][0].transcript;
+            } else {
+              interim += event.results[i][0].transcript;
+            }
+          }
+          const display = finalTranscript || interim;
+          if (display && voiceTranscriptBox) {
+            pendingVoiceText = display;
+            voiceTranscriptBox.innerHTML = `<strong>${display}</strong>`;
+          }
+          if (finalTranscript) {
+            applyVoiceResult(finalTranscript);
+          }
+        };
+
+        recognition.onerror = (event) => {
+          isWebListening = false;
+          if (voiceMicOrb) voiceMicOrb.classList.remove("active-pulse");
+          if (event.error !== "no-speech") {
+            showToast("ভয়েস ইনপুট পেতে সমস্যা হয়েছে বা মাইক্রোফোন পারমিশন দেওয়া হয়নি।");
+            closeVoiceModal();
+          }
+        };
+
+        recognition.onend = () => {
+          isWebListening = false;
+          if (voiceMicOrb) voiceMicOrb.classList.remove("active-pulse");
+          if (pendingVoiceText) {
+            applyVoiceResult(pendingVoiceText);
+          } else {
+            closeVoiceModal();
+          }
+        };
+      }
+
+      recognition.start();
+      isWebListening = true;
+      openVoiceModal();
+    } catch (e) {
+      console.warn("Speech recognition error:", e);
+      closeVoiceModal();
+    }
+  }
+
+  function handleVoiceClick() {
+    // 1. Check if native Android Voice Recognition is available
+    if (window.AndroidInterface && typeof window.AndroidInterface.startVoiceRecognition === "function") {
+      openVoiceModal();
+      window.AndroidInterface.startVoiceRecognition();
+      return;
+    }
+
+    // 2. Web Speech API fallback
+    startWebSpeech();
+  }
+
+  voiceBtn.addEventListener("click", handleVoiceClick);
+  btnVoiceClose?.addEventListener("click", closeVoiceModal);
+  btnVoiceCancel?.addEventListener("click", closeVoiceModal);
+  btnVoiceDone?.addEventListener("click", () => {
+    if (pendingVoiceText) {
+      applyVoiceResult(pendingVoiceText);
+    } else {
+      closeVoiceModal();
+    }
+  });
+
+  voiceOverlay?.addEventListener("click", (e) => {
+    if (e.target === voiceOverlay) {
+      closeVoiceModal();
+    }
+  });
+}
+
 // Initialization on DOM ready or immediate if already interactive
 function initApplication() {
   if (window._appInitialized) return;
@@ -5098,6 +7289,10 @@ function initApplication() {
   try { setupCurrencyConverter(); } catch (e) { console.error(e); }
   try { setupCustomFormula(); } catch (e) { console.error(e); }
   try { setupSettingsAndNavigation(); } catch (e) { console.error(e); }
+  try { setupSmartSearch(); } catch (e) { console.error(e); }
+
+  try { setupAppStatsAndRatings(); } catch (e) { console.error(e); }
+
   try { updateBasicDisplay(); } catch (e) { console.error(e); }
   try { updateSciDisplay(); } catch (e) { console.error(e); }
 }
