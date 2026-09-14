@@ -89,7 +89,26 @@
   .app-container {
     max-width: 680px;
     margin: 0 auto;
-    padding: 12px 14px 90px;
+    padding: 0 14px 90px;
+  }
+
+  /* Unified Top Sticky Container (Header + Search Bar) */
+  .top-sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background-color: var(--bg);
+    background-image: 
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    padding-top: 10px;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  [data-theme="dark"] .top-sticky-bar {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   /* Header */
@@ -100,13 +119,9 @@
     background: var(--surface);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
-    padding: 10px 14px;
-    margin-bottom: 14px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
     box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 8px;
-    z-index: 40;
-    backdrop-filter: blur(8px);
   }
   .header-left {
     display: flex;
@@ -690,6 +705,7 @@
       margin: 0 !important;
     }
     header,
+    .top-sticky-bar,
     .subnav-bar,
     .bottom-nav,
     .pill-tabs,
@@ -1057,7 +1073,7 @@
   /* ======================================================== */
   .smart-search-section {
     position: relative;
-    margin: 10px 0 16px;
+    margin: 0;
     z-index: 45;
   }
   .smart-search-wrapper {
@@ -1541,31 +1557,224 @@
     animation: highlightCardPulse 1.8s ease-out;
   }
 
+
+  /* ============================================== */
+  /* HEALTH & FITNESS CALCULATOR STYLES             */
+  /* ============================================== */
+  .health-metric-card {
+    background: var(--surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s ease;
+  }
+  .health-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .health-metric-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  .health-metric-val {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .health-metric-lbl {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .health-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .health-badge-underweight { background: rgba(59, 130, 246, 0.15); color: #2563eb; border: 1px solid rgba(59, 130, 246, 0.3); }
+  .health-badge-normal { background: rgba(16, 185, 129, 0.15); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .health-badge-overweight { background: rgba(245, 158, 11, 0.15); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.3); }
+  .health-badge-obese1 { background: rgba(239, 68, 68, 0.15); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.3); }
+  .health-badge-obese2 { background: rgba(185, 28, 28, 0.15); color: #991b1b; border: 1px solid rgba(185, 28, 28, 0.3); }
+
+  /* BMI & Body Fat Visual Meter Bar */
+  .health-gauge-wrapper {
+    margin: 14px 0 10px;
+    position: relative;
+    padding: 0 4px;
+  }
+  .health-gauge-bar {
+    height: 14px;
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .gauge-seg-under { flex: 18.5; background: #3B82F6; }
+  .gauge-seg-normal { flex: 6.4; background: #10B981; }
+  .gauge-seg-over { flex: 5.0; background: #F59E0B; }
+  .gauge-seg-obese1 { flex: 5.0; background: #EF4444; }
+  .gauge-seg-obese2 { flex: 10.0; background: #991B1B; }
+  .health-gauge-pointer {
+    position: absolute;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 10px solid var(--ink);
+    transform: translateX(-50%);
+    transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .health-gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  /* Water Tracker Glasses Grid */
+  .water-glasses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .water-glass-item {
+    background: var(--surface);
+    border: 1.5px dashed var(--card-border);
+    border-radius: 12px;
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .water-glass-item:hover {
+    border-color: #38bdf8;
+    transform: scale(1.05);
+  }
+  .water-glass-item.drank {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(2, 132, 199, 0.35) 100%);
+    border: 1.5px solid #0284c7;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+  }
+  .water-glass-item .glass-icon {
+    font-size: 20px;
+    transition: transform 0.2s ease;
+  }
+  .water-glass-item.drank .glass-icon {
+    transform: scale(1.15);
+  }
+  .water-glass-item .glass-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .water-glass-item.drank .glass-num {
+    color: #0369a1;
+  }
+
+  /* Macro Nutrients Tri-Color Split Bar */
+  .macro-tri-bar {
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+    margin: 10px 0;
+  }
+  .macro-seg-protein { background: #3B82F6; transition: width 0.3s ease; }
+  .macro-seg-carbs { background: #F59E0B; transition: width 0.3s ease; }
+  .macro-seg-fat { background: #10B981; transition: width 0.3s ease; }
+
+  .macro-legend-row {
+    display: flex;
+    justify-content: space-around;
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .macro-legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* Table styling for ideal weights & heart zones */
+  .health-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 8px;
+  }
+  .health-table th {
+    background: var(--surface-hover);
+    padding: 8px;
+    text-align: left;
+    color: var(--ink-soft);
+    font-weight: 600;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .health-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--ink);
+  }
+  .health-table tr:hover td {
+    background: var(--surface-hover);
+  }
+
+  .smart-pill.pill-health {
+    border-color: rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(239, 68, 68, 0.08) 100%);
+  }
+  .smart-pill.pill-health:hover {
+    border-color: #EF4444;
+  }
+
 </style>
 </head>
 <body data-fontsize="medium">
 
 <div class="app-container">
-  <!-- Sticky Header -->
-  <header class="app-header">
-    <div class="header-left">
-      <button class="home-btn" id="btnHomeNav" title="হোম পেজ" style="display:flex; align-items:center; justify-content:center; padding:2px; overflow:hidden; border:none; background:transparent;">
-        <img src="./icon-192.png" alt="Logo" style="width:36px; height:36px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.18); object-fit:cover;" />
-      </button>
-      <div class="header-titles">
-        <h1>গাণিতিক ক্যালকুলেটর</h1>
-        <p class="sub-title">All-in-One Math & Utility Calculator</p>
+  <!-- Unified Top Sticky Bar (Header + Search Bar) -->
+  <div class="top-sticky-bar" id="topStickyBar">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="home-btn" id="btnHomeNav" title="হোম পেজ" style="display:flex; align-items:center; justify-content:center; padding:2px; overflow:hidden; border:none; background:transparent;">
+          <img src="./icon-192.png" alt="Logo" style="width:36px; height:36px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.18); object-fit:cover;" />
+        </button>
+        <div class="header-titles">
+          <h1>গাণিতিক ক্যালকুলেটর</h1>
+          <p class="sub-title">All-in-One Math & Utility Calculator</p>
+        </div>
       </div>
-    </div>
-    <div class="header-actions">
-      <button class="icon-btn" id="btnInstallPWA" title="অ্যাপটি ইনস্টল করুন" style="display:none; color:var(--blue); font-weight:700;">📲</button>
-      <button class="icon-btn" id="themeToggleBtn" title="ডার্ক/লাইট মোড">🌙</button>
-      <button class="icon-btn" data-target="appstats" title="ডাউনলোড ও ইউজার রেটিং" style="color:#D97706; font-weight:700;">🌟</button>
-      <button class="icon-btn" data-target="favorites" title="ফেভারিট">⭐</button>
-      <button class="icon-btn" data-target="history" title="হিসাবের ইতিহাস">📜</button>
-      <button class="icon-btn" data-target="settings" title="সেটিংস">⚙️</button>
-    </div>
-  </header>
+      <div class="header-actions">
+        <button class="icon-btn" id="btnInstallPWA" title="অ্যাপটি ইনস্টল করুন" style="display:none; color:var(--blue); font-weight:700;">📲</button>
+        <button class="icon-btn" id="themeToggleBtn" title="ডার্ক/লাইট মোড">🌙</button>
+        <button class="icon-btn" data-target="favorites" title="ফেভারিট">⭐</button>
+        <button class="icon-btn" data-target="settings" title="সেটিংস">⚙️</button>
+      </div>
+    </header>
 
   <!-- ============================================== -->
   <!-- SMART SEARCH & VOICE ASSISTANT (স্মার্ট সার্চ ও ভয়েস সার্চ) -->
@@ -1613,7 +1822,11 @@
         <span>উদাহরণ:</span>
       </div>
       <div class="smart-search-pills" id="smartSearchPills">
-        <button type="button" class="smart-pill pill-profit" data-query="১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?">
+        <button type="button" class="smart-pill pill-health" data-query="আমার বিএমআই এবং ক্যালোরি কত?">
+          <span class="pill-icon">❤️</span>
+          <span class="pill-text">BMI ও ক্যালোরি</span>
+        </button>
+        <button type="button" class="smart-pill pill-profit"  data-query="১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?">
           <span class="pill-icon">📈</span>
           <span class="pill-text">১০০০ টাকার ১৫% লাভ কত?</span>
         </button>
@@ -1645,6 +1858,7 @@
       <!-- Populated dynamically via JS -->
     </div>
   </div>
+  </div><!-- /top-sticky-bar -->
 
   <!-- Dedicated Voice Search Modal / Listening Sheet -->
   <div class="voice-modal-overlay" id="voiceModalOverlay" style="display:none;">
@@ -1753,7 +1967,12 @@
         <div class="card-title" style="color:var(--blue-dark); font-weight:700;">QR কোড স্ক্যানার ও মেকার</div>
         <div class="card-sub">ক্যামেরা ও ছবি দিয়ে সরাসরি QR স্ক্যান এবং যেকোনো তথ্যের QR কোড তৈরি</div>
       </div>
-      <div class="dash-card" data-target="currency" style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
+      <div class="dash-card" data-target="health" style="border:1.5px solid #EF4444; background:linear-gradient(135deg, var(--surface) 0%, rgba(239,68,68,0.08) 100%);">
+        <span class="card-icon">❤️</span>
+        <div class="card-title" style="color:#DC2626; font-weight:700;">স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</div>
+        <div class="card-sub">BMI, BMR, দৈনিক ক্যালোরি, আদর্শ ওজন, বডি ফ্যাট, পানি ও ম্যাক্রো ডায়েট</div>
+      </div>
+      <div class="dash-card" data-target="currency"  style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
         <span class="card-icon">💱</span>
         <div class="card-title" style="color:#047857; font-weight:700;">কারেন্সি কনভার্টার</div>
         <div class="card-sub">ডলার, রিয়াল, ইউরো, পাউন্ড সহ ১৭+ আন্তর্জাতিক মুদ্রার টাকার বিনিময় হার</div>
@@ -2671,6 +2890,521 @@
     </div>
   </section>
 
+  
+  <!-- ============================================== -->
+  <!-- 10.5 HEALTH & FITNESS CALCULATOR               -->
+  <!-- ============================================== -->
+  <section id="section-health" class="section-view">
+    <!-- Header & Profile Auto-Fill Card -->
+    <div class="tool-card" style="background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, var(--surface) 100%); border-left: 4px solid #EF4444; margin-bottom: 14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <h2 style="margin:0 0 3px; font-size:18px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:8px;">
+            <span>❤️</span> স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর
+          </h2>
+          <p style="margin:0; font-size:12px; color:var(--ink-soft);">
+            BMI, BMR, দৈনিক ক্যালোরি (TDEE), আদর্শ ওজন, বডি ফ্যাট %, পানির হিসাব ও ম্যাক্রো নিউট্রিয়েন্ট
+          </p>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnToggleHealthProfile" style="font-size:12px; padding:5px 12px; display:inline-flex; align-items:center; gap:4px;">
+          <span>⚙️</span> কুইক প্রোফাইল
+        </button>
+      </div>
+
+      <!-- Collapsible Profile Bar -->
+      <div class="health-quick-profile" id="healthQuickProfile" style="margin-top:12px; padding:12px; background:var(--surface); border:1px dashed var(--card-border); border-radius:10px;">
+        <div style="font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:8px; display:flex; align-items:center; gap:5px;">
+          <span>👤</span> <strong>আপনার তথ্য (সব ক্যালকুলেটরে এক ক্লিকে স্বয়ংক্রিয় পূরণ হবে):</strong>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap:10px;">
+          <div>
+            <label class="form-label" style="font-size:11px; margin-bottom:2px;">লিঙ্গ</label>
+            <select id="hp_gender" class="form-control" style="padding:6px 8px; font-size:12px;">
+              <option value="male">পুরুষ (Male)</option>
+              <option value="female">নারী (Female)</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label" style="font-size:11px; margin-bottom:2px;">বয়স (বছর)</label>
+            <input type="number" id="hp_age" class="form-control mono-font" placeholder="২৫" value="২৫" style="padding:6px 8px; font-size:12px;">
+          </div>
+          <div>
+            <label class="form-label" style="font-size:11px; margin-bottom:2px;">উচ্চতা (ফিট ও ইঞ্চি)</label>
+            <div style="display:flex; gap:4px;">
+              <input type="number" id="hp_feet" class="form-control mono-font" placeholder="৫" value="৫" style="padding:6px 4px; font-size:12px; width:45px; text-align:center;">
+              <input type="number" id="hp_inches" class="form-control mono-font" placeholder="৭" value="৭" style="padding:6px 4px; font-size:12px; width:45px; text-align:center;">
+              <span style="font-size:11px; align-self:center; color:var(--ink-soft);">ফু.ই.</span>
+            </div>
+          </div>
+          <div>
+            <label class="form-label" style="font-size:11px; margin-bottom:2px;">ওজন (কেজি)</label>
+            <input type="number" id="hp_weight" class="form-control mono-font" placeholder="৬৫" value="৬৫" style="padding:6px 8px; font-size:12px;">
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
+          <button type="button" class="btn btn-primary btn-sm" id="btnSaveHealthProfile" style="font-size:12px; padding:5px 14px;">
+            প্রোফাইল সেভ ও সব টুলে সিঙ্ক করুন ✔️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Sub-Tool Navigation Pills -->
+    <div class="pill-tabs" id="healthSubTabs" style="margin-bottom:14px;">
+      <button class="pill-tab health-tab-btn active" data-health="bmi">⚖️ BMI (বডি মাস)</button>
+      <button class="pill-tab health-tab-btn" data-health="bmr">🔥 BMR (বিপাকীয় শক্তি)</button>
+      <button class="pill-tab health-tab-btn" data-health="tdee">⚡ দৈনিক ক্যালোরি (TDEE)</button>
+      <button class="pill-tab health-tab-btn" data-health="ideal">🎯 আদর্শ ওজন</button>
+      <button class="pill-tab health-tab-btn" data-health="bodyfat">🧬 বডি ফ্যাট %</button>
+      <button class="pill-tab health-tab-btn" data-health="water">💧 পানির চাহিদা</button>
+      <button class="pill-tab health-tab-btn" data-health="macros">🥗 ম্যাক্রো নিউট্রিয়েন্ট</button>
+      <button class="pill-tab health-tab-btn" data-health="others">🩺 অতিরিক্ত টুলস</button>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 1. BMI CALCULATOR (বডি মাস ইনডেক্স)             -->
+    <!-- ============================================== -->
+    <div id="health-view-bmi" class="health-subview tool-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">বডি মাস ইনডেক্স (BMI Calculator)</h3>
+        <span style="font-size:11.5px; color:var(--ink-soft); background:var(--surface-hover); padding:3px 8px; border-radius:12px;">WHO গাইডলাইন</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">আপনার উচ্চতা ও ওজনের অনুপাতে স্বাস্থ্যগত অবস্থা ও আদর্শ ওজন পরিমাপ করুন।</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">উচ্চতা ইউনিট</label>
+          <select id="bmiHeightUnit" class="form-control">
+            <option value="ft_in">ফিট ও ইঞ্চি (Feet & Inches)</option>
+            <option value="cm">সেন্টিমিটার (cm)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ওজন ইউনিট</label>
+          <select id="bmiWeightUnit" class="form-control">
+            <option value="kg">কেজি (Kilograms)</option>
+            <option value="lbs">পাউন্ড (Pounds)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" id="bmiGroupFtIn">
+          <label class="form-label">উচ্চতা</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="bmiHeightFt" class="form-control mono-font" placeholder="ফিট (৫)" value="৫">
+            <input type="number" id="bmiHeightIn" class="form-control mono-font" placeholder="ইঞ্চি (৭)" value="৭">
+          </div>
+        </div>
+        <div class="form-group" id="bmiGroupCm" style="display:none;">
+          <label class="form-label">উচ্চতা (সেন্টিমিটার)</label>
+          <input type="number" id="bmiHeightCm" class="form-control mono-font" placeholder="যেমন: ১৭০">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ওজন</label>
+          <input type="number" id="bmiWeightVal" class="form-control mono-font" placeholder="যেমন: ৬৫" value="৬৫">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">লিঙ্গ (ঐচ্ছিক)</label>
+          <select id="bmiGender" class="form-control">
+            <option value="male">পুরুষ</option>
+            <option value="female">নারী</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">বয়স (বছর)</label>
+          <input type="number" id="bmiAge" class="form-control mono-font" placeholder="যেমন: ২৫" value="২৫">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcBMI">BMI হিসাব করুন 🚀</button>
+
+      <!-- BMI Result Display -->
+      <div class="result-box" id="resBMI" style="margin-top:14px;">
+        <span class="muted">তথ্য দিয়ে 'BMI হিসাব করুন' বাটনে চাপ দিন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 2. BMR CALCULATOR (মৌলিক বিপাকীয় শক্তি)         -->
+    <!-- ============================================== -->
+    <div id="health-view-bmr" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">মৌলিক বিপাকীয় শক্তি (BMR Calculator)</h3>
+        <span style="font-size:11.5px; color:var(--ink-soft); background:var(--surface-hover); padding:3px 8px; border-radius:12px;">Mifflin-St Jeor</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">সারাদিন কোনো নড়াচড়া না করে সম্পূর্ণ বিশ্রামে থাকলে অঙ্গপ্রত্যঙ্গ সচল রাখতে শরীর কত ক্যালোরি শক্তি পোড়ায়।</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">লিঙ্গ</label>
+          <select id="bmrGender" class="form-control">
+            <option value="male">পুরুষ (Male)</option>
+            <option value="female">নারী (Female)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">বয়স (বছর)</label>
+          <input type="number" id="bmrAge" class="form-control mono-font" placeholder="২৫" value="২৫">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">উচ্চতা (ফিট ও ইঞ্চি)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="bmrHeightFt" class="form-control mono-font" placeholder="৫" value="৫">
+            <input type="number" id="bmrHeightIn" class="form-control mono-font" placeholder="৭" value="৭">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ওজন (কেজি)</label>
+          <input type="number" id="bmrWeightKg" class="form-control mono-font" placeholder="৬৫" value="৬৫">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcBMR">BMR ক্যালোরি হিসাব করুন 🔥</button>
+
+      <!-- BMR Result Display -->
+      <div class="result-box" id="resBMR" style="margin-top:14px;">
+        <span class="muted">তথ্য পূরণ করে হিসাব বাটনে চাপ দিন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 3. DAILY CALORIE / TDEE CALCULATOR             -->
+    <!-- ============================================== -->
+    <div id="health-view-tdee" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">দৈনিক ক্যালোরি চাহিদা (TDEE Calculator)</h3>
+        <span style="font-size:11.5px; color:#059669; background:rgba(16,185,129,0.1); padding:3px 8px; border-radius:12px; font-weight:600;">ওজন হ্রাস / বৃদ্ধি প্ল্যান</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">দৈনন্দিন কাজকর্ম ও শারীরিক পরিশ্রমের ওপর ভিত্তি করে আপনার মোট প্রয়োজনীয় ক্যালোরি ও ডায়েট লক্ষ্য নির্ধারণ করুন।</p>
+
+      <div class="form-group">
+        <label class="form-label">দৈনন্দিন শারীরিক পরিশ্রমের মাত্রা (Activity Level)</label>
+        <select id="tdeeActivity" class="form-control">
+          <option value="1.2">অলস জীবনযাপন / ডেস্কে বসে কাজ (কোনো ব্যায়াম নেই)</option>
+          <option value="1.375" selected>হালকা সক্রিয় (সপ্তাহে ১-৩ দিন হালকা ব্যায়াম বা হাঁটা)</option>
+          <option value="1.55">মাঝারি সক্রিয় (সপ্তাহে ৩-৫ দিন নিয়মিত ব্যায়াম/জিম)</option>
+          <option value="1.725">খুব সক্রিয় (সপ্তাহে ৬-৭ দিন কঠোর শরীরচর্চা/ভারী কাজ)</option>
+          <option value="1.9">চরম সক্রিয় / প্রফেশনাল অ্যাথলিট (দিনে ২ বার কঠোর অনুশীলন)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">বেস BMR (মৌলিক ক্যালোরি)</label>
+          <input type="number" id="tdeeBmrInput" class="form-control mono-font" placeholder="যেমন: ১৫৮০" value="১৫৮০">
+        </div>
+        <div class="form-group" style="display:flex; align-items:flex-end;">
+          <button type="button" class="btn btn-secondary" id="btnAutoFetchBmr" style="width:100%; font-size:12.5px;">
+            ⚡ প্রোফাইল থেকে BMR আনুন
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcTDEE">দৈনিক ক্যালোরি ও লক্ষ্য বের করুন ⚡</button>
+
+      <!-- TDEE Result Display -->
+      <div class="result-box" id="resTDEE" style="margin-top:14px;">
+        <span class="muted">পরিশ্রমের মাত্রা নির্বাচন করে হিসাব করুন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 4. IDEAL WEIGHT CALCULATOR (আদর্শ ওজন)          -->
+    <!-- ============================================== -->
+    <div id="health-view-ideal" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">আদর্শ ওজন নির্ণয় (Ideal Body Weight)</h3>
+        <span style="font-size:11.5px; color:#2563eb; background:rgba(37,99,235,0.1); padding:3px 8px; border-radius:12px; font-weight:600;">৪টি ক্লিনিক্যাল ফর্মুলা</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">Devine, Robinson, Miller, Hamwi এবং WHO সুস্থ BMI রেঞ্জ অনুযায়ী আপনার জন্য সবচেয়ে আদর্শ ওজন কত।</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">লিঙ্গ</label>
+          <select id="iwGender" class="form-control">
+            <option value="male">পুরুষ (Male)</option>
+            <option value="female">নারী (Female)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">উচ্চতা (ফিট ও ইঞ্চি)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="iwHeightFt" class="form-control mono-font" placeholder="৫" value="৫">
+            <input type="number" id="iwHeightIn" class="form-control mono-font" placeholder="৭" value="৭">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">বর্তমান ওজন (কেজি) - তুলনার জন্য ঐচ্ছিক</label>
+        <input type="number" id="iwCurrentWeight" class="form-control mono-font" placeholder="যেমন: ৬৫" value="৬৫">
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcIdealWeight">আদর্শ ওজন নির্ণয় করুন 🎯</button>
+
+      <!-- Ideal Weight Result Display -->
+      <div class="result-box" id="resIdealWeight" style="margin-top:14px;">
+        <span class="muted">উচ্চতা দিয়ে হিসাব বাটনে চাপ দিন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 5. BODY FAT ESTIMATE (শরীরের চর্বির শতকরা হার)  -->
+    <!-- ============================================== -->
+    <div id="health-view-bodyfat" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">বডি ফ্যাট পার্সেন্টেজ (Body Fat Estimate)</h3>
+        <span style="font-size:11.5px; color:#d97706; background:rgba(245,158,11,0.1); padding:3px 8px; border-radius:12px; font-weight:600;">US Navy & BMI মেথড</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">শরীরে চর্বিহীন পেশী (Lean Mass) ও চর্বির (Fat Mass) সঠিক ওজন ও অনুপাত জানুন।</p>
+
+      <div class="form-group">
+        <label class="form-label">পরিমাপের পদ্ধতি বেছে নিন</label>
+        <select id="bfMethod" class="form-control">
+          <option value="navy">ইউএস নেভি মেথড (ফিতা দিয়ে ঘাড় ও কোমর মেপে - নির্ভুল)</option>
+          <option value="bmi">বিএমআই ও বয়স ভিত্তিক মেথড (Deurenberg Formula - সহজ)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">লিঙ্গ</label>
+          <select id="bfGender" class="form-control">
+            <option value="male">পুরুষ (Male)</option>
+            <option value="female">নারী (Female)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">বয়স (বছর)</label>
+          <input type="number" id="bfAge" class="form-control mono-font" placeholder="২৫" value="২৫">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">উচ্চতা (সেন্টিমিটার বা ফু.ই.)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="bfHeightFt" class="form-control mono-font" placeholder="৫" value="৫">
+            <input type="number" id="bfHeightIn" class="form-control mono-font" placeholder="৭" value="৭">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">মোট ওজন (কেজি)</label>
+          <input type="number" id="bfWeight" class="form-control mono-font" placeholder="যেমন: ৬৫" value="৬৫">
+        </div>
+      </div>
+
+      <!-- US Navy Specific Measurements -->
+      <div id="bfNavyFields">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">ঘাড়ের পরিধি / Neck (সেমি)</label>
+            <input type="number" id="bfNeckCm" class="form-control mono-font" placeholder="যেমন: ৩৮" value="৩৮">
+          </div>
+          <div class="form-group">
+            <label class="form-label">কোমরের পরিধি / Waist (সেমি)</label>
+            <input type="number" id="bfWaistCm" class="form-control mono-font" placeholder="যেমন: ৮২" value="৮২">
+          </div>
+        </div>
+        <div class="form-group" id="bfHipRow" style="display:none;">
+          <label class="form-label">নিতম্বের পরিধি / Hip (সেমি) - মহিলাদের জন্য</label>
+          <input type="number" id="bfHipCm" class="form-control mono-font" placeholder="যেমন: ৯০">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcBodyFat">বডি ফ্যাট হিসাব করুন 🧬</button>
+
+      <!-- Body Fat Result Display -->
+      <div class="result-box" id="resBodyFat" style="margin-top:14px;">
+        <span class="muted">পরিমাপ দিয়ে হিসাব বাটনে চাপ দিন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 6. WATER INTAKE CALCULATOR (পানির চাহিদা)        -->
+    <!-- ============================================== -->
+    <div id="health-view-water" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">দৈনিক পানির চাহিদা ও ট্র্যাকার (Water Intake)</h3>
+        <span style="font-size:11.5px; color:#0284c7; background:rgba(2,132,199,0.1); padding:3px 8px; border-radius:12px; font-weight:600;">💧 হাইড্রেশন গাইড</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">আপনার শরীরের ওজন, দৈনিক ব্যায়াম ও আবহাওয়ার ভিত্তিতে প্রতিদিন কত লিটার পানি পান করা আবশ্যক।</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">শরীরের ওজন (কেজি)</label>
+          <input type="number" id="waterWeight" class="form-control mono-font" placeholder="৬৫" value="৬৫">
+        </div>
+        <div class="form-group">
+          <label class="form-label">দৈনিক ব্যায়াম / শরীরচর্চা</label>
+          <select id="waterExercise" class="form-control">
+            <option value="0">ব্যায়াম নেই (০ মিনিট)</option>
+            <option value="30" selected>হালকা ব্যায়াম (৩০ মিনিট)</option>
+            <option value="60">নিয়মিত জিম/ব্যায়াম (৬০ মিনিট)</option>
+            <option value="90">কঠোর অ্যাথলেটিকস (৯০+ মিনিট)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">আবহাওয়া ও কাজের পরিবেশ</label>
+          <select id="waterWeather" class="form-control">
+            <option value="normal">নাতিশীতোষ্ণ / এসি রুম (সাধারণ)</option>
+            <option value="hot" selected>গরম ও আর্দ্র আবহাওয়া / রোদে কাজ (+৫০০ মিলি)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">বিশেষ অবস্থা (মহিলাদের জন্য)</label>
+          <select id="waterSpecial" class="form-control">
+            <option value="none">স্বাভাবিক</option>
+            <option value="pregnant">গর্ভবতী (+৩০০ মিলি)</option>
+            <option value="nursing">দুগ্ধদানকারী মা (+৭০০ মিলি)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcWater">পানির চাহিদা হিসাব করুন 💧</button>
+
+      <!-- Water Result Display -->
+      <div class="result-box" id="resWater" style="margin-top:14px;">
+        <span class="muted">ওজন ও ব্যায়াম নির্বাচন করে হিসাব করুন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 7. MACRO CALCULATOR (ম্যাক্রো নিউট্রিয়েন্ট)      -->
+    <!-- ============================================== -->
+    <div id="health-view-macros" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">ম্যাক্রো নিউট্রিয়েন্ট ক্যালকুলেটর (Macro Planner)</h3>
+        <span style="font-size:11.5px; color:#7c3aed; background:rgba(124,58,237,0.1); padding:3px 8px; border-radius:12px; font-weight:600;">🥗 ডায়েট ব্যালেন্স</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">আপনার লক্ষ্য অনুযায়ী প্রতিদিন কত গ্রাম প্রোটিন, শর্করা (কার্বস) ও স্বাস্থ্যকর ফ্যাট খেতে হবে।</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">দৈনিক লক্ষ্য ক্যালোরি (kcal)</label>
+          <input type="number" id="macroCalories" class="form-control mono-font" placeholder="যেমন: ২০০০" value="২০০০">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ডায়েট প্ল্যান নির্বাচন করুন</label>
+          <select id="macroDietPreset" class="form-control">
+            <option value="balanced" selected>🥗 ব্যালেন্সড ডায়েট (৫০% কার্ব, ২০% প্রোটিন, ৩০% ফ্যাট)</option>
+            <option value="high_protein">🏋️‍♂️ হাই প্রোটিন / জিম ডায়েট (৪০% কার্ব, ৩৫% প্রোটিন, ২৫% ফ্যাট)</option>
+            <option value="low_carb">🥑 লো কার্ব / ফ্যাট লস (২০% কার্ব, ৪০% প্রোটিন, ৪০% ফ্যাট)</option>
+            <option value="keto">🥓 কিটো ডায়েট (৫% কার্ব, ২৫% প্রোটিন, ৭০% ফ্যাট)</option>
+            <option value="custom">⚙️ কাস্টম পার্সেন্টেজ স্লাইডার</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Custom Ratio Sliders (visible if custom) -->
+      <div id="macroCustomRow" style="display:none; margin-bottom:12px; padding:10px; background:var(--surface-hover); border-radius:8px;">
+        <div style="font-size:11.5px; font-weight:600; margin-bottom:6px; color:var(--ink);">কাস্টম অনুপাত (মোট ১০০% হতে হবে):</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+          <div>
+            <label style="font-size:11px; color:#2563eb;">প্রোটিন %</label>
+            <input type="number" id="macroCustomProtein" class="form-control mono-font" value="২৫">
+          </div>
+          <div>
+            <label style="font-size:11px; color:#d97706;">কার্বস %</label>
+            <input type="number" id="macroCustomCarbs" class="form-control mono-font" value="৫০">
+          </div>
+          <div>
+            <label style="font-size:11px; color:#059669;">ফ্যাট %</label>
+            <input type="number" id="macroCustomFat" class="form-control mono-font" value="২৫">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnCalcMacros">ম্যাক্রো নিউট্রিয়েন্ট বের করুন 🥗</button>
+
+      <!-- Macro Result Display -->
+      <div class="result-box" id="resMacros" style="margin-top:14px;">
+        <span class="muted">ক্যালোরি ও ডায়েটের ধরন নির্বাচন করে হিসাব করুন</span>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 8. OTHERS: WHtR, HEART RATE & BLOOD PRESSURE   -->
+    <!-- ============================================== -->
+    <div id="health-view-others" class="health-subview tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">অতিরিক্ত স্বাস্থ্য টুলস (Others Option)</h3>
+        <span style="font-size:11.5px; color:#dc2626; background:rgba(220,38,38,0.1); padding:3px 8px; border-radius:12px; font-weight:600;">🩺 হার্ট ও কোমর</span>
+      </div>
+      <p class="desc" style="margin-bottom:14px;">কোমর ও উচ্চতার অনুপাত (WHtR), ব্যায়ামের টার্গেট হার্ট রেট এবং রক্তচাপ স্টেজ অ্যানালাইজার।</p>
+
+      <div class="pill-tabs" id="othersHealthPills" style="margin-bottom:12px;">
+        <button class="pill-tab others-tab-btn active" data-oth="whtr">📏 কোমর-উচ্চতা অনুপাত (WHtR)</button>
+        <button class="pill-tab others-tab-btn" data-oth="hr">💓 টার্গেট হার্ট রেট</button>
+        <button class="pill-tab others-tab-btn" data-oth="bp">🩸 রক্তচাপ চেকার</button>
+      </div>
+
+      <!-- 8A: WHtR -->
+      <div id="oth-view-whtr" class="oth-view">
+        <h4 style="margin:0 0 8px; font-size:14.5px;">কোমর ও উচ্চতার অনুপাত (Waist-to-Height Ratio)</h4>
+        <p style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">পেটের চর্বি ও হৃদরোগের ঝুঁকি বোঝার জন্য চিকিৎসাবিজ্ঞানে এটি BMI এর চেয়েও কার্যকর নির্দেশক।</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">কোমরের পরিধি (সেমি বা ইঞ্চি)</label>
+            <input type="number" id="whtrWaist" class="form-control mono-font" placeholder="যেমন: ৮২" value="৮২">
+          </div>
+          <div class="form-group">
+            <label class="form-label">উচ্চতা (সেমি বা ইঞ্চি - একই এককে)</label>
+            <input type="number" id="whtrHeight" class="form-control mono-font" placeholder="যেমন: ১৭০" value="১৭০">
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btnCalcWHtR">WHtR অনুপাত হিসাব করুন</button>
+        <div class="result-box" id="resWHtR" style="margin-top:12px;"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+      </div>
+
+      <!-- 8B: Heart Rate Zones -->
+      <div id="oth-view-hr" class="oth-view" style="display:none;">
+        <h4 style="margin:0 0 8px; font-size:14.5px;">টার্গেট হার্ট রেট জোন (Target Heart Rate)</h4>
+        <p style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">ব্যায়ামের সময় ফ্যাট বার্নিং বা কার্ডিও সুবিধার জন্য প্রতি মিনিটে হৃদস্পন্দনের আদর্শ পরিসীমা।</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">বয়স (বছর)</label>
+            <input type="number" id="hrAge" class="form-control mono-font" placeholder="২৫" value="২৫">
+          </div>
+          <div class="form-group">
+            <label class="form-label">বিশ্রামকালীন পালস / RHR (ঐচ্ছিক)</label>
+            <input type="number" id="hrResting" class="form-control mono-font" placeholder="যেমন: ৭০" value="৭০">
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btnCalcHR">হার্ট রেট জোন বের করুন</button>
+        <div class="result-box" id="resHR" style="margin-top:12px;"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+      </div>
+
+      <!-- 8C: Blood Pressure Category -->
+      <div id="oth-view-bp" class="oth-view" style="display:none;">
+        <h4 style="margin:0 0 8px; font-size:14.5px;">রক্তচাপ পরিমাপক (Blood Pressure Checker)</h4>
+        <p style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">আমেরিকান হার্ট অ্যাসোসিয়েশন (AHA) গাইডলাইন অনুযায়ী রক্তচাপের পর্যায় ও পরামর্শ।</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">সিস্টোলিক / উপরের প্রেসার (mmHg)</label>
+            <input type="number" id="bpSystolic" class="form-control mono-font" placeholder="১২০" value="১২০">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ডায়াস্টোলিক / নিচের প্রেসার (mmHg)</label>
+            <input type="number" id="bpDiastolic" class="form-control mono-font" placeholder="৮০" value="৮০">
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btnCalcBP">রক্তচাপ স্টেজ দেখুন</button>
+        <div class="result-box" id="resBP" style="margin-top:12px;"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================== -->
   <!-- 11. CUSTOM FORMULA                             -->
   <!-- ============================================== -->
@@ -2984,6 +3718,7 @@
 <nav class="bottom-nav">
   <button class="nav-item active" data-target="dashboard"><span class="nav-icon">🏠</span>হোম</button>
   <button class="nav-item" data-target="basic"><span class="nav-icon">🧮</span>সাধারণ</button>
+  <button class="nav-item" data-target="health"><span class="nav-icon">❤️</span>ফিটনেস</button>
   <button class="nav-item" data-target="qrcode"><span class="nav-icon">📷</span>QR স্ক্যানার</button>
   <button class="nav-item" data-target="currency"><span class="nav-icon">💱</span>কারেন্সি</button>
   <button class="nav-item" data-target="history"><span class="nav-icon">📜</span>ইতিহাস</button>
@@ -3588,11 +4323,13 @@ window.addEventListener("keydown", (e) => {
 // ==========================================
 function setupPercentageCalc() {
   document.querySelectorAll(".pct-subtab").forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".pct-subtab").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".pct-view").forEach(v => v.style.display = "none");
       tab.classList.add("active");
-      document.getElementById("pct-view-" + tab.dataset.target).style.display = "block";
+      const targetView = document.getElementById("pct-view-" + tab.dataset.target);
+      if (targetView) targetView.style.display = "block";
     });
   });
 
@@ -3723,11 +4460,13 @@ function setupPercentageCalc() {
 // ==========================================
 function setupFinanceCalc() {
   document.querySelectorAll(".fin-subtab").forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".fin-subtab").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".fin-view").forEach(v => v.style.display = "none");
       tab.classList.add("active");
-      document.getElementById("fin-view-" + tab.dataset.target).style.display = "block";
+      const targetView = document.getElementById("fin-view-" + tab.dataset.target);
+      if (targetView) targetView.style.display = "block";
     });
   });
 
@@ -3832,11 +4571,13 @@ function setupFinanceCalc() {
 // ==========================================
 function setupAgeAndDateCalc() {
   document.querySelectorAll(".age-subtab").forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".age-subtab").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".age-view").forEach(v => v.style.display = "none");
       tab.classList.add("active");
-      document.getElementById("age-view-" + tab.dataset.target).style.display = "block";
+      const targetView = document.getElementById("age-view-" + tab.dataset.target);
+      if (targetView) targetView.style.display = "block";
     });
   });
 
@@ -4120,11 +4861,13 @@ function setupGeometryCalc() {
 // ==========================================
 function setupAlgebraCalc() {
   document.querySelectorAll(".alg-subtab").forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".alg-subtab").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".alg-view").forEach(v => v.style.display = "none");
       tab.classList.add("active");
-      document.getElementById("alg-view-" + tab.dataset.target).style.display = "block";
+      const targetView = document.getElementById("alg-view-" + tab.dataset.target);
+      if (targetView) targetView.style.display = "block";
     });
   });
 
@@ -5021,7 +5764,8 @@ function drawQRCodeToCanvas(canvas, qr, size = 260, margin = 4) {
 // ==========================================
 function setupBangladeshTools() {
   document.querySelectorAll(".bd-subtab").forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", (e) => {
+      e.stopPropagation();
       if (tab.dataset.target === "qrcode") {
         navigateTo("qrcode");
         return;
@@ -5191,7 +5935,8 @@ function setupQRCodeTools() {
 
   // Subtabs switching (Scanner vs Generator)
   document.querySelectorAll(".qr-subtab").forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".qr-subtab").forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
       activeTab = tab.dataset.qrtab;
@@ -6168,15 +6913,20 @@ function renderFavoritesUI() {
 function setupSettingsAndNavigation() {
   // Navigation Tabs & Views
   function navigateTo(targetId) {
+    if (!targetId) return;
+    const targetSection = document.getElementById("section-" + targetId);
+    // If targetId is not a main section (e.g. subtabs like 'a', 'b', etc.), do NOT touch or hide the view!
+    if (!targetSection) {
+      console.warn("Section not found:", targetId);
+      return;
+    }
+
     document.querySelectorAll(".section-view").forEach(v => v.classList.remove("active"));
     document.querySelectorAll(".subnav-btn").forEach(b => b.classList.remove("active"));
     document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
 
-    const targetSection = document.getElementById("section-" + targetId);
-    if (targetSection) {
-      targetSection.classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    targetSection.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     const subnavBtn = document.querySelector(`.subnav-btn[data-target="${targetId}"]`);
     if (subnavBtn) subnavBtn.classList.add("active");
@@ -6193,8 +6943,10 @@ function setupSettingsAndNavigation() {
     }
   }
 
-  document.querySelectorAll("[data-target]").forEach(btn => {
-    btn.addEventListener("click", () => {
+  // Bind navigation click ONLY to main section navigation elements (avoid hijacking sub-tabs!)
+  document.querySelectorAll(".dash-card[data-target], .nav-item[data-target], .app-header [data-target], button[data-target='appstats']").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       navigateTo(btn.dataset.target);
     });
   });
@@ -6912,6 +7664,64 @@ function setupSmartSearch() {
       };
     }
 
+
+    // 8. Health & Fitness / BMI / BMR / Calorie / Ideal Weight / Body Fat / Water / Macros
+    if (q.includes("bmi") || q.includes("বিএমআই") || q.includes("bmr") || q.includes("ক্যালোরি") || q.includes("calorie") || q.includes("tdee") || q.includes("স্বাস্থ্য") || q.includes("ফিটনেস") || q.includes("fitness") || q.includes("আদর্শ ওজন") || q.includes("ideal") || q.includes("বডি ফ্যাট") || q.includes("body fat") || q.includes("পানি") || q.includes("water") || q.includes("ম্যাক্রো") || q.includes("macro") || q.includes("প্রোটিন") || q.includes("প্রেসার") || q.includes("রক্তচাপ") || q.includes("হার্ট রেট") || q.includes("heart")) {
+      let subTarget = "bmi";
+      let toolName = "❤️ স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর";
+      let ansTitle = "স্বাস্থ্য ও বডি মেজারমেন্ট:";
+      let ansVal = "BMI, ক্যালোরি, আদর্শ ওজন ও ডায়েট";
+      let breakdown = "উচ্চতা, ওজন ও বয়সের ওপর ভিত্তি করে সম্পূর্ণ স্বাস্থ্য রিপোর্ট ও ক্যালোরি চাহিদা।";
+      let btnText = "👉 স্বাস্থ্য ও ফিটনেস ক্যালকুলেটরে সরাসরি খুলুন";
+
+      if (q.includes("bmr") || q.includes("বিপাক")) {
+        subTarget = "bmr";
+        toolName = "🔥 মৌলিক বিপাকীয় শক্তি (BMR Calculator)";
+        ansVal = "দৈনিক মৌলিক ক্যালোরি খরচ";
+      } else if (q.includes("ক্যালোরি") || q.includes("calorie") || q.includes("tdee")) {
+        subTarget = "tdee";
+        toolName = "⚡ দৈনিক ক্যালোরি চাহিদা (TDEE Calculator)";
+        ansVal = "ওজন হ্রাস / বৃদ্ধি / মেইনটেইন ক্যালোরি";
+      } else if (q.includes("আদর্শ ওজন") || q.includes("ideal")) {
+        subTarget = "ideal";
+        toolName = "🎯 আদর্শ ওজন নির্ণয় (Ideal Body Weight)";
+        ansVal = "উচ্চতা অনুযায়ী সুস্থ ও আদর্শ ওজন";
+      } else if (q.includes("ফ্যাট") || q.includes("fat")) {
+        subTarget = "bodyfat";
+        toolName = "🧬 বডি ফ্যাট পার্সেন্টেজ (Body Fat %)";
+        ansVal = "শরীরের চর্বির শতকরা হার";
+      } else if (q.includes("পানি") || q.includes("water")) {
+        subTarget = "water";
+        toolName = "💧 দৈনিক পানির চাহিদা ও ট্র্যাকার";
+        ansVal = "ওজন অনুযায়ী প্রতিদিনের প্রয়োজনীয় পানি ও গ্লাস";
+      } else if (q.includes("ম্যাক্রো") || q.includes("macro") || q.includes("প্রোটিন")) {
+        subTarget = "macros";
+        toolName = "🥗 ম্যাক্রো নিউট্রিয়েন্ট ক্যালকুলেটর";
+        ansVal = "প্রোটিন, কার্বস ও ফ্যাটের গ্রাম ও অনুপাত";
+      } else if (q.includes("প্রেসার") || q.includes("রক্তচাপ") || q.includes("হার্ট") || q.includes("whtr")) {
+        subTarget = "others";
+        toolName = "🩺 অতিরিক্ত স্বাস্থ্য টুলস (Others Option)";
+        ansVal = "WHtR অনুপাত, হার্ট রেট ও রক্তচাপ ক্যাটাগরি";
+      }
+
+      return {
+        id: "health_fitness_calculator",
+        toolName: toolName,
+        category: "স্বাস্থ্য, পুষ্টি ও বডি মেজারমেন্ট",
+        answerTitle: ansTitle,
+        answerValue: ansVal,
+        breakdownText: breakdown,
+        formulaText: "BMI = ওজন (kg) / উচ্চতা² (m) • TDEE = BMR × অ্যাক্টিভিটি ফ্যাক্টর",
+        buttonText: btnText,
+        openAction: () => {
+          navigateTo("health");
+          const tab = document.querySelector(`.health-tab-btn[data-health="${subTarget}"]`);
+          if (tab) tab.click();
+          showToast(`${toolName} খোলা হয়েছে ✔️`);
+        }
+      };
+    }
+
     // 7. QR Code / কিউআর কোড
     if (q.includes("কিউআর") || q.includes("qr") || q.includes("স্ক্যান") || q.includes("বারকোড")) {
       return {
@@ -7274,6 +8084,1100 @@ function setupSmartSearch() {
 }
 
 // Initialization on DOM ready or immediate if already interactive
+
+// ==========================================
+// 10.5 Health & Fitness Calculator Logic
+// ==========================================
+function setupHealthAndFitnessCalc() {
+  // Local Profile Storage
+  const HEALTH_PROFILE_KEY = "bangla_calc_health_profile";
+  let profile = getStorage(HEALTH_PROFILE_KEY, {
+    gender: "male",
+    age: 25,
+    feet: 5,
+    inches: 7,
+    cm: 170.18,
+    weight: 65,
+    waterGlasses: 0,
+    waterDate: new Date().toDateString()
+  });
+
+  // Check if today is a new day for water tracker
+  if (profile.waterDate !== new Date().toDateString()) {
+    profile.waterGlasses = 0;
+    profile.waterDate = new Date().toDateString();
+    setStorage(HEALTH_PROFILE_KEY, profile);
+  }
+
+  // Load profile values into Quick Profile Bar
+  const hpGender = document.getElementById("hp_gender");
+  const hpAge = document.getElementById("hp_age");
+  const hpFeet = document.getElementById("hp_feet");
+  const hpInches = document.getElementById("hp_inches");
+  const hpWeight = document.getElementById("hp_weight");
+  const quickProfileBox = document.getElementById("healthQuickProfile");
+
+  function populateProfileInputs() {
+    if (hpGender) hpGender.value = profile.gender || "male";
+    if (hpAge) hpAge.value = profile.age || 25;
+    if (hpFeet) hpFeet.value = profile.feet || 5;
+    if (hpInches) hpInches.value = profile.inches !== undefined ? profile.inches : 7;
+    if (hpWeight) hpWeight.value = profile.weight || 65;
+  }
+  populateProfileInputs();
+
+  // Toggle quick profile view
+  const btnToggleProfile = document.getElementById("btnToggleHealthProfile");
+  if (btnToggleProfile && quickProfileBox) {
+    btnToggleProfile.addEventListener("click", () => {
+      quickProfileBox.style.display = quickProfileBox.style.display === "none" ? "block" : "none";
+    });
+  }
+
+  // Save profile & sync to all tools
+  const btnSaveProfile = document.getElementById("btnSaveHealthProfile");
+  if (btnSaveProfile) {
+    btnSaveProfile.addEventListener("click", () => {
+      profile.gender = hpGender.value;
+      profile.age = parseFloat(hpAge.value) || 25;
+      profile.feet = parseFloat(hpFeet.value) || 5;
+      profile.inches = parseFloat(hpInches.value) || 0;
+      profile.cm = (profile.feet * 12 + profile.inches) * 2.54;
+      profile.weight = parseFloat(hpWeight.value) || 65;
+      setStorage(HEALTH_PROFILE_KEY, profile);
+
+      syncProfileToSubtools();
+      showToast("স্বাস্থ্য প্রোফাইল সেভ ও সব টুলে সিঙ্ক হয়েছে! ✔️");
+    });
+  }
+
+  function syncProfileToSubtools() {
+    // 1. BMI inputs
+    const bmiGender = document.getElementById("bmiGender");
+    const bmiAge = document.getElementById("bmiAge");
+    const bmiFt = document.getElementById("bmiHeightFt");
+    const bmiIn = document.getElementById("bmiHeightIn");
+    const bmiCm = document.getElementById("bmiHeightCm");
+    const bmiWt = document.getElementById("bmiWeightVal");
+    if (bmiGender) bmiGender.value = profile.gender;
+    if (bmiAge) bmiAge.value = profile.age;
+    if (bmiFt) bmiFt.value = profile.feet;
+    if (bmiIn) bmiIn.value = profile.inches;
+    if (bmiCm) bmiCm.value = Math.round(profile.cm);
+    if (bmiWt) bmiWt.value = profile.weight;
+
+    // 2. BMR inputs
+    const bmrGender = document.getElementById("bmrGender");
+    const bmrAge = document.getElementById("bmrAge");
+    const bmrFt = document.getElementById("bmrHeightFt");
+    const bmrIn = document.getElementById("bmrHeightIn");
+    const bmrWt = document.getElementById("bmrWeightKg");
+    if (bmrGender) bmrGender.value = profile.gender;
+    if (bmrAge) bmrAge.value = profile.age;
+    if (bmrFt) bmrFt.value = profile.feet;
+    if (bmrIn) bmrIn.value = profile.inches;
+    if (bmrWt) bmrWt.value = profile.weight;
+
+    // 3. Ideal Weight inputs
+    const iwGender = document.getElementById("iwGender");
+    const iwFt = document.getElementById("iwHeightFt");
+    const iwIn = document.getElementById("iwHeightIn");
+    const iwWt = document.getElementById("iwCurrentWeight");
+    if (iwGender) iwGender.value = profile.gender;
+    if (iwFt) iwFt.value = profile.feet;
+    if (iwIn) iwIn.value = profile.inches;
+    if (iwWt) iwWt.value = profile.weight;
+
+    // 4. Body Fat inputs
+    const bfGender = document.getElementById("bfGender");
+    const bfAge = document.getElementById("bfAge");
+    const bfFt = document.getElementById("bfHeightFt");
+    const bfIn = document.getElementById("bfHeightIn");
+    const bfWt = document.getElementById("bfWeight");
+    if (bfGender) bfGender.value = profile.gender;
+    if (bfAge) bfAge.value = profile.age;
+    if (bfFt) bfFt.value = profile.feet;
+    if (bfIn) bfIn.value = profile.inches;
+    if (bfWt) bfWt.value = profile.weight;
+
+    // 5. Water inputs
+    const waterWt = document.getElementById("waterWeight");
+    if (waterWt) waterWt.value = profile.weight;
+
+    // 6. Others (WHtR & HR)
+    const whtrHeight = document.getElementById("whtrHeight");
+    if (whtrHeight) whtrHeight.value = Math.round(profile.cm);
+    const hrAge = document.getElementById("hrAge");
+    if (hrAge) hrAge.value = profile.age;
+  }
+  syncProfileToSubtools();
+
+  // Sub-tabs switching
+  const healthTabs = document.querySelectorAll(".health-tab-btn");
+  healthTabs.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      healthTabs.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.dataset.health;
+      document.querySelectorAll(".health-subview").forEach(v => v.style.display = "none");
+      const view = document.getElementById("health-view-" + target);
+      if (view) {
+        view.style.display = "block";
+        view.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+  });
+
+  // BMI height unit switcher
+  const bmiHeightUnit = document.getElementById("bmiHeightUnit");
+  const bmiGroupFtIn = document.getElementById("bmiGroupFtIn");
+  const bmiGroupCm = document.getElementById("bmiGroupCm");
+  if (bmiHeightUnit) {
+    bmiHeightUnit.addEventListener("change", () => {
+      if (bmiHeightUnit.value === "cm") {
+        bmiGroupFtIn.style.display = "none";
+        bmiGroupCm.style.display = "block";
+        const ft = parseFloat(document.getElementById("bmiHeightFt").value) || 0;
+        const inc = parseFloat(document.getElementById("bmiHeightIn").value) || 0;
+        if (ft > 0) {
+          document.getElementById("bmiHeightCm").value = Math.round((ft * 12 + inc) * 2.54);
+        }
+      } else {
+        bmiGroupFtIn.style.display = "block";
+        bmiGroupCm.style.display = "none";
+        const cm = parseFloat(document.getElementById("bmiHeightCm").value) || 0;
+        if (cm > 0) {
+          const totalInches = cm / 2.54;
+          document.getElementById("bmiHeightFt").value = Math.floor(totalInches / 12);
+          document.getElementById("bmiHeightIn").value = Math.round(totalInches % 12);
+        }
+      }
+    });
+  }
+
+  // ------------------------------------------
+  // 1. BMI Calculation
+  // ------------------------------------------
+  const btnCalcBMI = document.getElementById("btnCalcBMI");
+  if (btnCalcBMI) {
+    btnCalcBMI.addEventListener("click", () => {
+      let heightCm = 0;
+      if (bmiHeightUnit.value === "cm") {
+        heightCm = parseFloat(document.getElementById("bmiHeightCm").value) || 0;
+      } else {
+        const ft = parseFloat(document.getElementById("bmiHeightFt").value) || 0;
+        const inc = parseFloat(document.getElementById("bmiHeightIn").value) || 0;
+        heightCm = (ft * 12 + inc) * 2.54;
+      }
+
+      const weightUnit = document.getElementById("bmiWeightUnit").value;
+      let rawWeight = parseFloat(document.getElementById("bmiWeightVal").value) || 0;
+      let weightKg = weightUnit === "lbs" ? rawWeight * 0.453592 : rawWeight;
+
+      if (heightCm <= 40 || heightCm > 260) {
+        showToast("দয়া করে সঠিক উচ্চতা লিখুন");
+        return;
+      }
+      if (weightKg <= 10 || weightKg > 350) {
+        showToast("দয়া করে সঠিক ওজন লিখুন");
+        return;
+      }
+
+      const hm = heightCm / 100.0;
+      const bmi = weightKg / (hm * hm);
+      const minHealthyWt = 18.5 * (hm * hm);
+      const maxHealthyWt = 24.9 * (hm * hm);
+
+      let category = "";
+      let badgeClass = "";
+      let advice = "";
+      let diffText = "";
+
+      if (bmi < 18.5) {
+        category = "কম ওজন (Underweight)";
+        badgeClass = "health-badge-underweight";
+        const toGain = minHealthyWt - weightKg;
+        diffText = `স্বাভাবিক সুস্থ ওজনে পৌঁছাতে আপনার প্রায় <strong>${toBn(toGain.toFixed(1))} কেজি</strong> ওজন বাড়ানো প্রয়োজন।`;
+        advice = "পুষ্টিকর খাবার, প্রোটিন, বাদাম, দুধ ও স্বাস্থ্যকর কার্বোহাইড্রেট গ্রহণ করুন এবং পেশী বৃদ্ধির ব্যায়াম করুন।";
+      } else if (bmi < 25.0) {
+        category = "স্বাভাবিক বা আদর্শ ওজন (Normal Weight)";
+        badgeClass = "health-badge-normal";
+        diffText = "অভিনন্দন! আপনার বর্তমান ওজন উচ্চতার সাপেক্ষে সম্পূর্ণ সুস্থ ও আদর্শ সীমার মধ্যে রয়েছে।";
+        advice = "এই চমৎকার স্বাস্থ্য ও ওজন বজায় রাখতে নিয়মিত ব্যালেন্সড খাবার খান এবং প্রতিদিন ৩০ মিনিট সক্রিয় থাকুন।";
+      } else if (bmi < 30.0) {
+        category = "অতিরিক্ত ওজন (Overweight)";
+        badgeClass = "health-badge-overweight";
+        const toLose = weightKg - maxHealthyWt;
+        diffText = `স্বাভাবিক সুস্থ ওজনে পৌঁছাতে আপনার প্রায় <strong>${toBn(toLose.toFixed(1))} কেজি</strong> ওজন কমানো দরকার।`;
+        advice = "চিনি, মিষ্টি, অতিরিক্ত তেল-চর্বি ও প্রক্রিয়াজাত খাবার পরিহার করুন এবং নিয়মিত শরীরচর্চা শুরু করুন।";
+      } else if (bmi < 35.0) {
+        category = "স্থূলতা - ১ম ধাপ (Obese Class I)";
+        badgeClass = "health-badge-obese1";
+        const toLose = weightKg - maxHealthyWt;
+        diffText = `আদর্শ ওজনে ফিরতে প্রায় <strong>${toBn(toLose.toFixed(1))} কেজি</strong> ওজন কমানো প্রয়োজন।`;
+        advice = "দৈনিক খাদ্যতালিকায় ক্যালোরি নিয়ন্ত্রণ করুন এবং দ্রুত ওজন নিয়ন্ত্রণে স্বাস্থ্য বিশেষজ্ঞের পরামর্শ নিন।";
+      } else {
+        category = "উচ্চ স্থূলতা (Obese Class II / Severe)";
+        badgeClass = "health-badge-obese2";
+        const toLose = weightKg - maxHealthyWt;
+        diffText = `আদর্শ ওজনে ফিরতে প্রায় <strong>${toBn(toLose.toFixed(1))} কেজি</strong> ওজন কমানো জরুরি।`;
+        advice = "উচ্চ রক্তচাপ, ডায়াবেটিস ও হৃদরোগের ঝুঁকি কমাতে বিশেষজ্ঞ চিকিৎসকের তত্ত্বাবধানে ডায়েট প্ল্যান অনুসরণ করুন।";
+      }
+
+      // Pointer percentage on gauge: clamped 15 to 40
+      const gaugePercent = Math.min(100, Math.max(0, ((bmi - 15) / 25) * 100));
+
+      const resBox = document.getElementById("resBMI");
+      resBox.innerHTML = `
+        <div style="text-align:center; padding:8px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">আপনার বডি মাস ইনডেক্স (BMI)</div>
+          <div style="font-size:36px; font-weight:900; color:var(--ink); font-family:'JetBrains Mono',monospace; line-height:1.1; margin:6px 0;">
+            ${toBn(bmi.toFixed(1))}
+          </div>
+          <div class="health-status-badge ${badgeClass}">${category}</div>
+        </div>
+
+        <!-- Gauge Bar -->
+        <div class="health-gauge-wrapper">
+          <div class="health-gauge-pointer" style="left: ${gaugePercent}%;"></div>
+          <div class="health-gauge-bar">
+            <div class="gauge-seg-under" title="কম ওজন (<18.5)"></div>
+            <div class="gauge-seg-normal" title="স্বাভাবিক (18.5-24.9)"></div>
+            <div class="gauge-seg-over" title="অতিরিক্ত (25-29.9)"></div>
+            <div class="gauge-seg-obese1" title="স্থূলতা ১ (30-34.9)"></div>
+            <div class="gauge-seg-obese2" title="স্থূলতা ২ (35+)"></div>
+          </div>
+          <div class="health-gauge-labels">
+            <span>১৮.৫ এর কম</span>
+            <span>১৮.৫ - ২৪.৯</span>
+            <span>২৫ - ২৯.৯</span>
+            <span>৩০ - ৩৪.৯</span>
+            <span>৩৫+</span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px; padding:10px; background:var(--surface); border:1px solid var(--card-border); border-radius:8px; font-size:12.5px;">
+          <div style="margin-bottom:6px;">
+            📏 আপনার উচ্চতার জন্য আদর্শ সুস্থ ওজন: <strong>${toBn(minHealthyWt.toFixed(1))} - ${toBn(maxHealthyWt.toFixed(1))} কেজি</strong>
+          </div>
+          <div style="margin-bottom:6px;">
+            ⚖️ ${diffText}
+          </div>
+          <div style="color:var(--ink-soft); font-size:12px; border-top:1px dashed var(--card-border); padding-top:6px; margin-top:6px;">
+            💡 <strong>পরামর্শ:</strong> ${advice}
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnBmiToTdee" style="font-size:11.5px;">
+            👉 এই ওজন দিয়ে দৈনিক ক্যালোরি দেখুন
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSaveBmiHistory" style="font-size:11.5px;">
+            📜 হিস্ট্রিতে সংরক্ষণ
+          </button>
+        </div>
+      `;
+
+      document.getElementById("btnBmiToTdee")?.addEventListener("click", () => {
+        document.querySelector('.health-tab-btn[data-health="tdee"]')?.click();
+      });
+
+      document.getElementById("btnSaveBmiHistory")?.addEventListener("click", () => {
+        addHistory("BMI", `উচ্চতা: ${toBn(Math.round(heightCm))}cm, ওজন: ${toBn(weightKg.toFixed(1))}kg`, `BMI ${toBn(bmi.toFixed(1))} (${category})`);
+        showToast("হিস্ট্রিতে সেভ করা হয়েছে ✔️");
+      });
+
+      addHistory("BMI", `উচ্চতা: ${toBn(Math.round(heightCm))}cm, ওজন: ${toBn(weightKg.toFixed(1))}kg`, `BMI ${toBn(bmi.toFixed(1))} (${category})`);
+    });
+  }
+
+  // ------------------------------------------
+  // 2. BMR Calculation (Basal Metabolic Rate)
+  // ------------------------------------------
+  const btnCalcBMR = document.getElementById("btnCalcBMR");
+  if (btnCalcBMR) {
+    btnCalcBMR.addEventListener("click", () => {
+      const gender = document.getElementById("bmrGender").value;
+      const age = parseFloat(document.getElementById("bmrAge").value) || 25;
+      const ft = parseFloat(document.getElementById("bmrHeightFt").value) || 5;
+      const inc = parseFloat(document.getElementById("bmrHeightIn").value) || 7;
+      const heightCm = (ft * 12 + inc) * 2.54;
+      const weightKg = parseFloat(document.getElementById("bmrWeightKg").value) || 65;
+
+      // Mifflin-St Jeor
+      let bmrMifflin = (10 * weightKg) + (6.25 * heightCm) - (5 * age);
+      bmrMifflin += (gender === "male" ? 5 : -161);
+
+      // Harris-Benedict (Revised)
+      let bmrHarris = 0;
+      if (gender === "male") {
+        bmrHarris = 88.362 + (13.397 * weightKg) + (4.799 * heightCm) - (5.677 * age);
+      } else {
+        bmrHarris = 447.593 + (9.247 * weightKg) + (3.098 * heightCm) - (4.330 * age);
+      }
+
+      const hourly = bmrMifflin / 24.0;
+
+      const resBox = document.getElementById("resBMR");
+      resBox.innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">মৌলিক বিপাকীয় ক্যালোরি (BMR)</div>
+          <div style="font-size:34px; font-weight:900; color:#DC2626; font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${formatNumber(Math.round(bmrMifflin))} <span style="font-size:16px; font-weight:600; color:var(--ink-soft);">kcal / দিন</span>
+          </div>
+          <div style="font-size:12px; color:var(--ink-soft);">
+            প্রতি ঘণ্টায় শরীর খরচ করে: <strong>${toBn(hourly.toFixed(1))} ক্যালোরি</strong>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:12px;">
+          <div class="health-metric-card" style="padding:10px;">
+            <div class="health-metric-val" style="font-size:16px;">${formatNumber(Math.round(bmrMifflin))} kcal</div>
+            <div class="health-metric-lbl">Mifflin-St Jeor (স্ট্যান্ডার্ড)</div>
+          </div>
+          <div class="health-metric-card" style="padding:10px;">
+            <div class="health-metric-val" style="font-size:16px;">${formatNumber(Math.round(bmrHarris))} kcal</div>
+            <div class="health-metric-lbl">Harris-Benedict (ঐতিহ্যবাহী)</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; padding:10px; background:var(--surface); border:1px solid var(--card-border); border-radius:8px; font-size:12px; color:var(--ink-soft);">
+          ℹ️ <strong>BMR কী?</strong> আপনি সারা দিন শুয়ে বসে পুরোপুরি বিশ্রামে কাটালেও শুধু শ্বাসপ্রশ্বাস, রক্ত সঞ্চালন ও অঙ্গপ্রত্যঙ্গ বাঁচিয়ে রাখতে শরীরকে এই ${toBn(Math.round(bmrMifflin))} ক্যালোরি শক্তি খরচ করতেই হয়।
+        </div>
+
+        <div style="display:flex; justify-content:space-between; gap:8px; margin-top:12px;">
+          <button type="button" class="btn btn-primary btn-sm" id="btnSendBmrToTdee" style="font-size:12px; flex:1;">
+            👉 এই BMR দিয়ে দৈনিক ক্যালোরি (TDEE) দেখুন
+          </button>
+        </div>
+      `;
+
+      document.getElementById("btnSendBmrToTdee")?.addEventListener("click", () => {
+        const tdeeInput = document.getElementById("tdeeBmrInput");
+        if (tdeeInput) tdeeInput.value = Math.round(bmrMifflin);
+        document.querySelector('.health-tab-btn[data-health="tdee"]')?.click();
+        document.getElementById("btnCalcTDEE")?.click();
+      });
+
+      addHistory("BMR", `${gender === 'male' ? 'পুরুষ' : 'নারী'}, বয়স: ${toBn(age)}, উচ্চতা: ${toBn(Math.round(heightCm))}cm, ওজন: ${toBn(weightKg)}kg`, `${toBn(Math.round(bmrMifflin))} kcal/দিন`);
+    });
+  }
+
+  // ------------------------------------------
+  // 3. Daily Calorie / TDEE Calculation
+  // ------------------------------------------
+  const btnCalcTDEE = document.getElementById("btnCalcTDEE");
+  const btnAutoBmr = document.getElementById("btnAutoFetchBmr");
+  if (btnAutoBmr) {
+    btnAutoBmr.addEventListener("click", () => {
+      const heightCm = (profile.feet * 12 + profile.inches) * 2.54;
+      let bmr = (10 * profile.weight) + (6.25 * heightCm) - (5 * profile.age);
+      bmr += (profile.gender === "male" ? 5 : -161);
+      document.getElementById("tdeeBmrInput").value = Math.round(bmr);
+      showToast(`প্রোফাইল থেকে BMR (${toBn(Math.round(bmr))}) লোড করা হয়েছে`);
+    });
+  }
+
+  if (btnCalcTDEE) {
+    btnCalcTDEE.addEventListener("click", () => {
+      const bmr = parseFloat(document.getElementById("tdeeBmrInput").value) || 1580;
+      const factor = parseFloat(document.getElementById("tdeeActivity").value) || 1.375;
+      const tdee = Math.round(bmr * factor);
+
+      const mildLoss = Math.round(tdee - 250);
+      const standardLoss = Math.round(tdee - 500);
+      const fastLoss = Math.max(1200, Math.round(tdee - 1000));
+      const mildGain = Math.round(tdee + 250);
+      const fastGain = Math.round(tdee + 500);
+
+      const resBox = document.getElementById("resTDEE");
+      resBox.innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">দৈনিক রক্ষণাবেক্ষণ ক্যালোরি (Maintenance TDEE)</div>
+          <div style="font-size:34px; font-weight:900; color:#059669; font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${formatNumber(tdee)} <span style="font-size:16px; font-weight:600; color:var(--ink-soft);">kcal / দিন</span>
+          </div>
+          <div style="font-size:12px; color:var(--ink-soft);">
+            বর্তমান ওজন অপরিবর্তিত রাখতে প্রতিদিন এই ক্যালোরি পরিমাণ খাবার প্রয়োজন।
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-size:13px; font-weight:700; color:var(--ink); margin-bottom:8px;">🎯 লক্ষ্য অনুযায়ী ক্যালোরি চার্ট:</div>
+          <table class="health-table">
+            <thead>
+              <tr>
+                <th>লক্ষ্য</th>
+                <th>সাপ্তাহিক পরিবর্তন</th>
+                <th style="text-align:right;">দৈনিক ক্যালোরি</th>
+                <th style="text-align:center;">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:rgba(16,185,129,0.06);">
+                <td><strong>ওজন অপরিবর্তিত রাখা</strong></td>
+                <td>০.০ কেজি</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono';">${formatNumber(tdee)} kcal</td>
+                <td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" style="padding:2px 6px; font-size:11px;" onclick="window.sendCalorieToMacro(${tdee})">ম্যাক্রো</button></td>
+              </tr>
+              <tr>
+                <td>হালকা ওজন কমানো</td>
+                <td>- ০.২৫ কেজি / সপ্তাহ</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono'; color:#0284c7;">${formatNumber(mildLoss)} kcal</td>
+                <td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" style="padding:2px 6px; font-size:11px;" onclick="window.sendCalorieToMacro(${mildLoss})">ম্যাক্রো</button></td>
+              </tr>
+              <tr style="background:rgba(2,132,199,0.06);">
+                <td><strong>সাধারণ ওজন কমানো</strong></td>
+                <td>- ০.৫০ কেজি / সপ্তাহ</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono'; color:#2563eb;">${formatNumber(standardLoss)} kcal</td>
+                <td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" style="padding:2px 6px; font-size:11px;" onclick="window.sendCalorieToMacro(${standardLoss})">ম্যাক্রো</button></td>
+              </tr>
+              <tr>
+                <td>দ্রুত ওজন কমানো ⚠️</td>
+                <td>- ১.০০ কেজি / সপ্তাহ</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono'; color:#dc2626;">${formatNumber(fastLoss)} kcal</td>
+                <td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" style="padding:2px 6px; font-size:11px;" onclick="window.sendCalorieToMacro(${fastLoss})">ম্যাক্রো</button></td>
+              </tr>
+              <tr>
+                <td>হালকা ওজন বৃদ্ধি</td>
+                <td>+ ০.২৫ কেজি / সপ্তাহ</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono'; color:#d97706;">${formatNumber(mildGain)} kcal</td>
+                <td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" style="padding:2px 6px; font-size:11px;" onclick="window.sendCalorieToMacro(${mildGain})">ম্যাক্রো</button></td>
+              </tr>
+              <tr>
+                <td>মাসল ও ওজন বৃদ্ধি</td>
+                <td>+ ০.৫০ কেজি / সপ্তাহ</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono'; color:#059669;">${formatNumber(fastGain)} kcal</td>
+                <td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" style="padding:2px 6px; font-size:11px;" onclick="window.sendCalorieToMacro(${fastGain})">ম্যাক্রো</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:10px; font-size:11.5px; color:var(--ink-soft);">
+          ⚠️ <em>স্বাস্থ্য পরামর্শ: চিকিৎসকের পরামর্শ ছাড়া নারীদের দিনে ১২০০ ক্যালোরি ও পুরুষদের ১৫০০ ক্যালোরির কম খাওয়া ক্ষতিকর।</em>
+        </div>
+      `;
+
+      addHistory("TDEE", `BMR: ${toBn(bmr)}, ফ্যাক্টর: ${toBn(factor)}`, `${toBn(tdee)} kcal/দিন`);
+    });
+  }
+
+  // Global helper to send calorie directly to Macro calculator
+  window.sendCalorieToMacro = function(cal) {
+    const macroInput = document.getElementById("macroCalories");
+    if (macroInput) macroInput.value = cal;
+    document.querySelector('.health-tab-btn[data-health="macros"]')?.click();
+    document.getElementById("btnCalcMacros")?.click();
+    showToast(`ম্যাক্রো প্ল্যানারে ${toBn(cal)} ক্যালোরি সেট করা হয়েছে ✔️`);
+  };
+
+  // ------------------------------------------
+  // 4. Ideal Weight Calculation
+  // ------------------------------------------
+  const btnCalcIdeal = document.getElementById("btnCalcIdealWeight");
+  if (btnCalcIdeal) {
+    btnCalcIdeal.addEventListener("click", () => {
+      const gender = document.getElementById("iwGender").value;
+      const ft = parseFloat(document.getElementById("iwHeightFt").value) || 5;
+      const inc = parseFloat(document.getElementById("iwHeightIn").value) || 7;
+      const totalInches = ft * 12 + inc;
+      const heightCm = totalInches * 2.54;
+      const currentWt = parseFloat(document.getElementById("iwCurrentWeight").value) || 0;
+
+      const over5ft = Math.max(0, totalInches - 60);
+
+      let devine = 0, robinson = 0, miller = 0, hamwi = 0;
+      if (gender === "male") {
+        devine = 50.0 + 2.3 * over5ft;
+        robinson = 52.0 + 1.9 * over5ft;
+        miller = 56.2 + 1.41 * over5ft;
+        hamwi = 48.0 + 2.7 * over5ft;
+      } else {
+        devine = 45.5 + 2.3 * over5ft;
+        robinson = 49.0 + 1.7 * over5ft;
+        miller = 53.1 + 1.36 * over5ft;
+        hamwi = 45.5 + 2.2 * over5ft;
+      }
+
+      const hm = heightCm / 100.0;
+      const bmiMin = 18.5 * (hm * hm);
+      const bmiMax = 24.9 * (hm * hm);
+      const avgIdeal = (devine + robinson + miller + hamwi) / 4.0;
+
+      let comparisonMsg = "";
+      if (currentWt > 0) {
+        const diff = currentWt - avgIdeal;
+        if (Math.abs(diff) <= 1.5) {
+          comparisonMsg = `<span style="color:#059669; font-weight:700;">আপনার বর্তমান ওজন (${toBn(currentWt)} কেজি) আদর্শ গড়ের সম্পূর্ণ কাছাকাছি! 👍</span>`;
+        } else if (diff > 0) {
+          comparisonMsg = `আদর্শ গড়ের জন্য আপনাকে প্রায় <strong style="color:#dc2626;">${toBn(diff.toFixed(1))} কেজি</strong> ওজন কমাতে হবে।`;
+        } else {
+          comparisonMsg = `আদর্শ গড়ের জন্য আপনাকে প্রায় <strong style="color:#2563eb;">${toBn(Math.abs(diff).toFixed(1))} কেজি</strong> ওজন বাড়াতে হবে।`;
+        }
+      }
+
+      const resBox = document.getElementById("resIdealWeight");
+      resBox.innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">ক্লিনিক্যাল সূত্রের আদর্শ গড় ওজন</div>
+          <div style="font-size:34px; font-weight:900; color:#2563eb; font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${toBn(avgIdeal.toFixed(1))} <span style="font-size:16px; font-weight:600; color:var(--ink-soft);">কেজি</span>
+          </div>
+          <div style="font-size:12.5px; margin-top:4px;">${comparisonMsg}</div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div style="font-size:13px; font-weight:700; color:var(--ink); margin-bottom:8px;">📊 বিখ্যাত বৈজ্ঞানিক সূত্রের তুলনামূলক তালিকা:</div>
+          <table class="health-table">
+            <thead>
+              <tr>
+                <th>সূত্র (Formula)</th>
+                <th>সাল ও ভিত্তি</th>
+                <th style="text-align:right;">আদর্শ ওজন</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Devine Formula</strong></td>
+                <td>১৯৭৪ (মেডিকেল ওষুধ ডোজ)</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono';">${toBn(devine.toFixed(1))} কেজি</td>
+              </tr>
+              <tr>
+                <td><strong>Robinson Formula</strong></td>
+                <td>১৯৮৩ (উন্নত সংস্করণ)</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono';">${toBn(robinson.toFixed(1))} কেজি</td>
+              </tr>
+              <tr>
+                <td><strong>Miller Formula</strong></td>
+                <td>১৯৮৩ (জনপ্রিয় ক্লিনিক্যাল)</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono';">${toBn(miller.toFixed(1))} কেজি</td>
+              </tr>
+              <tr>
+                <td><strong>Hamwi Formula</strong></td>
+                <td>১৯৬৪ (ডায়েটিক্স ভিত্তি)</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono';">${toBn(hamwi.toFixed(1))} কেজি</td>
+              </tr>
+              <tr style="background:rgba(16,185,129,0.06);">
+                <td><strong>WHO Healthy BMI Range</strong></td>
+                <td>১৮.৫ থেকে ২৪.৯ BMI</td>
+                <td style="text-align:right; font-weight:700; font-family:'JetBrains Mono'; color:#059669;">${toBn(bmiMin.toFixed(1))} - ${toBn(bmiMax.toFixed(1))} কেজি</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      addHistory("আদর্শ ওজন", `উচ্চতা: ${toBn(ft)}'${toBn(inc)}"`, `গড় আদর্শ ওজন: ${toBn(avgIdeal.toFixed(1))} কেজি`);
+    });
+  }
+
+  // ------------------------------------------
+  // 5. Body Fat Percentage Calculation
+  // ------------------------------------------
+  const bfMethodSelect = document.getElementById("bfMethod");
+  const bfNavyFields = document.getElementById("bfNavyFields");
+  const bfGenderSelect = document.getElementById("bfGender");
+  const bfHipRow = document.getElementById("bfHipRow");
+
+  if (bfMethodSelect) {
+    bfMethodSelect.addEventListener("change", () => {
+      if (bfNavyFields) bfNavyFields.style.display = bfMethodSelect.value === "navy" ? "block" : "none";
+    });
+  }
+
+  if (bfGenderSelect) {
+    bfGenderSelect.addEventListener("change", () => {
+      if (bfHipRow) bfHipRow.style.display = bfGenderSelect.value === "female" ? "block" : "none";
+    });
+  }
+
+  const btnCalcBF = document.getElementById("btnCalcBodyFat");
+  if (btnCalcBF) {
+    btnCalcBF.addEventListener("click", () => {
+      const method = bfMethodSelect.value;
+      const gender = bfGenderSelect.value;
+      const age = parseFloat(document.getElementById("bfAge").value) || 25;
+      const ft = parseFloat(document.getElementById("bfHeightFt").value) || 5;
+      const inc = parseFloat(document.getElementById("bfHeightIn").value) || 7;
+      const heightCm = (ft * 12 + inc) * 2.54;
+      const weightKg = parseFloat(document.getElementById("bfWeight").value) || 65;
+
+      let bodyFatPct = 0;
+
+      if (method === "navy") {
+        const neckCm = parseFloat(document.getElementById("bfNeckCm").value) || 38;
+        const waistCm = parseFloat(document.getElementById("bfWaistCm").value) || 82;
+
+        if (gender === "male") {
+          const diff = waistCm - neckCm;
+          if (diff <= 0) {
+            showToast("কোমরের মাপ অবশ্যই ঘাড়ের মাপের চেয়ে বড় হতে হবে");
+            return;
+          }
+          const denom = 1.0324 - (0.19077 * Math.log10(diff)) + (0.15456 * Math.log10(heightCm));
+          bodyFatPct = 495 / denom - 450;
+        } else {
+          const hipCm = parseFloat(document.getElementById("bfHipCm").value) || 90;
+          const diff = waistCm + hipCm - neckCm;
+          if (diff <= 0) {
+            showToast("দয়া করে সঠিক মাপ দিন");
+            return;
+          }
+          const denom = 1.29579 - (0.35004 * Math.log10(diff)) + (0.22100 * Math.log10(heightCm));
+          bodyFatPct = 495 / denom - 450;
+        }
+      } else {
+        // BMI Deurenberg method
+        const hm = heightCm / 100.0;
+        const bmi = weightKg / (hm * hm);
+        const gVal = gender === "male" ? 1 : 0;
+        bodyFatPct = (1.20 * bmi) + (0.23 * age) - (10.8 * gVal) - 5.4;
+      }
+
+      bodyFatPct = Math.max(3, Math.min(60, bodyFatPct));
+      const fatMassKg = weightKg * (bodyFatPct / 100.0);
+      const leanMassKg = weightKg - fatMassKg;
+
+      let category = "";
+      let badgeClass = "health-badge-normal";
+
+      if (gender === "male") {
+        if (bodyFatPct < 6) { category = "অত্যাবশ্যকীয় চর্বি (Essential Fat)"; badgeClass = "health-badge-underweight"; }
+        else if (bodyFatPct < 14) { category = "অ্যাথলিট লেভেল (Athletes)"; badgeClass = "health-badge-normal"; }
+        else if (bodyFatPct < 18) { category = "ফিটনেস স্ট্যান্ডার্ড (Fitness)"; badgeClass = "health-badge-normal"; }
+        else if (bodyFatPct < 25) { category = "সাধারণ / গ্রহণযোগ্য (Average)"; badgeClass = "health-badge-overweight"; }
+        else { category = "অতিরিক্ত চর্বি / স্থূলতা (Obese)"; badgeClass = "health-badge-obese1"; }
+      } else {
+        if (bodyFatPct < 14) { category = "অত্যাবশ্যকীয় চর্বি (Essential Fat)"; badgeClass = "health-badge-underweight"; }
+        else if (bodyFatPct < 21) { category = "অ্যাথলিট লেভেল (Athletes)"; badgeClass = "health-badge-normal"; }
+        else if (bodyFatPct < 25) { category = "ফিটনেস স্ট্যান্ডার্ড (Fitness)"; badgeClass = "health-badge-normal"; }
+        else if (bodyFatPct < 32) { category = "সাধারণ / গ্রহণযোগ্য (Average)"; badgeClass = "health-badge-overweight"; }
+        else { category = "অতিরিক্ত চর্বি / স্থূলতা (Obese)"; badgeClass = "health-badge-obese1"; }
+      }
+
+      const resBox = document.getElementById("resBodyFat");
+      resBox.innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">শরীরের চর্বির শতকরা হার (Body Fat)</div>
+          <div style="font-size:36px; font-weight:900; color:#D97706; font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${toBn(bodyFatPct.toFixed(1))}%
+          </div>
+          <div class="health-status-badge ${badgeClass}">${category}</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:14px;">
+          <div class="health-metric-card" style="padding:10px;">
+            <div class="health-metric-icon">🥩</div>
+            <div class="health-metric-val" style="color:#059669;">${toBn(leanMassKg.toFixed(1))} <span style="font-size:12px;">কেজি</span></div>
+            <div class="health-metric-lbl">পেশী ও হাড়ের ভর (Lean Mass)</div>
+          </div>
+          <div class="health-metric-card" style="padding:10px;">
+            <div class="health-metric-icon">🧈</div>
+            <div class="health-metric-val" style="color:#d97706;">${toBn(fatMassKg.toFixed(1))} <span style="font-size:12px;">কেজি</span></div>
+            <div class="health-metric-lbl">মোট চর্বির ওজন (Fat Mass)</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; padding:10px; background:var(--surface); border:1px solid var(--card-border); border-radius:8px; font-size:12px; color:var(--ink-soft);">
+          🎯 <strong>আদর্শ লক্ষ্যমাত্রা:</strong> সুস্থ ও আকর্ষণীয় শরীরের জন্য পুরুষদের আদর্শ বডি ফ্যাট ১০-১৮% এবং নারীদের ১৮-২৫% থাকা সবচেয়ে স্বাস্থ্যকর।
+        </div>
+      `;
+
+      addHistory("বডি ফ্যাট", `ওজন: ${toBn(weightKg)}kg, পদ্ধতি: ${method === 'navy' ? 'US Navy' : 'BMI'}`, `${toBn(bodyFatPct.toFixed(1))}% (${category})`);
+    });
+  }
+
+  // ------------------------------------------
+  // 6. Water Intake & Daily Tracker
+  // ------------------------------------------
+  const btnCalcWater = document.getElementById("btnCalcWater");
+  if (btnCalcWater) {
+    btnCalcWater.addEventListener("click", () => {
+      const weight = parseFloat(document.getElementById("waterWeight").value) || 65;
+      const exerciseMins = parseFloat(document.getElementById("waterExercise").value) || 30;
+      const weather = document.getElementById("waterWeather").value;
+      const special = document.getElementById("waterSpecial").value;
+
+      // Base water: 35ml per kg
+      let ml = weight * 35.0;
+
+      // Exercise: 350ml per 30 mins
+      ml += (exerciseMins / 30.0) * 350.0;
+
+      // Weather
+      if (weather === "hot") ml += 500.0;
+
+      // Special
+      if (special === "pregnant") ml += 300.0;
+      if (special === "nursing") ml += 700.0;
+
+      const liters = ml / 1000.0;
+      const totalGlasses = Math.round(ml / 250.0); // 250ml per glass
+
+      renderWaterResult(liters, ml, totalGlasses);
+      addHistory("পানির চাহিদা", `ওজন: ${toBn(weight)}kg, ব্যায়াম: ${toBn(exerciseMins)} মি.`, `${toBn(liters.toFixed(2))} লিটার (${toBn(totalGlasses)} গ্লাস)`);
+    });
+  }
+
+  function renderWaterResult(liters, ml, totalGlasses) {
+    const resBox = document.getElementById("resWater");
+    const drankGlasses = Math.min(totalGlasses, profile.waterGlasses || 0);
+    const pct = Math.round((drankGlasses / totalGlasses) * 100);
+
+    let glassesHtml = "";
+    for (let i = 1; i <= totalGlasses; i++) {
+      const isDrank = i <= drankGlasses;
+      glassesHtml += `
+        <div class="water-glass-item ${isDrank ? 'drank' : ''}" data-glass="${i}">
+          <span class="glass-icon">${isDrank ? '💧' : '🥛'}</span>
+          <span class="glass-num">${toBn(i)}</span>
+        </div>
+      `;
+    }
+
+    resBox.innerHTML = `
+      <div style="text-align:center; padding:6px 0;">
+        <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">দৈনিক মোট পানির চাহিদা</div>
+        <div style="font-size:34px; font-weight:900; color:#0284c7; font-family:'JetBrains Mono',monospace; margin:4px 0;">
+          ${toBn(liters.toFixed(2))} <span style="font-size:16px; font-weight:600; color:var(--ink-soft);">লিটার / দিন</span>
+        </div>
+        <div style="font-size:13px; color:var(--ink); font-weight:600;">
+          মোট <strong>${formatNumber(Math.round(ml))} মিলি</strong> বা প্রায় <strong>${toBn(totalGlasses)} গ্লাস</strong> (প্রতি গ্লাস ২৫০ মিলি)
+        </div>
+      </div>
+
+      <!-- Interactive Water Tracker -->
+      <div style="margin-top:14px; padding:12px; background:var(--surface); border:1px solid var(--card-border); border-radius:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:13px; font-weight:700; color:var(--ink);">আজকের পানি পান ট্র্যাকার:</span>
+          <span style="font-size:12px; font-weight:700; color:#0284c7;">
+            ${toBn(drankGlasses)}/${toBn(totalGlasses)} গ্লাস (${toBn(pct)}%)
+          </span>
+        </div>
+
+        <div style="height:8px; background:var(--card-border); border-radius:4px; overflow:hidden; margin-bottom:10px;">
+          <div style="height:100%; width:${pct}%; background:#0284c7; transition:width 0.3s ease;"></div>
+        </div>
+
+        <div class="water-glasses-grid" id="waterGlassesGrid">
+          ${glassesHtml}
+        </div>
+        <div style="font-size:11px; text-align:center; color:var(--ink-soft);">
+          👆 পানি খাওয়ার পর গ্লাসে ট্যাপ করে ট্র্যাকিং আপডেট করুন
+        </div>
+      </div>
+
+      <!-- Drinking Schedule -->
+      <div style="margin-top:12px; font-size:12px;">
+        <div style="font-weight:700; color:var(--ink); margin-bottom:6px;">⏰ আদর্শ পানি পানের রুটিন:</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; color:var(--ink-soft);">
+          <div>🌅 ঘুম থেকে উঠে: <strong>২ গ্লাস</strong></div>
+          <div>🍳 নাস্তার ৩০ মি. আগে: <strong>১ গ্লাস</strong></div>
+          <div>💻 কাজের ফাঁকে ফাঁকে: <strong>২-৩ গ্লাস</strong></div>
+          <div>🍲 দুপুরের খাবারের আগে: <strong>১ গ্লাস</strong></div>
+          <div>🏃 ব্যায়ামের সময়: <strong>১-২ গ্লাস</strong></div>
+          <div>🌙 রাতের খাবারের আগে: <strong>১ গ্লাস</strong></div>
+        </div>
+      </div>
+    `;
+
+    // Add click event to glasses
+    document.querySelectorAll(".water-glass-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const num = parseInt(item.dataset.glass, 10);
+        if (profile.waterGlasses === num) {
+          profile.waterGlasses = num - 1;
+        } else {
+          profile.waterGlasses = num;
+        }
+        setStorage(HEALTH_PROFILE_KEY, profile);
+        renderWaterResult(liters, ml, totalGlasses);
+        if (profile.waterGlasses >= totalGlasses) {
+          showToast("অভিনন্দন! আজকের দৈনিক পানির লক্ষ্য পূর্ণ হয়েছে! 💧🎉");
+        }
+      });
+    });
+  }
+
+  // ------------------------------------------
+  // 7. Macro Nutrients Calculation
+  // ------------------------------------------
+  const macroPreset = document.getElementById("macroDietPreset");
+  const macroCustomRow = document.getElementById("macroCustomRow");
+  if (macroPreset) {
+    macroPreset.addEventListener("change", () => {
+      if (macroCustomRow) {
+        macroCustomRow.style.display = macroPreset.value === "custom" ? "block" : "none";
+      }
+    });
+  }
+
+  const btnCalcMacros = document.getElementById("btnCalcMacros");
+  if (btnCalcMacros) {
+    btnCalcMacros.addEventListener("click", () => {
+      const calories = parseFloat(document.getElementById("macroCalories").value) || 2000;
+      const preset = macroPreset.value;
+
+      let pPct = 20, cPct = 50, fPct = 30; // default balanced
+      let presetTitle = "🥗 ব্যালেন্সড ডায়েট";
+
+      if (preset === "high_protein") {
+        pPct = 35; cPct = 40; fPct = 25;
+        presetTitle = "🏋️‍♂️ হাই প্রোটিন জিম ডায়েট";
+      } else if (preset === "low_carb") {
+        pPct = 40; cPct = 20; fPct = 40;
+        presetTitle = "🥑 লো কার্ব ফ্যাট লস";
+      } else if (preset === "keto") {
+        pPct = 25; cPct = 5; fPct = 70;
+        presetTitle = "🥓 কিটোজেনিক ডায়েট";
+      } else if (preset === "custom") {
+        pPct = parseFloat(document.getElementById("macroCustomProtein").value) || 25;
+        cPct = parseFloat(document.getElementById("macroCustomCarbs").value) || 50;
+        fPct = parseFloat(document.getElementById("macroCustomFat").value) || 25;
+        presetTitle = "⚙️ কাস্টম অনুপাত";
+        const sum = pPct + cPct + fPct;
+        if (Math.abs(sum - 100) > 0.5) {
+          showToast(`মোট শতাংশ ১০০% হতে হবে (বর্তমানে ${toBn(sum)}%)`);
+          return;
+        }
+      }
+
+      // Calculations: Protein: 4 cal/g, Carb: 4 cal/g, Fat: 9 cal/g
+      const pCal = calories * (pPct / 100.0);
+      const cCal = calories * (cPct / 100.0);
+      const fCal = calories * (fPct / 100.0);
+
+      const pGrams = pCal / 4.0;
+      const cGrams = cCal / 4.0;
+      const fGrams = fCal / 9.0;
+
+      const resBox = document.getElementById("resMacros");
+      resBox.innerHTML = `
+        <div style="text-align:center; padding:4px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">দৈনিক ম্যাক্রো লক্ষ্য (${presetTitle})</div>
+          <div style="font-size:24px; font-weight:800; color:var(--ink); font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${formatNumber(Math.round(calories))} kcal
+          </div>
+        </div>
+
+        <!-- Macro Tri-Color Bar -->
+        <div class="macro-tri-bar">
+          <div class="macro-seg-protein" style="width:${pPct}%;" title="প্রোটিন ${toBn(pPct)}%"></div>
+          <div class="macro-seg-carbs" style="width:${cPct}%;" title="কার্বস ${toBn(cPct)}%"></div>
+          <div class="macro-seg-fat" style="width:${fPct}%;" title="ফ্যাট ${toBn(fPct)}%"></div>
+        </div>
+        <div class="macro-legend-row">
+          <span style="color:#2563eb;"><span class="macro-legend-dot" style="background:#3B82F6;"></span>প্রোটিন (${toBn(pPct)}%)</span>
+          <span style="color:#d97706;"><span class="macro-legend-dot" style="background:#F59E0B;"></span>কার্বোহাইড্রেট (${toBn(cPct)}%)</span>
+          <span style="color:#059669;"><span class="macro-legend-dot" style="background:#10B981;"></span>ফ্যাট (${toBn(fPct)}%)</span>
+        </div>
+
+        <!-- 3 Macro Cards -->
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:8px;">
+          <div class="health-metric-card" style="border-top:3px solid #3B82F6; padding:10px 4px;">
+            <div style="font-size:11px; font-weight:700; color:#2563eb;">প্রোটিন (Protein)</div>
+            <div class="health-metric-val" style="font-size:18px; color:#2563eb; margin:4px 0;">${toBn(Math.round(pGrams))}g</div>
+            <div class="health-metric-lbl">${formatNumber(Math.round(pCal))} kcal</div>
+          </div>
+          <div class="health-metric-card" style="border-top:3px solid #F59E0B; padding:10px 4px;">
+            <div style="font-size:11px; font-weight:700; color:#d97706;">কার্বস (Carbs)</div>
+            <div class="health-metric-val" style="font-size:18px; color:#d97706; margin:4px 0;">${toBn(Math.round(cGrams))}g</div>
+            <div class="health-metric-lbl">${formatNumber(Math.round(cCal))} kcal</div>
+          </div>
+          <div class="health-metric-card" style="border-top:3px solid #10B981; padding:10px 4px;">
+            <div style="font-size:11px; font-weight:700; color:#059669;">ফ্যাট (Fat)</div>
+            <div class="health-metric-val" style="font-size:18px; color:#059669; margin:4px 0;">${toBn(Math.round(fGrams))}g</div>
+            <div class="health-metric-lbl">${formatNumber(Math.round(fCal))} kcal</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; padding:10px; background:var(--surface); border:1px solid var(--card-border); border-radius:8px; font-size:12px;">
+          <div style="font-weight:700; color:var(--ink); margin-bottom:4px;">🥗 স্বাস্থ্যকর খাবারের উৎস:</div>
+          <div style="color:var(--ink-soft); line-height:1.5;">
+            • <strong>প্রোটিন:</strong> ডিম, মুরগির মাংস, মাছ, ডাল, ছোলা, পনির ও ছানা।<br>
+            • <strong>কার্বোহাইড্রেট:</strong> লাল চালের ভাত, ওটস, মিষ্টি আলু, রুটি ও তাজা ফল।<br>
+            • <strong>স্বাস্থ্যকর ফ্যাট:</strong> কাঠবাদাম, চিয়া সিডস, অলিভ অয়েল, সরিষার তেল ও ডিমের কুসুম।
+          </div>
+        </div>
+      `;
+
+      addHistory("ম্যাক্রো প্ল্যান", `${presetTitle} (${toBn(Math.round(calories))} kcal)`, `প্রোটিন: ${toBn(Math.round(pGrams))}g, কার্বস: ${toBn(Math.round(cGrams))}g, ফ্যাট: ${toBn(Math.round(fGrams))}g`);
+    });
+  }
+
+  // ------------------------------------------
+  // 8. Others: WHtR, Heart Rate & Blood Pressure
+  // ------------------------------------------
+  const othersTabs = document.querySelectorAll(".others-tab-btn");
+  othersTabs.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      othersTabs.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.dataset.oth;
+      document.querySelectorAll(".oth-view").forEach(v => v.style.display = "none");
+      const view = document.getElementById("oth-view-" + target);
+      if (view) view.style.display = "block";
+    });
+  });
+
+  // 8A. WHtR
+  const btnCalcWHtR = document.getElementById("btnCalcWHtR");
+  if (btnCalcWHtR) {
+    btnCalcWHtR.addEventListener("click", () => {
+      const waist = parseFloat(document.getElementById("whtrWaist").value) || 0;
+      const height = parseFloat(document.getElementById("whtrHeight").value) || 0;
+      if (waist <= 0 || height <= 0) {
+        showToast("দয়া করে সঠিক পরিমাপ দিন");
+        return;
+      }
+      const ratio = waist / height;
+      let status = "";
+      let badgeClass = "";
+      let tips = "";
+
+      if (ratio < 0.4) {
+        status = "খুবই পাতলা / কম ওজন";
+        badgeClass = "health-badge-underweight";
+        tips = "কোমরের অনুপাতে শরীরের চর্বি অনেক কম। পর্যাপ্ত পুষ্টিকর খাবার গ্রহণ করুন।";
+      } else if (ratio < 0.5) {
+        status = "স্বাভাবিক ও স্বাস্থ্যকর (Healthy)";
+        badgeClass = "health-badge-normal";
+        tips = "চমৎকার! আপনার পেটের চর্বি সম্পূর্ণ নিরাপদ সীমার মধ্যে আছে। হৃদরোগের ঝুঁকি সর্বনিম্ন।";
+      } else if (ratio < 0.6) {
+        status = "অতিরিক্ত পেটের চর্বি (Increased Risk)";
+        badgeClass = "health-badge-overweight";
+        tips = "কোমরে মেদ জমতে শুরু করেছে। পেটের চর্বি কমাতে নিয়মিত হাঁটুন ও মিষ্টি খাবার পরিহার করুন।";
+      } else {
+        status = "উচ্চ স্বাস্থ্য ঝুঁকি (High Risk)";
+        badgeClass = "health-badge-obese1";
+        tips = "পেটের ভিসেরাল ফ্যাট বেশি থাকায় ডায়াবেটিস ও হৃদরোগের প্রবল সম্ভাবনা রয়েছে। ওজন নিয়ন্ত্রণ জরুরি।";
+      }
+
+      document.getElementById("resWHtR").innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">কোমর ও উচ্চতার অনুপাত (WHtR)</div>
+          <div style="font-size:32px; font-weight:900; color:var(--ink); font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${toBn(ratio.toFixed(2))}
+          </div>
+          <div class="health-status-badge ${badgeClass}">${status}</div>
+          <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">💡 ${tips}</p>
+        </div>
+      `;
+      addHistory("WHtR অনুপাত", `কোমর: ${toBn(waist)}, উচ্চতা: ${toBn(height)}`, `${toBn(ratio.toFixed(2))} (${status})`);
+    });
+  }
+
+  // 8B. Heart Rate Zones
+  const btnCalcHR = document.getElementById("btnCalcHR");
+  if (btnCalcHR) {
+    btnCalcHR.addEventListener("click", () => {
+      const age = parseFloat(document.getElementById("hrAge").value) || 25;
+      const rhr = parseFloat(document.getElementById("hrResting").value) || 70;
+      const maxHr = 220 - age;
+
+      document.getElementById("resHR").innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">সর্বোচ্চ সম্ভাব্য হার্ট রেট (Max Heart Rate)</div>
+          <div style="font-size:32px; font-weight:900; color:#DC2626; font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${toBn(maxHr)} <span style="font-size:14px; font-weight:600; color:var(--ink-soft);">BPM</span>
+          </div>
+        </div>
+        <table class="health-table" style="margin-top:10px;">
+          <thead>
+            <tr>
+              <th>জোন</th>
+              <th>তীব্রতা</th>
+              <th style="text-align:right;">পালস (BPM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>জোন ১: ওয়ার্ম আপ</strong></td>
+              <td>৫০ - ৬০%</td>
+              <td style="text-align:right; font-family:'JetBrains Mono'; font-weight:700;">${toBn(Math.round(maxHr * 0.5))} - ${toBn(Math.round(maxHr * 0.6))}</td>
+            </tr>
+            <tr style="background:rgba(16,185,129,0.06);">
+              <td><strong>জোন ২: ফ্যাট বার্নিং 🎯</strong></td>
+              <td>৬০ - ৭০%</td>
+              <td style="text-align:right; font-family:'JetBrains Mono'; font-weight:700; color:#059669;">${toBn(Math.round(maxHr * 0.6))} - ${toBn(Math.round(maxHr * 0.7))}</td>
+            </tr>
+            <tr>
+              <td><strong>জোন ৩: অ্যারোবিক কার্ডিও</strong></td>
+              <td>৭০ - ৮০%</td>
+              <td style="text-align:right; font-family:'JetBrains Mono'; font-weight:700; color:#0284c7;">${toBn(Math.round(maxHr * 0.7))} - ${toBn(Math.round(maxHr * 0.8))}</td>
+            </tr>
+            <tr>
+              <td><strong>জোন ৪: অ্যানারোবিক পারফরম্যান্স</strong></td>
+              <td>৮০ - ৯০%</td>
+              <td style="text-align:right; font-family:'JetBrains Mono'; font-weight:700; color:#d97706;">${toBn(Math.round(maxHr * 0.8))} - ${toBn(Math.round(maxHr * 0.9))}</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.06);">
+              <td><strong>জোন ৫: সর্বোচ্চ প্রচেষ্টা ⚠️</strong></td>
+              <td>৯০ - ১০০%</td>
+              <td style="text-align:right; font-family:'JetBrains Mono'; font-weight:700; color:#dc2626;">${toBn(Math.round(maxHr * 0.9))} - ${toBn(maxHr)}</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+      addHistory("হার্ট রেট জোন", `বয়স: ${toBn(age)}`, `Max HR: ${toBn(maxHr)} BPM`);
+    });
+  }
+
+  // 8C. Blood Pressure Checker
+  const btnCalcBP = document.getElementById("btnCalcBP");
+  if (btnCalcBP) {
+    btnCalcBP.addEventListener("click", () => {
+      const sys = parseFloat(document.getElementById("bpSystolic").value) || 120;
+      const dia = parseFloat(document.getElementById("bpDiastolic").value) || 80;
+
+      let category = "";
+      let badgeClass = "";
+      let advice = "";
+
+      if (sys > 180 || dia > 120) {
+        category = "হাইপারটেনসিভ ক্রাইসিস (জরুরি অবস্থা!)";
+        badgeClass = "health-badge-obese2";
+        advice = "🚨 অবিলম্বে জরুরি চিকিৎসা বা ডাক্তারের শরণাপন্ন হোন!";
+      } else if (sys >= 140 || dia >= 90) {
+        category = "স্টেজ ২ হাইপারটেনশন (উচ্চ রক্তচাপ)";
+        badgeClass = "health-badge-obese1";
+        advice = "রক্তচাপ বেশ বেশি। ডাক্তারের পরামর্শ অনুযায়ী নিয়মিত ওষুধ সেবন ও লবণ নিয়ন্ত্রণ করুন।";
+      } else if ((sys >= 130 && sys <= 139) || (dia >= 80 && dia <= 89)) {
+        category = "স্টেজ ১ হাইপারটেনশন";
+        badgeClass = "health-badge-overweight";
+        advice = "রক্তচাপ স্বাভাবিকের চেয়ে বেশি। জীবনযাত্রা পরিবর্তন ও নিয়মিত ব্যায়াম শুরু করুন।";
+      } else if (sys >= 120 && sys <= 129 && dia < 80) {
+        category = "উন্নত রক্তচাপ (Elevated)";
+        badgeClass = "health-badge-overweight";
+        advice = "রক্তচাপ কিছুটা বেশি। খাদ্যতালিকায় সোডিয়াম/লবণ কমান ও মানসিক চাপ নিয়ন্ত্রণ করুন।";
+      } else if (sys < 90 || dia < 60) {
+        category = "লো ব্লাড প্রেসার (Hypotension)";
+        badgeClass = "health-badge-underweight";
+        advice = "রক্তচাপ কম। পর্যাপ্ত পানি, খাবার স্যালাইন ও পুষ্টিকর খাবার গ্রহণ করুন।";
+      } else {
+        category = "স্বাভাবিক ও স্বাস্থ্যকর (Normal BP)";
+        badgeClass = "health-badge-normal";
+        advice = "অভিনন্দন! আপনার রক্তচাপ সম্পূর্ণ আদর্শ ও স্বাস্থ্যকর পরিসীমায় রয়েছে।";
+      }
+
+      document.getElementById("resBP").innerHTML = `
+        <div style="text-align:center; padding:6px 0;">
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">রক্তচাপের মান (Blood Pressure)</div>
+          <div style="font-size:32px; font-weight:900; color:var(--ink); font-family:'JetBrains Mono',monospace; margin:4px 0;">
+            ${toBn(sys)} / ${toBn(dia)} <span style="font-size:14px; font-weight:600; color:var(--ink-soft);">mmHg</span>
+          </div>
+          <div class="health-status-badge ${badgeClass}">${category}</div>
+          <p style="font-size:12.5px; color:var(--ink-soft); margin-top:8px;">💡 ${advice}</p>
+        </div>
+      `;
+      addHistory("রক্তচাপ", `${toBn(sys)}/${toBn(dia)} mmHg`, category);
+    });
+  }
+}
+
 function initApplication() {
   if (window._appInitialized) return;
   window._appInitialized = true;
@@ -7287,6 +9191,8 @@ function initApplication() {
   try { setupBangladeshTools(); } catch (e) { console.error(e); }
   try { setupQRCodeTools(); } catch (e) { console.error(e); }
   try { setupCurrencyConverter(); } catch (e) { console.error(e); }
+  try { setupHealthAndFitnessCalc(); } catch (e) { console.error(e); }
+  
   try { setupCustomFormula(); } catch (e) { console.error(e); }
   try { setupSettingsAndNavigation(); } catch (e) { console.error(e); }
   try { setupSmartSearch(); } catch (e) { console.error(e); }
