@@ -41,7 +41,12 @@
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --radius: 12px;
+    --radius: 18px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 22px;
+    --radius-pill: 9999px;
   }
 
   [data-theme="dark"] {
@@ -192,20 +197,27 @@
     background: var(--surface);
     border: 1px solid var(--card-border);
     color: var(--ink-soft);
-    padding: 7px 13px;
-    border-radius: 20px;
+    padding: 8px 15px;
+    border-radius: 22px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
-    transition: all 0.15s ease;
+    gap: 6px;
+    transition: all 0.18s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   }
-  .subnav-btn.active, .subnav-btn:hover {
+  .subnav-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-1px);
+  }
+  .subnav-btn.active {
     background: var(--blue);
     color: #FFFFFF;
     border-color: var(--blue);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.32);
   }
 
   /* Page Sections */
@@ -245,63 +257,192 @@
   .dash-card {
     background: var(--surface);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 16px 12px;
+    border-radius: 20px;
+    padding: 18px 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
   }
   .dash-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.16);
     border-color: var(--blue);
   }
-  .dash-card:active { transform: scale(0.98); }
+  .dash-card:active { transform: scale(0.97); }
   .dash-card .card-icon {
     font-size: 28px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     line-height: 1;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: var(--blue-light);
+    transition: transform 0.2s ease;
+  }
+  .dash-card:hover .card-icon {
+    transform: scale(1.08);
   }
   .dash-card .card-title {
     font-size: 14.5px;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 2px;
+    margin-bottom: 3px;
   }
   .dash-card .card-sub {
     font-size: 11.5px;
     color: var(--ink-soft);
+    line-height: 1.35;
   }
 
   /* Form and Content Cards */
   .tool-card {
     background: var(--surface);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 18px 16px;
+    border-radius: 18px;
+    padding: 18px 18px;
     margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    transition: all 0.2s ease;
+  }
+  .tool-card:hover {
+    box-shadow: 0 6px 24px -2px rgba(15, 23, 42, 0.09);
   }
   .tool-card h3 {
     margin: 0 0 12px;
-    font-size: 16px;
+    font-size: 16.5px;
     font-weight: 700;
     color: var(--ink);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
   }
   .tool-card .desc {
     font-size: 12.5px;
     color: var(--ink-soft);
-    margin-top: -8px;
+    margin-top: -6px;
     margin-bottom: 14px;
+    line-height: 1.45;
+  }
+
+  /* Section Header Banner - Matches QR, Health & Currency style */
+  .section-hero-card {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, var(--surface) 100%);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--blue);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  }
+  .section-hero-card.pct-theme {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #10B981;
+  }
+  .section-hero-card.fin-theme {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #F59E0B;
+  }
+  .section-hero-card.age-theme {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #A855F7;
+  }
+  .section-hero-card.geom-theme {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #0EA5E9;
+  }
+  .section-hero-card.alg-theme {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #6366F1;
+  }
+  .section-hero-card.frac-theme {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #EC4899;
+  }
+  .section-hero-card.conv-theme {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #14B8A6;
+  }
+  .section-hero-card.bd-theme {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.07) 0%, var(--surface) 100%);
+    border-left-color: #059669;
+  }
+  .section-hero-card.basic-theme {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, var(--surface) 100%);
+    border-left-color: var(--blue);
+  }
+  .section-hero-card.sci-theme {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #8B5CF6;
+  }
+  .section-hero-card.custom-theme {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #F97316;
+  }
+  .section-hero-card.qr-theme {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #2563EB;
+  }
+  .section-hero-card.curr-theme {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #10B981;
+  }
+  .section-hero-card.health-theme {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #EF4444;
+  }
+  .section-hero-card.hist-theme {
+    background: linear-gradient(135deg, rgba(100, 116, 139, 0.08) 0%, var(--surface) 100%);
+    border-left-color: #64748B;
+  }
+  .section-hero-card.fav-theme {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--surface) 100%);
+    border-left-color: #F59E0B;
+  }
+  .section-hero-card.set-theme {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.07) 0%, var(--surface) 100%);
+    border-left-color: #6366F1;
+  }
+  .section-hero-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .section-hero-title {
+    margin: 0 0 3px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-hero-desc {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .section-hero-badge {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
   }
 
   /* Inputs & Form controls */
@@ -322,15 +463,16 @@
   .form-row > * { flex: 1; }
   .form-control, .form-select {
     width: 100%;
-    padding: 9px 12px;
+    padding: 10px 14px;
     font-family: inherit;
     font-size: 14.5px;
     border: 1px solid var(--card-border);
-    border-radius: 8px;
+    border-radius: 12px;
     background: var(--surface);
     color: var(--ink);
     outline: none;
-    transition: border-color 0.15s ease;
+    transition: all 0.18s ease;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
   }
   .form-control:focus, .form-select:focus {
     border-color: var(--blue);
@@ -344,46 +486,63 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 16px;
+    padding: 11px 18px;
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
     width: 100%;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   }
-  .btn-primary { background: var(--blue); color: #FFF; }
-  .btn-primary:hover { background: var(--blue-dark); }
-  .btn-secondary { background: var(--surface-hover); color: var(--ink); border-color: var(--card-border); }
-  .btn-secondary:hover { background: var(--card-border); }
+  .btn-primary { 
+    background: var(--blue); 
+    color: #FFF; 
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  }
+  .btn-primary:hover { 
+    background: var(--blue-dark); 
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-secondary { 
+    background: var(--surface-hover); 
+    color: var(--ink); 
+    border-color: var(--card-border); 
+  }
+  .btn-secondary:hover { 
+    background: var(--card-border); 
+    transform: translateY(-1px);
+  }
   .btn-success { background: var(--green); color: #FFF; }
-  .btn-success:hover { filter: brightness(0.92); }
+  .btn-success:hover { filter: brightness(0.92); transform: translateY(-1px); }
   .btn-danger { background: var(--red); color: #FFF; }
-  .btn-danger:hover { filter: brightness(0.92); }
+  .btn-danger:hover { filter: brightness(0.92); transform: translateY(-1px); }
   .btn-outline { background: transparent; border-color: var(--card-border); color: var(--ink); }
   .btn-outline:hover { background: var(--surface-hover); border-color: var(--blue); }
-  .btn-sm { padding: 6px 10px; font-size: 12.5px; border-radius: 6px; width: auto; }
+  .btn-sm { padding: 6px 14px; font-size: 12.5px; border-radius: 20px; width: auto; }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* Result Box */
   .result-box {
-    background: var(--blue-light);
-    border: 1px solid rgba(29, 78, 216, 0.25);
-    border-radius: 10px;
-    padding: 14px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, var(--surface) 100%);
+    border: 1.5px solid rgba(29, 78, 216, 0.25);
+    border-radius: 16px;
+    padding: 16px;
     margin-top: 14px;
     position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
   }
   .result-box.success {
-    background: var(--green-light);
-    border-color: rgba(22, 163, 74, 0.3);
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.06) 0%, var(--surface) 100%);
+    border-color: rgba(22, 163, 74, 0.35);
   }
   .result-box.error {
-    background: var(--red-light);
-    border-color: rgba(220, 38, 38, 0.3);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.06) 0%, var(--surface) 100%);
+    border-color: rgba(220, 38, 38, 0.35);
   }
   .result-title {
     font-size: 12px;
@@ -417,19 +576,19 @@
   .calc-container {
     background: var(--surface);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow-sm);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 6px 24px -2px rgba(15, 23, 42, 0.08);
     margin-bottom: 16px;
   }
   .calc-screen {
     background: #0B132B;
     color: #F8FAFC;
-    border-radius: 10px;
-    padding: 16px 14px;
+    border-radius: 16px;
+    padding: 18px 16px;
     text-align: right;
-    margin-bottom: 14px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 16px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
   }
   .screen-mode {
     font-size: 11px;
@@ -441,8 +600,8 @@
   .screen-mode .badge {
     background: #1E293B;
     color: #38BDF8;
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
     font-weight: 600;
   }
   .screen-history {
@@ -481,26 +640,32 @@
     font-size: 17px;
     font-weight: 600;
     padding: 15px 4px;
-    border-radius: 9px;
+    border-radius: 14px;
     border: 1px solid var(--card-border);
     background: var(--surface);
     color: var(--ink);
     cursor: pointer;
     user-select: none;
-    transition: all 0.1s ease;
+    transition: all 0.15s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .key-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
   }
   .calc-keyboard.scientific-grid .key-btn {
-    padding: 11px 2px;
+    padding: 12px 2px;
     font-size: 13.5px;
+    border-radius: 12px;
   }
-  .key-btn:active { transform: scale(0.96); }
+  .key-btn:active { transform: scale(0.95); }
   .key-btn.key-op { color: var(--orange); background: var(--orange-light); border-color: rgba(217, 119, 6, 0.2); }
   .key-btn.key-fn { color: var(--purple); background: var(--purple-light); border-color: rgba(124, 58, 237, 0.2); }
   .key-btn.key-clear { color: var(--red); background: var(--red-light); border-color: rgba(220, 38, 38, 0.2); }
-  .key-btn.key-eq { background: var(--blue); color: #FFF; border-color: var(--blue); }
+  .key-btn.key-eq { background: var(--blue); color: #FFF; border-color: var(--blue); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
   .key-btn.key-wide { grid-column: span 2; }
   .key-btn.key-full { grid-column: span 4; }
   .calc-keyboard.scientific-grid .key-btn.key-full { grid-column: span 5; }
@@ -508,29 +673,39 @@
   /* Sub tool pills inside calculators */
   .pill-tabs {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 8px;
+    padding: 4px 2px 10px;
     margin-bottom: 14px;
     scrollbar-width: none;
   }
   .pill-tabs::-webkit-scrollbar { display: none; }
   .pill-tab {
-    padding: 6px 12px;
-    border-radius: 16px;
+    padding: 7px 15px;
+    border-radius: 22px;
     border: 1px solid var(--card-border);
     background: var(--surface);
     color: var(--ink-soft);
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .pill-tab:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-1px);
   }
   .pill-tab.active {
     background: var(--blue);
     color: #FFF;
     border-color: var(--blue);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.32);
   }
 
   /* History & Formula Lists */
@@ -2023,89 +2198,106 @@
   <!-- ============================================== -->
   <section id="section-dashboard" class="section-view active">
     <div class="dashboard-grid">
-      <div class="dash-card" data-target="basic">
-        <span class="card-icon">🧮</span>
-        <div class="card-title">সাধারণ ক্যালকুলেটর</div>
-        <div class="card-sub">যোগ, বিয়োগ, গুণ, ভাগ ও বন্ধনী</div>
+      <!-- 1. Basic Calculator -->
+      <div class="dash-card" data-target="basic" style="border:1.5px solid #3B82F6; background:linear-gradient(135deg, var(--surface) 0%, rgba(59,130,246,0.08) 100%);">
+        <span class="card-icon" style="background:#DBEAFE; color:#1D4ED8;">🧮</span>
+        <div class="card-title" style="color:#2563EB; font-weight:700;">সাধারণ ক্যালকুলেটর</div>
+        <div class="card-sub">যোগ, বিয়োগ, গুণ, ভাগ ও বন্ধনী হিসাব</div>
       </div>
-      <div class="dash-card" data-target="scientific">
-        <span class="card-icon">🔬</span>
-        <div class="card-title">সায়েন্টিফিক ক্যালকুলেটর</div>
-        <div class="card-sub">ত্রিকোণমিতি, লগ, ঘাত ও ফ্যাক্টোরিয়াল</div>
-      </div>
-      <div class="dash-card" data-target="percentage">
-        <span class="card-icon">📊</span>
-        <div class="card-title">শতকরা ক্যালকুলেটর</div>
-        <div class="card-sub">ডিসকাউন্ট, ভ্যাট, লাভ-ক্ষতি ও বৃদ্ধি/হ্রাস</div>
-      </div>
-      <div class="dash-card" data-target="finance">
-        <span class="card-icon">💰</span>
-        <div class="card-title">ফিন্যান্স ক্যালকুলেটর</div>
-        <div class="card-sub">মুনাফা, লোন EMI, DPS ও FDR</div>
-      </div>
-      <div class="dash-card" data-target="age">
-        <span class="card-icon">🎂</span>
-        <div class="card-title">বয়স ও তারিখ</div>
-        <div class="card-sub">সঠিক বয়স, ব্যবধান ও দিন যোগ/বিয়োগ</div>
-      </div>
-      <div class="dash-card" data-target="geometry">
-        <span class="card-icon">📐</span>
-        <div class="card-title">জ্যামিতি ক্যালকুলেটর</div>
-        <div class="card-sub">১১টি আকারের ক্ষেত্রফল, পরিসীমা ও আয়তন</div>
-      </div>
-      <div class="dash-card" data-target="algebra">
-        <span class="card-icon">🔢</span>
-        <div class="card-title">বীজগণিত টুলস</div>
-        <div class="card-sub">সমীকরণ, লসাগু, গসাগু, মৌলিক ও গড়</div>
-      </div>
-      <div class="dash-card" data-target="fraction">
-        <span class="card-icon">➗</span>
-        <div class="card-title">ভগ্নাংশ ক্যালকুলেটর</div>
-        <div class="card-sub">ভগ্নাংশের যোগ-বিয়োগ, মিশ্র ও দশমিক</div>
-      </div>
-      <div class="dash-card" data-target="converter">
-        <span class="card-icon">⚖️</span>
-        <div class="card-title">একক রূপান্তর</div>
-        <div class="card-sub">দৈর্ঘ্য, ওজন, আয়তন, তাপমাত্রা ও ডাটা</div>
-      </div>
-      <div class="dash-card" data-target="bangladesh">
-        <span class="card-icon">🇧🇩</span>
-        <div class="card-title">বাংলাদেশ টুলস</div>
-        <div class="card-sub">টাকা কথায়, জমির মাপ, মণ-সের ও সংখ্যা রূপান্তর</div>
-      </div>
+      <!-- 2. QR Code Scanner & Maker -->
       <div class="dash-card" data-target="qrcode" style="border:1.5px solid var(--blue); background:linear-gradient(135deg, var(--surface) 0%, var(--blue-light) 100%);">
-        <span class="card-icon">📷</span>
+        <span class="card-icon" style="background:#DBEAFE; color:#1D4ED8;">📷</span>
         <div class="card-title" style="color:var(--blue-dark); font-weight:700;">QR কোড স্ক্যানার ও মেকার</div>
         <div class="card-sub">ক্যামেরা ও ছবি দিয়ে সরাসরি QR স্ক্যান এবং যেকোনো তথ্যের QR কোড তৈরি</div>
       </div>
-      <div class="dash-card" data-target="health" style="border:1.5px solid #EF4444; background:linear-gradient(135deg, var(--surface) 0%, rgba(239,68,68,0.08) 100%);">
-        <span class="card-icon">❤️</span>
-        <div class="card-title" style="color:#DC2626; font-weight:700;">স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</div>
-        <div class="card-sub">BMI, BMR, দৈনিক ক্যালোরি, আদর্শ ওজন, বডি ফ্যাট, পানি ও ম্যাক্রো ডায়েট</div>
-      </div>
-      <div class="dash-card" data-target="currency"  style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
-        <span class="card-icon">💱</span>
+      <!-- 3. Currency Converter -->
+      <div class="dash-card" data-target="currency" style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
+        <span class="card-icon" style="background:#D1FAE5; color:#065F46;">💱</span>
         <div class="card-title" style="color:#047857; font-weight:700;">কারেন্সি কনভার্টার</div>
         <div class="card-sub">ডলার, রিয়াল, ইউরো, পাউন্ড সহ ১৭+ আন্তর্জাতিক মুদ্রার টাকার বিনিময় হার</div>
       </div>
-      <div class="dash-card" data-target="custom">
-        <span class="card-icon">🧩</span>
-        <div class="card-title">কাস্টম সূত্র</div>
+      <!-- 4. Health & Fitness -->
+      <div class="dash-card" data-target="health" style="border:1.5px solid #EF4444; background:linear-gradient(135deg, var(--surface) 0%, rgba(239,68,68,0.08) 100%);">
+        <span class="card-icon" style="background:#FEE2E2; color:#B91C1C;">❤️</span>
+        <div class="card-title" style="color:#DC2626; font-weight:700;">স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</div>
+        <div class="card-sub">BMI, BMR, দৈনিক ক্যালোরি, আদর্শ ওজন, বডি ফ্যাট, পানি ও ম্যাক্রো ডায়েট</div>
+      </div>
+      <!-- 5. Scientific Calculator -->
+      <div class="dash-card" data-target="scientific" style="border:1.5px solid #8B5CF6; background:linear-gradient(135deg, var(--surface) 0%, rgba(139,92,246,0.08) 100%);">
+        <span class="card-icon" style="background:#EDE9FE; color:#6D28D9;">🔬</span>
+        <div class="card-title" style="color:#7C3AED; font-weight:700;">সায়েন্টিফিক ক্যালকুলেটর</div>
+        <div class="card-sub">ত্রিকোণমিতি, লগ, ঘাত ও ফ্যাক্টোরিয়াল</div>
+      </div>
+      <!-- 6. Percentage Calculator -->
+      <div class="dash-card" data-target="percentage" style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
+        <span class="card-icon" style="background:#D1FAE5; color:#065F46;">📊</span>
+        <div class="card-title" style="color:#059669; font-weight:700;">শতকরা ক্যালকুলেটর</div>
+        <div class="card-sub">ডিসকাউন্ট, ভ্যাট, লাভ-ক্ষতি ও বৃদ্ধি/হ্রাস</div>
+      </div>
+      <!-- 7. Finance Calculator -->
+      <div class="dash-card" data-target="finance" style="border:1.5px solid #F59E0B; background:linear-gradient(135deg, var(--surface) 0%, rgba(245,158,11,0.08) 100%);">
+        <span class="card-icon" style="background:#FEF3C7; color:#92400E;">💰</span>
+        <div class="card-title" style="color:#D97706; font-weight:700;">ফিন্যান্স ক্যালকুলেটর</div>
+        <div class="card-sub">মুনাফা, লোন EMI, DPS ও FDR সঞ্চয়</div>
+      </div>
+      <!-- 8. Age & Date -->
+      <div class="dash-card" data-target="age" style="border:1.5px solid #A855F7; background:linear-gradient(135deg, var(--surface) 0%, rgba(168,85,247,0.08) 100%);">
+        <span class="card-icon" style="background:#F3E8FF; color:#7E22CE;">🎂</span>
+        <div class="card-title" style="color:#9333EA; font-weight:700;">বয়স ও তারিখ</div>
+        <div class="card-sub">সঠিক বয়স, ব্যবধান ও দিন যোগ/বিয়োগ</div>
+      </div>
+      <!-- 9. Geometry -->
+      <div class="dash-card" data-target="geometry" style="border:1.5px solid #0EA5E9; background:linear-gradient(135deg, var(--surface) 0%, rgba(14,165,233,0.08) 100%);">
+        <span class="card-icon" style="background:#E0F2FE; color:#0369A1;">📐</span>
+        <div class="card-title" style="color:#0284C7; font-weight:700;">জ্যামিতি ক্যালকুলেটর</div>
+        <div class="card-sub">১১টি আকারের ক্ষেত্রফল, পরিসীমা ও আয়তন</div>
+      </div>
+      <!-- 10. Algebra -->
+      <div class="dash-card" data-target="algebra" style="border:1.5px solid #6366F1; background:linear-gradient(135deg, var(--surface) 0%, rgba(99,102,241,0.08) 100%);">
+        <span class="card-icon" style="background:#E0E7FF; color:#3730A3;">🔢</span>
+        <div class="card-title" style="color:#4F46E5; font-weight:700;">বীজগণিত টুলস</div>
+        <div class="card-sub">সমীকরণ, লসাগু, গসাগু, মৌলিক ও গড়</div>
+      </div>
+      <!-- 11. Fraction -->
+      <div class="dash-card" data-target="fraction" style="border:1.5px solid #EC4899; background:linear-gradient(135deg, var(--surface) 0%, rgba(236,72,153,0.08) 100%);">
+        <span class="card-icon" style="background:#FCE7F3; color:#9D174D;">➗</span>
+        <div class="card-title" style="color:#DB2777; font-weight:700;">ভগ্নাংশ ক্যালকুলেটর</div>
+        <div class="card-sub">ভগ্নাংশের যোগ-বিয়োগ, মিশ্র ও দশমিক</div>
+      </div>
+      <!-- 12. Unit Converter -->
+      <div class="dash-card" data-target="converter" style="border:1.5px solid #14B8A6; background:linear-gradient(135deg, var(--surface) 0%, rgba(20,184,166,0.08) 100%);">
+        <span class="card-icon" style="background:#CCFBF1; color:#115E59;">⚖️</span>
+        <div class="card-title" style="color:#0D9488; font-weight:700;">একক রূপান্তর</div>
+        <div class="card-sub">দৈর্ঘ্য, ওজন, আয়তন, তাপমাত্রা ও ডাটা</div>
+      </div>
+      <!-- 13. Bangladesh Tools -->
+      <div class="dash-card" data-target="bangladesh" style="border:1.5px solid #059669; background:linear-gradient(135deg, var(--surface) 0%, rgba(5,150,105,0.09) 100%);">
+        <span class="card-icon" style="background:#D1FAE5; color:#065F46;">🇧🇩</span>
+        <div class="card-title" style="color:#047857; font-weight:700;">বাংলাদেশ টুলস</div>
+        <div class="card-sub">টাকা কথায়, জমির মাপ, মণ-সের ও সংখ্যা রূপান্তর</div>
+      </div>
+      <!-- 14. Custom Formula -->
+      <div class="dash-card" data-target="custom" style="border:1.5px solid #F97316; background:linear-gradient(135deg, var(--surface) 0%, rgba(249,115,22,0.08) 100%);">
+        <span class="card-icon" style="background:#FFEDD5; color:#9A3412;">🧩</span>
+        <div class="card-title" style="color:#EA580C; font-weight:700;">কাস্টম সূত্র</div>
         <div class="card-sub">নিজের সূত্র লিখুন, সেভ করুন ও হিসাব করুন</div>
       </div>
-      <div class="dash-card" data-target="history">
-        <span class="card-icon">📜</span>
-        <div class="card-title">হিসাবের ইতিহাস</div>
+      <!-- 15. History -->
+      <div class="dash-card" data-target="history" style="border:1.5px solid #64748B; background:linear-gradient(135deg, var(--surface) 0%, rgba(100,116,139,0.08) 100%);">
+        <span class="card-icon" style="background:#F1F5F9; color:#334155;">📜</span>
+        <div class="card-title" style="color:#475569; font-weight:700;">হিসাবের ইতিহাস</div>
         <div class="card-sub">সব ক্যালকুলেটরের হিস্ট্রি ও ফেভারিট</div>
       </div>
+      <!-- 16. App Stats & Ratings -->
       <div class="dash-card" data-target="appstats" style="border:1.5px solid #F59E0B; background:linear-gradient(135deg, var(--surface) 0%, rgba(245,158,11,0.08) 100%);">
-        <span class="card-icon">⭐</span>
+        <span class="card-icon" style="background:#FEF3C7; color:#92400E;">⭐</span>
         <div class="card-title" style="color:#B45309; font-weight:700;">ডাউনলোড, শেয়ার ও ইউজার রেটিং</div>
         <div class="card-sub">২৫,৮৫০+ ডাউনলোড • ৩,৪২০+ শেয়ার • ৪.৮★ ইউজার রিভিউ</div>
       </div>
-      <div class="dash-card" data-target="settings">
-        <span class="card-icon">⚙️</span>
-        <div class="card-title">সেটিংস</div>
+      <!-- 17. Settings -->
+      <div class="dash-card" data-target="settings" style="border:1.5px solid #8B5CF6; background:linear-gradient(135deg, var(--surface) 0%, rgba(139,92,246,0.08) 100%);">
+        <span class="card-icon" style="background:#EDE9FE; color:#6D28D9;">⚙️</span>
+        <div class="card-title" style="color:#6D28D9; font-weight:700;">সেটিংস</div>
         <div class="card-sub">থিম, ফন্ট সাইজ, দশমিক ও প্রিফারেন্স</div>
       </div>
     </div>
@@ -2115,6 +2307,17 @@
   <!-- 1. BASIC CALCULATOR                            -->
   <!-- ============================================== -->
   <section id="section-basic" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card basic-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🧮</span> সাধারণ ক্যালকুলেটর (Standard)</h2>
+          <p class="section-hero-desc">দৈনন্দিন সাধারণ হিসাব, যোগ, বিয়োগ, গুণ, ভাগ ও বন্ধনী হিসাব</p>
+        </div>
+        <span class="section-hero-badge" style="background:#DBEAFE; color:#1D4ED8;">স্মার্ট এক্সপ্রেশন</span>
+      </div>
+    </div>
+
     <div class="calc-container">
       <div class="calc-screen">
         <div class="screen-mode">
@@ -2164,6 +2367,17 @@
   <!-- 2. SCIENTIFIC CALCULATOR                       -->
   <!-- ============================================== -->
   <section id="section-scientific" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card sci-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🔬</span> সায়েন্টিফিক ক্যালকুলেটর (Scientific)</h2>
+          <p class="section-hero-desc">ত্রিকোণমিতি (sin, cos, tan), লগারিদম, সূচক (xʸ), বর্গমূল ও ফ্যাক্টোরিয়াল</p>
+        </div>
+        <span class="section-hero-badge" style="background:#EDE9FE; color:#6D28D9;">ডিগ্রি / রেডিয়ান</span>
+      </div>
+    </div>
+
     <div class="calc-container">
       <div class="calc-screen">
         <div class="screen-mode">
@@ -2230,14 +2444,25 @@
   <!-- 3. PERCENTAGE CALCULATOR                       -->
   <!-- ============================================== -->
   <section id="section-percentage" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card pct-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📊</span> শতকরা ক্যালকুলেটর (Percentage)</h2>
+          <p class="section-hero-desc">যেকোনো সংখ্যার শতকরা, বৃদ্ধি/হ্রাস, ডিসকাউন্ট, ভ্যাট ও লাভ-ক্ষতি নির্ভুল হিসাব</p>
+        </div>
+        <span class="section-hero-badge" style="background:#D1FAE5; color:#065F46;">৭টি ফর্মুলা টুলস</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab pct-subtab active" data-target="a">A. X এর Y%</button>
-      <button class="pill-tab pct-subtab" data-target="b">B. X কত শতাংশ</button>
-      <button class="pill-tab pct-subtab" data-target="c">C. % বৃদ্ধি</button>
-      <button class="pill-tab pct-subtab" data-target="d">D. % হ্রাস</button>
-      <button class="pill-tab pct-subtab" data-target="e">E. ডিসকাউন্ট</button>
-      <button class="pill-tab pct-subtab" data-target="f">F. ভ্যাট</button>
-      <button class="pill-tab pct-subtab" data-target="g">G. লাভ-ক্ষতি</button>
+      <button class="pill-tab pct-subtab active" data-target="a">📊 X এর Y%</button>
+      <button class="pill-tab pct-subtab" data-target="b">📈 X কত %</button>
+      <button class="pill-tab pct-subtab" data-target="c">🔺 % বৃদ্ধি</button>
+      <button class="pill-tab pct-subtab" data-target="d">🔻 % হ্রাস</button>
+      <button class="pill-tab pct-subtab" data-target="e">🏷️ ডিসকাউন্ট</button>
+      <button class="pill-tab pct-subtab" data-target="f">🧾 ভ্যাট (VAT)</button>
+      <button class="pill-tab pct-subtab" data-target="g">💼 লাভ-ক্ষতি</button>
     </div>
 
     <!-- A: X এর Y% কত? -->
@@ -2364,12 +2589,23 @@
   <!-- 4. FINANCE CALCULATOR                          -->
   <!-- ============================================== -->
   <section id="section-finance" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card fin-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>💰</span> ফিন্যান্স ও ব্যাংক ক্যালকুলেটর (Finance)</h2>
+          <p class="section-hero-desc">সরল ও চক্রবৃদ্ধি মুনাফা, ব্যাংক লোন EMI, ডিপিএস (DPS) এবং এফডিআর (FDR) হিসাব</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEF3C7; color:#92400E;">৫টি আর্থিক ক্যালকুলেটর</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab fin-subtab active" data-target="a">সরল মুনাফা (SI)</button>
-      <button class="pill-tab fin-subtab" data-target="b">চক্রবৃদ্ধি মুনাফা (CI)</button>
-      <button class="pill-tab fin-subtab" data-target="c">লোন EMI</button>
-      <button class="pill-tab fin-subtab" data-target="d">DPS ক্যালকুলেটর</button>
-      <button class="pill-tab fin-subtab" data-target="e">FDR ক্যালকুলেটর</button>
+      <button class="pill-tab fin-subtab active" data-target="a">💵 সরল মুনাফা (SI)</button>
+      <button class="pill-tab fin-subtab" data-target="b">📈 চক্রবৃদ্ধি (CI)</button>
+      <button class="pill-tab fin-subtab" data-target="c">💳 লোন EMI</button>
+      <button class="pill-tab fin-subtab" data-target="d">🏦 DPS সঞ্চয়</button>
+      <button class="pill-tab fin-subtab" data-target="e">🔒 FDR মেয়াদি</button>
     </div>
 
     <!-- Simple Interest -->
@@ -2446,10 +2682,21 @@
   <!-- 5. AGE & DATE CALCULATOR                       -->
   <!-- ============================================== -->
   <section id="section-age" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card age-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🎂</span> বয়স ও তারিখ ক্যালকুলেটর (Age & Date)</h2>
+          <p class="section-hero-desc">বছর, মাস, দিন, ঘণ্টা ও মিনিটে বয়স, দুটি তারিখের ব্যবধান এবং দিন যোগ/বিয়োগ</p>
+        </div>
+        <span class="section-hero-badge" style="background:#F3E8FF; color:#7E22CE;">সঠিক সময় হিসাব</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab age-subtab active" data-target="exact">বয়স গণনা</button>
-      <button class="pill-tab age-subtab" data-target="diff">তারিখের ব্যবধান</button>
-      <button class="pill-tab age-subtab" data-target="add">দিন যোগ / বিয়োগ</button>
+      <button class="pill-tab age-subtab active" data-target="exact">🎂 বয়স গণনা</button>
+      <button class="pill-tab age-subtab" data-target="diff">📅 তারিখের ব্যবধান</button>
+      <button class="pill-tab age-subtab" data-target="add">➕ দিন যোগ / বিয়োগ</button>
     </div>
 
     <!-- Exact Age -->
@@ -2495,6 +2742,32 @@
   <!-- 6. GEOMETRY CALCULATOR                         -->
   <!-- ============================================== -->
   <section id="section-geometry" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card geom-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📐</span> জ্যামিতি ক্যালকুলেটর (Geometry)</h2>
+          <p class="section-hero-desc">১১টি দ্বিমাত্রিক ও ত্রিমাত্রিক আকারের ক্ষেত্রফল, পরিসীমা ও আয়তন নিখুঁত নির্ণয়</p>
+        </div>
+        <span class="section-hero-badge" style="background:#E0F2FE; color:#0369A1;">১১টি জ্যামিতিক আকার</span>
+      </div>
+    </div>
+
+    <!-- Shape Sub-tabs matching Health/QR pill style -->
+    <div class="pill-tabs" id="geomShapePills">
+      <button type="button" class="pill-tab geom-subtab active" data-shape="square">⏹️ বর্গক্ষেত্র</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="rectangle">▭ আয়তক্ষেত্র</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="triangle">△ ত্রিভুজ</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="circle">◯ বৃত্ত</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="parallelogram">▱ সামান্তরিক</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="trapezium">⏢ ট্রাপিজিয়াম</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cube">🧊 ঘনক</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cuboid">📦 আয়তাকার ঘনবস্তু</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cylinder">🛢️ সিলিন্ডার</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cone">🍦 কোণক</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="sphere">⚽ গোলক</button>
+    </div>
+
     <div class="tool-card">
       <h3>জ্যামিতি ক্যালকুলেটর (Geometry)</h3>
       <p class="desc">আকার নির্বাচন করুন এবং প্রয়োজনীয় মান দিন</p>
@@ -2524,13 +2797,24 @@
   <!-- 7. ALGEBRA CALCULATOR                          -->
   <!-- ============================================== -->
   <section id="section-algebra" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card alg-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🔢</span> বীজগণিত ক্যালকুলেটর (Algebra)</h2>
+          <p class="section-hero-desc">রৈখিক ও দ্বিঘাত সমীকরণ, লসাগু-গসাগু, মৌলিক সংখ্যা ও পরিসংখ্যান গড়</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEE2E2; color:#B91C1C;">৬টি বীজগণিত টুলস</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab alg-subtab active" data-target="linear">রৈখিক সমীকরণ</button>
-      <button class="pill-tab alg-subtab" data-target="quad">দ্বিঘাত সমীকরণ</button>
-      <button class="pill-tab alg-subtab" data-target="lcm">লসাগু ও গসাগু</button>
-      <button class="pill-tab alg-subtab" data-target="prime">মৌলিক সংখ্যা</button>
-      <button class="pill-tab alg-subtab" data-target="factor">উৎপাদক</button>
-      <button class="pill-tab alg-subtab" data-target="avg">গড় ও পরিসংখ্যান</button>
+      <button class="pill-tab alg-subtab active" data-target="linear">📏 রৈখিক সমীকরণ</button>
+      <button class="pill-tab alg-subtab" data-target="quad">🔲 দ্বিঘাত সমীকরণ</button>
+      <button class="pill-tab alg-subtab" data-target="lcm">🔢 লসাগু ও গসাগু</button>
+      <button class="pill-tab alg-subtab" data-target="prime">✨ মৌলিক সংখ্যা</button>
+      <button class="pill-tab alg-subtab" data-target="factor">🧩 উৎপাদক</button>
+      <button class="pill-tab alg-subtab" data-target="avg">📊 গড় ও পরিসংখ্যান</button>
     </div>
 
     <!-- Linear: ax + b = c -->
@@ -2596,9 +2880,28 @@
   <!-- 8. FRACTION CALCULATOR                         -->
   <!-- ============================================== -->
   <section id="section-fraction" class="section-view">
-    <div class="tool-card">
-      <h3>ভগ্নাংশ ক্যালকুলেটর (Fraction)</h3>
-      <p class="desc">দুটি ভগ্নাংশের যোগ, বিয়োগ, গুণ ও ভাগ</p>
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card frac-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>½</span> ভগ্নাংশ ক্যালকুলেটর (Fraction)</h2>
+          <p class="section-hero-desc">দুটি সাধারণ ভগ্নাংশের যোগ, বিয়োগ, গুণ, ভাগ, মিশ্র রূপান্তর ও সরলীকরণ</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEF3C7; color:#B45309;">লব ও হর হিসাব</span>
+      </div>
+    </div>
+
+    <!-- Fraction Sub-tabs matching Health/QR pill style -->
+    <div class="pill-tabs" id="fracTabs">
+      <button type="button" class="pill-tab frac-subtab active" data-target="basic">➗ সাধারণ ভগ্নাংশ</button>
+      <button type="button" class="pill-tab frac-subtab" data-target="mixed">🔄 মিশ্র ↔ অপ্রকৃত</button>
+      <button type="button" class="pill-tab frac-subtab" data-target="decimal">📊 ভগ্নাংশ ↔ দশমিক</button>
+    </div>
+
+    <!-- 1: Basic Fractions -->
+    <div id="frac-view-basic" class="frac-view tool-card">
+      <h3>সাধারণ ভগ্নাংশ অপারেশন (+, −, ×, ÷)</h3>
+      <p class="desc">দুটি ভগ্নাংশের যোগ, বিয়োগ, গুণ ও ভাগ নির্ণয় করুন</p>
       <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:14px;">
         <div style="width:75px;">
           <input type="number" id="frac_n1" class="form-control mono-font" placeholder="লব ১" value="1">
@@ -2620,12 +2923,69 @@
       <button class="btn btn-primary" id="btnCalcFract">ভগ্নাংশ হিসাব করুন</button>
       <div class="result-box" id="resFraction"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
     </div>
+
+    <!-- 2: Mixed Fraction Converter -->
+    <div id="frac-view-mixed" class="frac-view tool-card" style="display:none;">
+      <h3>মিশ্র ↔ অপ্রকৃত ভগ্নাংশ রূপান্তর</h3>
+      <p class="desc">পূর্ণ সংখ্যা ও ভগ্নাংশ দিয়ে মিশ্র ভগ্নাংশকে অপ্রকৃত ভগ্নাংশে রূপান্তর করুন</p>
+      <div class="form-row" style="margin-bottom:12px;">
+        <div class="form-group" style="flex:1;">
+          <label class="form-label">পূর্ণ সংখ্যা (Whole)</label>
+          <input type="number" id="fracMixedWhole" class="form-control mono-font" placeholder="২" value="2">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label class="form-label">লব (Numerator)</label>
+          <input type="number" id="fracMixedNum" class="form-control mono-font" placeholder="৩" value="3">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label class="form-label">হর (Denominator)</label>
+          <input type="number" id="fracMixedDen" class="form-control mono-font" placeholder="৪" value="4">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btnCalcMixedFrac">মিশ্র রূপান্তর করুন</button>
+      <div class="result-box" id="resMixedFraction"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+    </div>
+
+    <!-- 3: Decimal <-> Fraction Converter -->
+    <div id="frac-view-decimal" class="frac-view tool-card" style="display:none;">
+      <h3>ভগ্নাংশ ↔ দশমিক রূপান্তর</h3>
+      <p class="desc">যেকোনো দশমিক সংখ্যা দিন ভগ্নাংশে রূপান্তর করতে, অথবা লব/হর দিন দশমিকে রূপান্তর করতে</p>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label class="form-label">দশমিক সংখ্যা (যেমন: 0.75 বা 0.375)</label>
+        <input type="number" step="any" id="fracDecInput" class="form-control mono-font" placeholder="যেমন: ০.৭৫" value="0.75">
+      </div>
+      <button class="btn btn-primary" id="btnCalcDecToFrac">দশমিক থেকে ভগ্নাংশ করুন</button>
+      <div class="result-box" id="resDecToFrac"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+    </div>
   </section>
 
   <!-- ============================================== -->
   <!-- 9. UNIT CONVERTER                              -->
   <!-- ============================================== -->
   <section id="section-converter" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card conv-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🔄</span> একক রূপান্তর (Unit Converter)</h2>
+          <p class="section-hero-desc">দৈর্ঘ্য, ওজন, ক্ষেত্রফল, আয়তন, তাপমাত্রা, সময়, গতিবেগ ও ডাটা রূপান্তর</p>
+        </div>
+        <span class="section-hero-badge" style="background:#DCFCE7; color:#15803D;">৮টি ক্যাটাগরি</span>
+      </div>
+    </div>
+
+    <!-- Category Sub-tabs matching Health/QR pill style -->
+    <div class="pill-tabs" id="unitCategoryPills">
+      <button type="button" class="pill-tab unit-subtab active" data-cat="length">📏 দৈর্ঘ্য</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="weight">⚖️ ওজন</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="area">📐 ক্ষেত্রফল</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="volume">🧊 আয়তন</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="temperature">🌡️ তাপমাত্রা</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="time">⏱️ সময়</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="speed">🚀 গতিবেগ</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="data">💾 ডাটা</button>
+    </div>
+
     <div class="tool-card">
       <h3>একক রূপান্তর (Unit Converter)</h3>
       <div class="form-group">
@@ -2657,13 +3017,24 @@
   <!-- 10. BANGLADESH TOOLS 🇧🇩                       -->
   <!-- ============================================== -->
   <section id="section-bangladesh" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card bd-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🇧🇩</span> বাংলাদেশ স্পেশাল টুলস (BD Tools)</h2>
+          <p class="section-hero-desc">টাকা কথায় রূপান্তর, বাংলা-ইংরেজি সংখ্যা, শতক-বিঘা জমির মাপ ও মণ-সের ওজন</p>
+        </div>
+        <span class="section-hero-badge" style="background:#DCFCE7; color:#166534;">দেশীয় পরিমাপ</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab bd-subtab active" data-target="taka">টাকা কথায়</button>
-      <button class="pill-tab bd-subtab" data-target="digits">বাংলা ↔ English সংখ্যা</button>
-      <button class="pill-tab bd-subtab" data-target="land">জমির পরিমাপ</button>
-      <button class="pill-tab bd-subtab" data-target="weight">মণ-সের-ভরি ওজন</button>
-      <button class="pill-tab bd-subtab" data-target="height">উচ্চতা কনভার্টার</button>
-      <button class="pill-tab bd-subtab" data-target="qrcode">কিউআর কোড (QR Code)</button>
+      <button class="pill-tab bd-subtab active" data-target="taka">💵 টাকা কথায়</button>
+      <button class="pill-tab bd-subtab" data-target="digits">🔤 বাংলা ↔ EN সংখ্যা</button>
+      <button class="pill-tab bd-subtab" data-target="land">🌾 জমির পরিমাপ</button>
+      <button class="pill-tab bd-subtab" data-target="weight">⚖️ মণ-সের-ভরি ওজন</button>
+      <button class="pill-tab bd-subtab" data-target="height">📏 উচ্চতা কনভার্টার</button>
+      <button class="pill-tab bd-subtab" data-target="qrcode">📷 কিউআর কোড</button>
     </div>
 
     <!-- Taka in words -->
@@ -2766,12 +3137,40 @@
       <div class="result-box" id="resHeight"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
     </div>
 
+    <!-- QR Code Quick Launcher View inside BD tools -->
+    <div id="bd-view-qrcode" class="bd-view tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">কিউআর কোড স্ক্যানার ও জেনারেটর (QR Tools)</h3>
+        <span class="section-hero-badge" style="background:#dbeafe; color:#1d4ed8;">স্মার্ট কিউআর</span>
+      </div>
+      <p class="desc">মোবাইলের ক্যামেরা দিয়ে যেকোনো কিউআর কোড স্ক্যান করুন অথবা বিকাশ/নগদ পেমেন্ট, ওয়াইফাই ও ওয়েবসাইটের কিউআর তৈরি করুন।</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0;">
+        <button type="button" class="btn btn-primary" onclick="window.navigateTo('qrcode', 'qr', 'scanner')" style="padding:14px; font-size:13.5px;">
+          📷 কিউআর স্ক্যানার খুলুন
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="window.navigateTo('qrcode', 'qr', 'generator')" style="padding:14px; font-size:13.5px;">
+          ✏️ কিউআর তৈরি করুন
+        </button>
+      </div>
+    </div>
+
   </section>
 
   <!-- ============================================== -->
   <!-- 11. QR CODE SCANNER & GENERATOR                -->
   <!-- ============================================== -->
   <section id="section-qrcode" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card qr-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📷</span> কিউআর কোড টুলস (QR Code Hub)</h2>
+          <p class="section-hero-desc">লাইভ ক্যামেরা ও ছবি স্ক্যানার, টেক্সট, ইউআরএল ও বিকাশ/নগদ কিউআর জেনারেটর</p>
+        </div>
+        <span class="section-hero-badge" style="background:#E0E7FF; color:#3730A3;">স্ক্যানার ও জেনারেটর</span>
+      </div>
+    </div>
+
     <div class="pill-tabs" style="margin-bottom:12px;">
       <button type="button" class="pill-tab qr-subtab active" data-qrtab="scanner">📷 কিউআর স্ক্যানার (Scanner)</button>
       <button type="button" class="pill-tab qr-subtab" data-qrtab="generator">✏️ কিউআর জেনারেটর (Generator)</button>
@@ -2906,14 +3305,18 @@
   <!-- 12. CURRENCY CONVERTER                         -->
   <!-- ============================================== -->
   <section id="section-currency" class="section-view">
-    <div class="tool-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3 style="margin:0; font-size:18px; display:flex; align-items:center; gap:8px;">
-          <span>💱</span> কারেন্সি কনভার্টার (Currency Converter)
-        </h3>
-        <span class="badge" id="currRateSyncBadge" style="background:#d1fae5; color:#065f46; font-weight:600; padding:3px 10px; border-radius:12px; font-size:12px;">রেট: আপডেট</span>
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card curr-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>💱</span> কারেন্সি কনভার্টার (Currency Converter)</h2>
+          <p class="section-hero-desc">বাংলাদেশি টাকা (BDT) ও বিশ্বের জনপ্রিয় সকল বৈদেশিক মুদ্রার রিয়েল-টাইম ও অফলাইন বিনিময় হার</p>
+        </div>
+        <span class="section-hero-badge" id="currRateSyncBadge" style="background:#d1fae5; color:#065f46;">রেট: আপডেট</span>
       </div>
-      <p class="desc">বাংলাদেশি টাকা (BDT) ও বিশ্বের জনপ্রিয় সকল বৈদেশিক মুদ্রার রিয়েল-টাইম এবং অফলাইন বিনিময় হার রূপান্তর করুন।</p>
+    </div>
+
+    <div class="tool-card">
 
       <div style="background:var(--surface); border:1px solid var(--card-border); border-radius:var(--radius); padding:16px; margin:14px 0; box-shadow:var(--shadow-sm);">
         <div class="form-group" style="margin-bottom:12px;">
@@ -3006,24 +3409,23 @@
   <!-- 10.5 HEALTH & FITNESS CALCULATOR               -->
   <!-- ============================================== -->
   <section id="section-health" class="section-view">
-    <!-- Header & Profile Auto-Fill Card -->
-    <div class="tool-card" style="background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, var(--surface) 100%); border-left: 4px solid #EF4444; margin-bottom: 14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card health-theme">
+      <div class="section-hero-header">
         <div>
-          <h2 style="margin:0 0 3px; font-size:18px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:8px;">
-            <span>❤️</span> স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর
-          </h2>
-          <p style="margin:0; font-size:12px; color:var(--ink-soft);">
-            BMI, BMR, দৈনিক ক্যালোরি (TDEE), আদর্শ ওজন, বডি ফ্যাট %, পানির হিসাব ও ম্যাক্রো নিউট্রিয়েন্ট
-          </p>
+          <h2 class="section-hero-title"><span>❤️</span> স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</h2>
+          <p class="section-hero-desc">BMI, BMR, দৈনিক ক্যালোরি (TDEE), আদর্শ ওজন, বডি ফ্যাট %, পানির হিসাব ও ম্যাক্রো নিউট্রিয়েন্ট</p>
         </div>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnToggleHealthProfile" style="font-size:12px; padding:5px 12px; display:inline-flex; align-items:center; gap:4px;">
-          <span>⚙️</span> কুইক প্রোফাইল
-        </button>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="section-hero-badge" style="background:#fee2e2; color:#b91c1c;">ফিটনেস ও ডায়েট</span>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnToggleHealthProfile" style="font-size:12px; padding:5px 12px; display:inline-flex; align-items:center; gap:4px;">
+            <span>⚙️</span> কুইক প্রোফাইল
+          </button>
+        </div>
       </div>
 
       <!-- Collapsible Profile Bar -->
-      <div class="health-quick-profile" id="healthQuickProfile" style="margin-top:12px; padding:12px; background:var(--surface); border:1px dashed var(--card-border); border-radius:10px;">
+      <div class="health-quick-profile" id="healthQuickProfile" style="margin-top:12px; padding:12px; background:var(--surface); border:1px dashed var(--card-border); border-radius:12px;">
         <div style="font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:8px; display:flex; align-items:center; gap:5px;">
           <span>👤</span> <strong>আপনার তথ্য (সব ক্যালকুলেটরে এক ক্লিকে স্বয়ংক্রিয় পূরণ হবে):</strong>
         </div>
@@ -3520,6 +3922,17 @@
   <!-- 11. CUSTOM FORMULA                             -->
   <!-- ============================================== -->
   <section id="section-custom" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card custom-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🧪</span> কাস্টম সূত্র নির্মাতা (Custom Formulas)</h2>
+          <p class="section-hero-desc">যেকোনো গাণিতিক সূত্র নিজে লিখুন এবং স্বয়ংক্রিয় ইনপুট ফর্ম তৈরি করুন</p>
+        </div>
+        <span class="section-hero-badge" style="background:#EDE9FE; color:#6D28D9;">ডাইনামিক ফর্মুলা</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>নিজের কাস্টম সূত্র তৈরি করুন</h3>
       <div class="form-group">
@@ -3550,6 +3963,17 @@
   <!-- 12. GLOBAL HISTORY                             -->
   <!-- ============================================== -->
   <section id="section-history" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card hist-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📜</span> হিসাবের ইতিহাস (Global History)</h2>
+          <p class="section-hero-desc">পূর্ববর্তী সকল ক্যালকুলেশন ইতিহাস অনুসন্ধান, ফিল্টার ও এক্সপোর্ট করুন</p>
+        </div>
+        <span class="section-hero-badge" style="background:#F1F5F9; color:#475569;">অটো-সেভ হিস্ট্রি</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>হিসাবের ইতিহাস (Global History)</h3>
       <div class="form-row" style="margin-bottom:12px;">
@@ -3576,6 +4000,17 @@
   <!-- 13. FAVORITES                                  -->
   <!-- ============================================== -->
   <section id="section-favorites" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card fav-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>⭐</span> প্রিয় হিসাবসমূহ (Favorites)</h2>
+          <p class="section-hero-desc">আপনার পছন্দের ও বারবার প্রয়োজনীয় হিসাবগুলোর বুকমার্ক তালিকা</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEF3C7; color:#B45309;">তারকা চিহ্নিত</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>প্রিয় হিসাবসমূহ (Favorites ⭐)</h3>
       <p class="desc">গুরুত্বপূর্ণ হিসাবগুলো তারকা চিহ্নিত করে এখানে দ্রুত দেখতে পারবেন</p>
@@ -3587,6 +4022,17 @@
   <!-- 15. APP STATS & USER RATINGS                   -->
   <!-- ============================================== -->
   <section id="section-appstats" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card set-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📊</span> অ্যাপ ডাউনলোড ও ব্যবহারকারী পরিসংখ্যান</h2>
+          <p class="section-hero-desc">গাণিতিক ক্যালকুলেটর অ্যাপটির মোট ডাউনলোড, লাইভ শেয়ার ট্র্যাকার এবং নিয়মিত ব্যবহারকারীদের বাস্তব মতামত ও রেটিং</p>
+        </div>
+        <span class="section-hero-badge" style="background:#fef3c7; color:#b45309;">৪.৮★ শীর্ষ রেটিং</span>
+      </div>
+    </div>
+
     <!-- Hero Stats Card -->
     <div class="stats-hero-card">
       <div class="stats-hero-title">
@@ -3753,6 +4199,17 @@
   <!-- 14. SETTINGS                                   -->
   <!-- ============================================== -->
   <section id="section-settings" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card set-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>⚙️</span> অ্যাপ সেটিংস (Settings)</h2>
+          <p class="section-hero-desc">থিম, ফন্ট সাইজ, দশমিক সংখ্যা, অফলাইন ব্যাকআপ ও সাউন্ড নিয়ন্ত্রণ</p>
+        </div>
+        <span class="section-hero-badge" style="background:#E0E7FF; color:#3730A3;">কনফিগারেশন</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>অ্যাপ সেটিংস (Settings)</h3>
       <div class="form-group">
@@ -3825,11 +4282,10 @@
   </section>
 </div>
 
-<!-- Mobile Bottom Navigation Bar -->
-<nav class="bottom-nav">
+<!-- Mobile Bottom Navigation Bar (Fixed Core Tabs - New features must NOT be added here) -->
+<nav class="bottom-nav" id="mainBottomNav">
   <button class="nav-item active" data-target="dashboard"><span class="nav-icon">🏠</span>হোম</button>
   <button class="nav-item" data-target="basic"><span class="nav-icon">🧮</span>সাধারণ</button>
-  <button class="nav-item" data-target="health"><span class="nav-icon">❤️</span>ফিটনেস</button>
   <button class="nav-item" data-target="qrcode"><span class="nav-icon">📷</span>QR স্ক্যানার</button>
   <button class="nav-item" data-target="currency"><span class="nav-icon">💱</span>কারেন্সি</button>
   <button class="nav-item" data-target="history"><span class="nav-icon">📜</span>ইতিহাস</button>
@@ -5179,6 +5635,63 @@ function setupFractionCalc() {
       <div class="result-formula-text">হিসাব: (${toBn(n1)}/${toBn(d1)}) ${op} (${toBn(n2)}/${toBn(d2)})</div>`;
     addHistory("ভগ্নাংশ হিসাব", `(${toBn(n1)}/${toBn(d1)}) ${op} (${toBn(n2)}/${toBn(d2)})`, `${toBn(simNum)}/${toBn(simDen)}`);
   });
+
+  // Mixed Fraction Converter
+  const btnMixed = document.getElementById("btnCalcMixedFrac");
+  if (btnMixed) {
+    btnMixed.addEventListener("click", () => {
+      const w = parseInt(bnToLatin(document.getElementById("fracMixedWhole").value || "0"), 10);
+      const n = parseInt(bnToLatin(document.getElementById("fracMixedNum").value || "0"), 10);
+      const d = parseInt(bnToLatin(document.getElementById("fracMixedDen").value || "1"), 10);
+      const out = document.getElementById("resMixedFraction");
+      if (isNaN(w) || isNaN(n) || isNaN(d) || d === 0) {
+        out.innerHTML = '<span class="formula-error">সঠিক সংখ্যা দিন (হর শূন্য হতে পারবে না)</span>';
+        return;
+      }
+      const impNum = (Math.abs(w) * d) + n;
+      const finalNum = w < 0 ? -impNum : impNum;
+      const g = gcd(Math.abs(finalNum), Math.abs(d));
+      const simNum = finalNum / g;
+      const simDen = d / g;
+      const dec = simNum / simDen;
+
+      out.innerHTML = `<div>অপ্রকৃত ভগ্নাংশ (Improper): <strong>${toBn(simNum)} / ${toBn(simDen)}</strong></div>
+        <div>দশমিক মান: <strong>${formatNumber(dec)}</strong></div>
+        <div class="result-formula-text">সূত্র: (${toBn(w)} × ${toBn(d)} + ${toBn(n)}) / ${toBn(d)} = ${toBn(simNum)}/${toBn(simDen)}</div>`;
+      addHistory("মিশ্র ভগ্নাংশ", `${toBn(w)} পূর্ণ ${toBn(n)}/${toBn(d)}`, `${toBn(simNum)}/${toBn(simDen)}`);
+    });
+  }
+
+  // Decimal to Fraction Converter
+  const btnDecToFrac = document.getElementById("btnCalcDecToFrac");
+  if (btnDecToFrac) {
+    btnDecToFrac.addEventListener("click", () => {
+      const raw = bnToLatin(document.getElementById("fracDecInput").value.trim());
+      const val = parseFloat(raw);
+      const out = document.getElementById("resDecToFrac");
+      if (isNaN(val)) {
+        out.innerHTML = '<span class="formula-error">সঠিক দশমিক সংখ্যা দিন</span>';
+        return;
+      }
+      const len = (raw.split('.')[1] || '').length;
+      const den = Math.pow(10, len);
+      const num = Math.round(val * den);
+      const g = gcd(Math.abs(num), den);
+      const simNum = num / g;
+      const simDen = den / g;
+
+      let mixed = "";
+      if (Math.abs(simNum) >= simDen && simDen !== 1) {
+        const whole = Math.trunc(simNum / simDen);
+        const rem = Math.abs(simNum % simDen);
+        if (rem > 0) mixed = ` (মিশ্র: <strong>${toBn(whole)} পূর্ণ ${toBn(rem)}/${toBn(simDen)}</strong>)`;
+      }
+
+      out.innerHTML = `<div>ভগ্নাংশ মান: <strong>${toBn(simNum)} / ${toBn(simDen)}</strong>${mixed}</div>
+        <div>দশমিক মান: <strong>${formatNumber(val)}</strong></div>`;
+      addHistory("দশমিক থেকে ভগ্নাংশ", toBn(raw), `${toBn(simNum)}/${toBn(simDen)}`);
+    });
+  }
 }
 
 // ==========================================
@@ -7021,38 +7534,291 @@ function renderFavoritesUI() {
 // ==========================================
 // Settings, Themes & Navigation
 // ==========================================
-function setupSettingsAndNavigation() {
-  // Navigation Tabs & Views
-  function navigateTo(targetId) {
-    if (!targetId) return;
-    const targetSection = document.getElementById("section-" + targetId);
-    // If targetId is not a main section (e.g. subtabs like 'a', 'b', etc.), do NOT touch or hide the view!
-    if (!targetSection) {
-      console.warn("Section not found:", targetId);
+
+// Global Subtab Activator - switches any subtab smoothly
+window.activateSubtab = function(subtabType, subtabValue) {
+  if (!subtabType || !subtabValue) return;
+
+  // 1. Percentage
+  if (subtabType === "pct") {
+    const tab = document.querySelector(`.pct-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".pct-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".pct-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("pct-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 2. Finance
+  if (subtabType === "fin") {
+    const tab = document.querySelector(`.fin-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".fin-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".fin-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("fin-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 3. Age
+  if (subtabType === "age") {
+    const tab = document.querySelector(`.age-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".age-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".age-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("age-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 4. Algebra
+  if (subtabType === "alg") {
+    const tab = document.querySelector(`.alg-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".alg-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".alg-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("alg-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 5. Bangladesh
+  if (subtabType === "bd") {
+    const tab = document.querySelector(`.bd-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".bd-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".bd-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("bd-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 6. QR Code
+  if (subtabType === "qr" || subtabType === "qrcode") {
+    const tab = document.querySelector(`.qr-subtab[data-qrtab="${subtabValue}"]`);
+    document.querySelectorAll(".qr-subtab").forEach(t => t.classList.remove("active"));
+    if (tab) tab.classList.add("active");
+    if (subtabValue === "scanner") {
+      const vs = document.getElementById("qr-view-scanner");
+      const vg = document.getElementById("qr-view-generator");
+      if (vs) vs.style.display = "block";
+      if (vg) vg.style.display = "none";
+      if (typeof startCamera === "function") startCamera();
+    } else {
+      const vs = document.getElementById("qr-view-scanner");
+      const vg = document.getElementById("qr-view-generator");
+      if (vs) vs.style.display = "none";
+      if (vg) vg.style.display = "block";
+      if (typeof stopCamera === "function") stopCamera();
+    }
+    return;
+  }
+
+  // 7. Health Main Subtabs
+  if (subtabType === "health") {
+    const tab = document.querySelector(`.health-tab-btn[data-health="${subtabValue}"]`);
+    document.querySelectorAll(".health-tab-btn").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".health-subview").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("health-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 8. Health Others Subtabs
+  if (subtabType === "oth" || subtabType === "others") {
+    // activate health "others" first
+    window.activateSubtab("health", "others");
+    const tab = document.querySelector(`.others-tab-btn[data-oth="${subtabValue}"]`);
+    document.querySelectorAll(".others-tab-btn").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".oth-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("oth-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 9. Geometry
+  if (subtabType === "geom" || subtabType === "geometry") {
+    const tab = document.querySelector(`.geom-subtab[data-shape="${subtabValue}"]`);
+    document.querySelectorAll(".geom-subtab").forEach(t => t.classList.remove("active"));
+    if (tab) tab.classList.add("active");
+    const shapeSel = document.getElementById("geomShapeSelect");
+    if (shapeSel) {
+      shapeSel.value = subtabValue;
+      shapeSel.dispatchEvent(new Event("change"));
+    }
+    return;
+  }
+
+  // 10. Unit Converter
+  if (subtabType === "unit" || subtabType === "converter") {
+    const tab = document.querySelector(`.unit-subtab[data-cat="${subtabValue}"]`);
+    document.querySelectorAll(".unit-subtab").forEach(t => t.classList.remove("active"));
+    if (tab) tab.classList.add("active");
+    const catSel = document.getElementById("unitCategory");
+    if (catSel) {
+      catSel.value = subtabValue;
+      catSel.dispatchEvent(new Event("change"));
+    }
+    return;
+  }
+
+  // 11. Fraction
+  if (subtabType === "frac" || subtabType === "fraction") {
+    const tab = document.querySelector(`.frac-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".frac-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".frac-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("frac-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+};
+
+// Global Navigation Controller
+window.navigateTo = function(targetId, subtabType, subtabValue) {
+  if (!targetId) return;
+  const targetSection = document.getElementById("section-" + targetId);
+  if (!targetSection) {
+    console.warn("Section not found:", targetId);
+    return;
+  }
+
+  document.querySelectorAll(".section-view").forEach(v => v.classList.remove("active"));
+  document.querySelectorAll(".subnav-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+
+  targetSection.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const subnavBtn = document.querySelector(`.subnav-btn[data-target="${targetId}"]`);
+  if (subnavBtn) subnavBtn.classList.add("active");
+
+  const bottomBtn = document.querySelector(`.nav-item[data-target="${targetId}"]`);
+  if (bottomBtn) bottomBtn.classList.add("active");
+
+  if (targetId === "history" && typeof renderHistoryUI === "function") renderHistoryUI();
+  if (targetId === "favorites" && typeof renderFavoritesUI === "function") renderFavoritesUI();
+  if (targetId === "qrcode") {
+    if (window.onQRTabActivated) window.onQRTabActivated();
+  } else {
+    if (window.onQRTabDeactivated) window.onQRTabDeactivated();
+  }
+
+  // Ensure the active sub-view is visible inside the opened section
+  const activePill = targetSection.querySelector(".pill-tab.active");
+  if (activePill) {
+    const t = activePill.dataset.target || activePill.dataset.health || activePill.dataset.qrtab;
+    if (t) {
+      const candidates = ["pct-view-" + t, "fin-view-" + t, "age-view-" + t, "alg-view-" + t, "bd-view-" + t, "health-view-" + t, "qr-view-" + t, "frac-view-" + t];
+      for (const cid of candidates) {
+        const el = document.getElementById(cid);
+        if (el) { el.style.display = "block"; break; }
+      }
+    }
+  }
+
+  if (subtabType && subtabValue) {
+    setTimeout(() => {
+      window.activateSubtab(subtabType, subtabValue);
+    }, 30);
+  }
+};
+
+const navigateTo = window.navigateTo;
+
+// Delegated Universal Subtab Click Listener - 100% reliable across all browsers & tabs
+window.setupUniversalSubtabs = function() {
+  document.addEventListener("click", (e) => {
+    const tab = e.target.closest(".pill-tab");
+    if (!tab) return;
+
+    // 1. Percentage
+    if (tab.classList.contains("pct-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("pct", tab.dataset.target);
       return;
     }
 
-    document.querySelectorAll(".section-view").forEach(v => v.classList.remove("active"));
-    document.querySelectorAll(".subnav-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
-
-    targetSection.classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    const subnavBtn = document.querySelector(`.subnav-btn[data-target="${targetId}"]`);
-    if (subnavBtn) subnavBtn.classList.add("active");
-
-    const bottomBtn = document.querySelector(`.nav-item[data-target="${targetId}"]`);
-    if (bottomBtn) bottomBtn.classList.add("active");
-
-    if (targetId === "history") renderHistoryUI();
-    if (targetId === "favorites") renderFavoritesUI();
-    if (targetId === "qrcode") {
-      if (window.onQRTabActivated) window.onQRTabActivated();
-    } else {
-      if (window.onQRTabDeactivated) window.onQRTabDeactivated();
+    // 2. Finance
+    if (tab.classList.contains("fin-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("fin", tab.dataset.target);
+      return;
     }
-  }
+
+    // 3. Age
+    if (tab.classList.contains("age-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("age", tab.dataset.target);
+      return;
+    }
+
+    // 4. Algebra
+    if (tab.classList.contains("alg-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("alg", tab.dataset.target);
+      return;
+    }
+
+    // 5. Bangladesh
+    if (tab.classList.contains("bd-subtab")) {
+      e.preventDefault();
+      if (tab.dataset.target === "qrcode") {
+        window.activateSubtab("bd", "qrcode");
+        return;
+      }
+      window.activateSubtab("bd", tab.dataset.target);
+      return;
+    }
+
+    // 6. Health Main Subtabs
+    if (tab.classList.contains("health-tab-btn")) {
+      e.preventDefault();
+      window.activateSubtab("health", tab.dataset.health);
+      return;
+    }
+
+    // 7. Health Others Subtabs
+    if (tab.classList.contains("others-tab-btn")) {
+      e.preventDefault();
+      window.activateSubtab("others", tab.dataset.oth);
+      return;
+    }
+
+    // 8. QR Code Subtabs
+    if (tab.classList.contains("qr-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("qr", tab.dataset.qrtab);
+      return;
+    }
+
+    // 9. Geometry Subtabs
+    if (tab.classList.contains("geom-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("geom", tab.dataset.shape);
+      return;
+    }
+
+    // 10. Unit Converter Subtabs
+    if (tab.classList.contains("unit-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("unit", tab.dataset.cat);
+      return;
+    }
+
+    // 11. Fraction Subtabs
+    if (tab.classList.contains("frac-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("frac", tab.dataset.target);
+      return;
+    }
+  });
+};
+
+function setupSettingsAndNavigation() {
 
   // Bind navigation click ONLY to main section navigation elements (avoid hijacking sub-tabs!)
   document.querySelectorAll(".dash-card[data-target], .nav-item[data-target], .app-header [data-target], button[data-target='appstats']").forEach(btn => {
@@ -9913,6 +10679,7 @@ function setupHealthAndFitnessCalc() {
 function initApplication() {
   if (window._appInitialized) return;
   window._appInitialized = true;
+  try { if (window.setupUniversalSubtabs) window.setupUniversalSubtabs(); } catch (e) { console.error(e); }
   try { setupPercentageCalc(); } catch (e) { console.error(e); }
   try { setupFinanceCalc(); } catch (e) { console.error(e); }
   try { setupAgeAndDateCalc(); } catch (e) { console.error(e); }
