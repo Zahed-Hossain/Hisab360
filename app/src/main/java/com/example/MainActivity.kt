@@ -69,6 +69,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    companion object {
+        init {
+            try {
+                android.system.Os.setenv("LIBGL_ALWAYS_SOFTWARE", "1", true)
+            } catch (_: Throwable) {}
+        }
+    }
+
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -88,6 +96,9 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
+        } catch (_: Exception) {}
 
         // Initialize Google Mobile Ads SDK
         try {
@@ -108,6 +119,7 @@ class MainActivity : ComponentActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             setBackgroundColor(Color.parseColor("#F8FAFC"))
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }
 
         val wv = WebView(this).apply {
