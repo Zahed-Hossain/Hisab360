@@ -7707,23 +7707,24 @@ window.navigateTo = function(targetId, subtabType, subtabValue) {
     if (window.onQRTabDeactivated) window.onQRTabDeactivated();
   }
 
-  // Ensure the active sub-view is visible inside the opened section
-  const activePill = targetSection.querySelector(".pill-tab.active");
-  if (activePill) {
-    const t = activePill.dataset.target || activePill.dataset.health || activePill.dataset.qrtab;
-    if (t) {
-      const candidates = ["pct-view-" + t, "fin-view-" + t, "age-view-" + t, "alg-view-" + t, "bd-view-" + t, "health-view-" + t, "qr-view-" + t, "frac-view-" + t];
-      for (const cid of candidates) {
-        const el = document.getElementById(cid);
-        if (el) { el.style.display = "block"; break; }
+  // If subtab is specified, activate it immediately and synchronously
+  if (subtabType && subtabValue) {
+    if (typeof window.activateSubtab === "function") {
+      window.activateSubtab(subtabType, subtabValue);
+    }
+  } else {
+    // Ensure the default active sub-view is visible inside the opened section
+    const activePill = targetSection.querySelector(".pill-tab.active");
+    if (activePill) {
+      const t = activePill.dataset.target || activePill.dataset.health || activePill.dataset.qrtab;
+      if (t) {
+        const candidates = ["pct-view-" + t, "fin-view-" + t, "age-view-" + t, "alg-view-" + t, "bd-view-" + t, "health-view-" + t, "qr-view-" + t, "frac-view-" + t];
+        for (const cid of candidates) {
+          const el = document.getElementById(cid);
+          if (el) { el.style.display = "block"; break; }
+        }
       }
     }
-  }
-
-  if (subtabType && subtabValue) {
-    setTimeout(() => {
-      window.activateSubtab(subtabType, subtabValue);
-    }, 30);
   }
 };
 
@@ -8949,44 +8950,48 @@ function setupSmartSearch() {
     }
     if (!tool.targetId) return;
 
-    navigateTo(tool.targetId);
+    // Navigate to target section and immediately activate subtab
+    navigateTo(tool.targetId, tool.subtabType, tool.subtabValue);
 
     if (tool.subtabType && tool.subtabValue) {
+      if (typeof window.activateSubtab === "function") {
+        window.activateSubtab(tool.subtabType, tool.subtabValue);
+      }
       setTimeout(() => {
         try {
+          if (typeof window.activateSubtab === "function") {
+            window.activateSubtab(tool.subtabType, tool.subtabValue);
+          }
           if (tool.subtabType === "pct") {
-            const tab = document.querySelector(`.pct-subtab[data-target="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.pct-subtab[data-target="${tool.subtabValue}"]`)?.click();
           } else if (tool.subtabType === "fin") {
-            const tab = document.querySelector(`.fin-subtab[data-target="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.fin-subtab[data-target="${tool.subtabValue}"]`)?.click();
           } else if (tool.subtabType === "age") {
-            const tab = document.querySelector(`.age-subtab[data-target="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.age-subtab[data-target="${tool.subtabValue}"]`)?.click();
           } else if (tool.subtabType === "alg") {
-            const tab = document.querySelector(`.alg-subtab[data-target="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.alg-subtab[data-target="${tool.subtabValue}"]`)?.click();
           } else if (tool.subtabType === "bd") {
-            const tab = document.querySelector(`.bd-subtab[data-target="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.bd-subtab[data-target="${tool.subtabValue}"]`)?.click();
           } else if (tool.subtabType === "health") {
-            const tab = document.querySelector(`.health-tab-btn[data-health="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.health-tab-btn[data-health="${tool.subtabValue}"]`)?.click();
           } else if (tool.subtabType === "others") {
-            const healthTabOthers = document.querySelector(`.health-tab-btn[data-health="others"]`);
-            if (healthTabOthers) healthTabOthers.click();
+            document.querySelector(`.health-tab-btn[data-health="others"]`)?.click();
             setTimeout(() => {
-              const othTab = document.querySelector(`.others-tab-btn[data-oth="${tool.subtabValue}"]`);
-              if (othTab) othTab.click();
-            }, 60);
+              document.querySelector(`.others-tab-btn[data-oth="${tool.subtabValue}"]`)?.click();
+            }, 50);
           } else if (tool.subtabType === "qr") {
-            const tab = document.querySelector(`.qr-subtab[data-qrtab="${tool.subtabValue}"]`);
-            if (tab) tab.click();
+            document.querySelector(`.qr-subtab[data-qrtab="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "geom") {
+            document.querySelector(`.geom-subtab[data-shape="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "unit") {
+            document.querySelector(`.unit-subtab[data-cat="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "frac") {
+            document.querySelector(`.frac-subtab[data-target="${tool.subtabValue}"]`)?.click();
           }
         } catch (err) {
           console.warn("Subtab trigger error:", err);
         }
-      }, 50);
+      }, 40);
     }
     showToast(`${tool.title} খোলা হয়েছে ✔️`);
   }
@@ -9021,7 +9026,8 @@ function setupSmartSearch() {
         formulaText: `বিক্রয়মূল্য = ${toBn(cost)} ${isLoss ? "-" : "+"} (${toBn(cost)} × ${toBn(pct)}%) = ${toBn(finalPrice)} টাকা`,
         buttonText: `👉 লাভ ও ক্ষতি ক্যালকুলেটরে সরাসরি খুলুন`,
         openAction: () => {
-          navigateTo("percentage");
+          navigateTo("percentage", "pct", "g");
+          if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "g");
           const tabG = document.querySelector('.pct-subtab[data-target="g"]');
           if (tabG) tabG.click();
           const costInput = document.getElementById("pctG_cost");
@@ -9033,7 +9039,9 @@ function setupSmartSearch() {
             if (typeSelect) typeSelect.value = isLoss ? "loss" : "profit";
             document.getElementById("btnPctG_fromPct")?.click();
           }
-          document.getElementById("pct-view-g")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            document.getElementById("pct-view-g")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 60);
           showToast(`লাভ-ক্ষতি ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
         }
       };
@@ -9056,7 +9064,8 @@ function setupSmartSearch() {
         formulaText: `পরিশোধ = ${toBn(price)} - (${toBn(price)} × ${toBn(disc)}%) = ${toBn(finalPrice)} টাকা`,
         buttonText: `👉 ডিসকাউন্ট ক্যালকুলেটরে সরাসরি খুলুন`,
         openAction: () => {
-          navigateTo("percentage");
+          navigateTo("percentage", "pct", "e");
+          if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "e");
           const tabE = document.querySelector('.pct-subtab[data-target="e"]');
           if (tabE) tabE.click();
           const pInput = document.getElementById("pctE_price");
@@ -9066,7 +9075,9 @@ function setupSmartSearch() {
             dInput.value = disc;
             document.getElementById("btnPctE")?.click();
           }
-          document.getElementById("pct-view-e")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            document.getElementById("pct-view-e")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 60);
           showToast(`ডিসকাউন্ট ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
         }
       };
@@ -9089,7 +9100,8 @@ function setupSmartSearch() {
         formulaText: `মোট = ${toBn(price)} + (${toBn(price)} × ${toBn(vat)}%) = ${toBn(total)} টাকা`,
         buttonText: `👉 ভ্যাট ক্যালকুলেটরে সরাসরি খুলুন`,
         openAction: () => {
-          navigateTo("percentage");
+          navigateTo("percentage", "pct", "f");
+          if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "f");
           const tabF = document.querySelector('.pct-subtab[data-target="f"]');
           if (tabF) tabF.click();
           const pInput = document.getElementById("pctF_price");
@@ -9099,7 +9111,9 @@ function setupSmartSearch() {
             vInput.value = vat;
             document.getElementById("btnPctF")?.click();
           }
-          document.getElementById("pct-view-f")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            document.getElementById("pct-view-f")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 60);
           showToast(`ভ্যাট ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
         }
       };
@@ -9183,7 +9197,8 @@ function setupSmartSearch() {
           formulaText: `${toBn(x)} × (${toBn(y)}/১০০) = ${toBn(ans)}`,
           buttonText: `👉 শতকরা ক্যালকুলেটরে সরাসরি খুলুন`,
           openAction: () => {
-            navigateTo("percentage");
+            navigateTo("percentage", "pct", "a");
+            if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "a");
             const tabA = document.querySelector('.pct-subtab[data-target="a"]');
             if (tabA) tabA.click();
             const xInput = document.getElementById("pctA_x");
@@ -9193,6 +9208,9 @@ function setupSmartSearch() {
               yInput.value = y;
               document.getElementById("btnPctA")?.click();
             }
+            setTimeout(() => {
+              document.getElementById("pct-view-a")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 60);
             showToast(`শতকরা ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
           }
         };
@@ -9255,22 +9273,28 @@ function setupSmartSearch() {
   }
 
   let currentPrimaryAction = null;
+  let currentCalculationResult = null;
+  let currentMatchedTools = [];
 
   function renderSearchResults(query, calculationResult, matchedTools) {
     if (!query) {
       resultsContainer.style.display = "none";
       currentPrimaryAction = null;
+      currentCalculationResult = null;
+      currentMatchedTools = [];
       return;
     }
 
     currentPrimaryAction = null;
+    currentCalculationResult = calculationResult || null;
+    currentMatchedTools = matchedTools || [];
     let html = "";
 
     // 1. Render Calculation Card (if user asked a direct math or formula question)
     if (calculationResult) {
       currentPrimaryAction = calculationResult.openAction;
       html += `
-        <div class="smart-result-card">
+        <div class="smart-result-card" data-action="open-calc" style="cursor:pointer;" role="button" tabindex="0">
           <div class="smart-result-header">
             <span class="smart-detected-badge">🎯 ${calculationResult.category || "শনাক্তকৃত ক্যালকুলেটর"}</span>
             <span class="smart-tool-name">${calculationResult.toolName}</span>
@@ -9283,7 +9307,7 @@ function setupSmartSearch() {
             <div class="smart-answer-formula">${calculationResult.formulaText}</div>
           </div>
 
-          <button type="button" class="btn btn-primary smart-open-btn" id="btnSmartOpenDetected">
+          <button type="button" class="btn btn-primary smart-open-btn" id="btnSmartOpenDetected" data-action="open-calc">
             ${calculationResult.buttonText}
           </button>
         </div>
@@ -9307,7 +9331,7 @@ function setupSmartSearch() {
 
       matchedTools.slice(0, 7).forEach((tool, idx) => {
         html += `
-          <div class="smart-tool-item" data-tool-index="${idx}">
+          <div class="smart-tool-item" data-tool-index="${idx}" style="cursor:pointer;" role="button" tabindex="0">
             <div class="smart-tool-info">
               <div class="smart-tool-title-row">
                 <span class="smart-tool-title">${tool.title}</span>
@@ -9330,7 +9354,7 @@ function setupSmartSearch() {
       html += `
         <div class="smart-no-results">
           <p>⚠️ "<strong>${query}</strong>" এর জন্য নির্দিষ্ট কোনো ক্যালকুলেটর পাওয়া যায়নি।</p>
-          <button type="button" class="btn btn-primary smart-open-btn" id="btnGoDashboardFallback">
+          <button type="button" class="btn btn-primary smart-open-btn" id="btnGoDashboardFallback" data-action="go-dashboard">
             👉 সকল ক্যালকুলেটর তালিকা দেখুন
           </button>
         </div>
@@ -9340,32 +9364,104 @@ function setupSmartSearch() {
 
     resultsContainer.innerHTML = html;
     resultsContainer.style.display = "block";
-
-    // Bind primary button if exists
-    document.getElementById("btnSmartOpenDetected")?.addEventListener("click", () => {
-      if (calculationResult && typeof calculationResult.openAction === "function") {
-        calculationResult.openAction();
-        resultsContainer.style.display = "none";
-      }
-    });
-
-    document.getElementById("btnGoDashboardFallback")?.addEventListener("click", () => {
-      navigateTo("dashboard");
-      resultsContainer.style.display = "none";
-    });
-
-    // Bind tool item clicks
-    resultsContainer.querySelectorAll(".smart-tool-item, .smart-tool-go-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const idx = parseInt(btn.dataset.toolIndex, 10);
-        if (!isNaN(idx) && matchedTools[idx]) {
-          openToolByReference(matchedTools[idx]);
-          resultsContainer.style.display = "none";
-        }
-      });
-    });
   }
+
+  // Robust Delegated Event Handler for Touch and Click
+  let lastActionTimestamp = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isTouchScroll = false;
+
+  resultsContainer.addEventListener("touchstart", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isTouchScroll = false;
+    }
+  }, { passive: true });
+
+  resultsContainer.addEventListener("touchmove", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 8 || dy > 8) {
+        isTouchScroll = true;
+      }
+    }
+  }, { passive: true });
+
+  function executeSearchAction(interactiveTarget) {
+    if (!interactiveTarget) return;
+
+    // 1. Direct calculation result
+    const calcCard = interactiveTarget.closest('[data-action="open-calc"]');
+    if (calcCard && currentCalculationResult && typeof currentCalculationResult.openAction === "function") {
+      searchInput.blur();
+      resultsContainer.style.display = "none";
+      try {
+        currentCalculationResult.openAction();
+      } catch (err) {
+        console.error("Calculation openAction error:", err);
+      }
+      return;
+    }
+
+    // 2. Matching Tool
+    const toolEl = interactiveTarget.closest('[data-tool-index]');
+    if (toolEl) {
+      const idx = parseInt(toolEl.dataset.toolIndex, 10);
+      if (!isNaN(idx) && currentMatchedTools[idx]) {
+        searchInput.blur();
+        resultsContainer.style.display = "none";
+        try {
+          openToolByReference(currentMatchedTools[idx]);
+        } catch (err) {
+          console.error("openToolByReference error:", err);
+        }
+        return;
+      }
+    }
+
+    // 3. Fallback to Dashboard
+    const fallbackBtn = interactiveTarget.closest('[data-action="go-dashboard"], #btnGoDashboardFallback');
+    if (fallbackBtn) {
+      searchInput.blur();
+      resultsContainer.style.display = "none";
+      navigateTo("dashboard");
+      return;
+    }
+  }
+
+  function handleContainerInteraction(e) {
+    if (e.type === "touchend" && isTouchScroll) return;
+
+    const interactive = e.target.closest('[data-action="open-calc"], [data-tool-index], [data-action="go-dashboard"], #btnGoDashboardFallback');
+    if (!interactive) return;
+
+    const now = Date.now();
+    if (now - lastActionTimestamp < 350) {
+      e.stopPropagation();
+      return;
+    }
+    lastActionTimestamp = now;
+
+    if (e.type === "touchend") {
+      // Prevent delayed emulated click on mobile
+      try { e.preventDefault(); } catch (err) {}
+    }
+    e.stopPropagation();
+    executeSearchAction(interactive);
+  }
+
+  resultsContainer.addEventListener("click", handleContainerInteraction, true);
+  resultsContainer.addEventListener("touchend", handleContainerInteraction, { passive: false });
+
+  // Close dropdown on outside click
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#topStickyBar") && !e.target.closest("#smartResultsContainer")) {
+      resultsContainer.style.display = "none";
+    }
+  });
 
   function handleInput() {
     const val = searchInput.value.trim();
