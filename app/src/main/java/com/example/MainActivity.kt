@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
     private var interstitialAd: InterstitialAd? = null
 
     private var pendingPermissionRequest: PermissionRequest? = null
+    private var textToSpeech: android.speech.tts.TextToSpeech? = null
 
     private val speechRecognizerLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -66,6 +67,14 @@ class MainActivity : ComponentActivity() {
         } catch (e: Exception) {
             Log.w("VoiceSearch", "Native voice recognition not available, fallback to web", e)
             webView?.evaluateJavascript("if(typeof window.fallbackWebSpeech === 'function') { window.fallbackWebSpeech(); }", null)
+        }
+    }
+
+    fun speakVoice(text: String) {
+        try {
+            textToSpeech?.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, null, "VoiceResult")
+        } catch (e: Exception) {
+            Log.w("VoiceTTS", "TTS speak failed", e)
         }
     }
 
@@ -99,6 +108,18 @@ class MainActivity : ComponentActivity() {
         try {
             window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
         } catch (_: Exception) {}
+
+        try {
+            textToSpeech = android.speech.tts.TextToSpeech(this) { status ->
+                if (status == android.speech.tts.TextToSpeech.SUCCESS) {
+                    try {
+                        textToSpeech?.language = java.util.Locale("bn", "BD")
+                    } catch (_: Exception) {}
+                }
+            }
+        } catch (e: Exception) {
+            Log.w("VoiceTTS", "TTS init failed", e)
+        }
 
         // Initialize Google Mobile Ads SDK
         try {
@@ -317,6 +338,11 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
+        try {
+            textToSpeech?.stop()
+            textToSpeech?.shutdown()
+            textToSpeech = null
+        } catch (_: Exception) {}
         adView?.destroy()
         adView = null
         webView?.destroy()
@@ -412,6 +438,15 @@ class WebAppInterface(private val activity: Activity?, private val webView: WebV
         activity?.runOnUiThread {
             if (activity is MainActivity) {
                 activity.startNativeVoiceSearch()
+            }
+        }
+    }
+
+    @JavascriptInterface
+    fun speakText(text: String) {
+        activity?.runOnUiThread {
+            if (activity is MainActivity) {
+                activity.speakVoice(text)
             }
         }
     }
