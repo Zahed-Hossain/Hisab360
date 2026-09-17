@@ -41,7 +41,12 @@
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --radius: 12px;
+    --radius: 18px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 22px;
+    --radius-pill: 9999px;
   }
 
   [data-theme="dark"] {
@@ -192,20 +197,27 @@
     background: var(--surface);
     border: 1px solid var(--card-border);
     color: var(--ink-soft);
-    padding: 7px 13px;
-    border-radius: 20px;
+    padding: 8px 15px;
+    border-radius: 22px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
-    transition: all 0.15s ease;
+    gap: 6px;
+    transition: all 0.18s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   }
-  .subnav-btn.active, .subnav-btn:hover {
+  .subnav-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-1px);
+  }
+  .subnav-btn.active {
     background: var(--blue);
     color: #FFFFFF;
     border-color: var(--blue);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.32);
   }
 
   /* Page Sections */
@@ -245,63 +257,192 @@
   .dash-card {
     background: var(--surface);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 16px 12px;
+    border-radius: 20px;
+    padding: 18px 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
   }
   .dash-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.16);
     border-color: var(--blue);
   }
-  .dash-card:active { transform: scale(0.98); }
+  .dash-card:active { transform: scale(0.97); }
   .dash-card .card-icon {
     font-size: 28px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     line-height: 1;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: var(--blue-light);
+    transition: transform 0.2s ease;
+  }
+  .dash-card:hover .card-icon {
+    transform: scale(1.08);
   }
   .dash-card .card-title {
     font-size: 14.5px;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 2px;
+    margin-bottom: 3px;
   }
   .dash-card .card-sub {
     font-size: 11.5px;
     color: var(--ink-soft);
+    line-height: 1.35;
   }
 
   /* Form and Content Cards */
   .tool-card {
     background: var(--surface);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 18px 16px;
+    border-radius: 18px;
+    padding: 18px 18px;
     margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    transition: all 0.2s ease;
+  }
+  .tool-card:hover {
+    box-shadow: 0 6px 24px -2px rgba(15, 23, 42, 0.09);
   }
   .tool-card h3 {
     margin: 0 0 12px;
-    font-size: 16px;
+    font-size: 16.5px;
     font-weight: 700;
     color: var(--ink);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
   }
   .tool-card .desc {
     font-size: 12.5px;
     color: var(--ink-soft);
-    margin-top: -8px;
+    margin-top: -6px;
     margin-bottom: 14px;
+    line-height: 1.45;
+  }
+
+  /* Section Header Banner - Matches QR, Health & Currency style */
+  .section-hero-card {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, var(--surface) 100%);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--blue);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  }
+  .section-hero-card.pct-theme {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #10B981;
+  }
+  .section-hero-card.fin-theme {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #F59E0B;
+  }
+  .section-hero-card.age-theme {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #A855F7;
+  }
+  .section-hero-card.geom-theme {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #0EA5E9;
+  }
+  .section-hero-card.alg-theme {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #6366F1;
+  }
+  .section-hero-card.frac-theme {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #EC4899;
+  }
+  .section-hero-card.conv-theme {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #14B8A6;
+  }
+  .section-hero-card.bd-theme {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.07) 0%, var(--surface) 100%);
+    border-left-color: #059669;
+  }
+  .section-hero-card.basic-theme {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, var(--surface) 100%);
+    border-left-color: var(--blue);
+  }
+  .section-hero-card.sci-theme {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #8B5CF6;
+  }
+  .section-hero-card.custom-theme {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #F97316;
+  }
+  .section-hero-card.qr-theme {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #2563EB;
+  }
+  .section-hero-card.curr-theme {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #10B981;
+  }
+  .section-hero-card.health-theme {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, var(--surface) 100%);
+    border-left-color: #EF4444;
+  }
+  .section-hero-card.hist-theme {
+    background: linear-gradient(135deg, rgba(100, 116, 139, 0.08) 0%, var(--surface) 100%);
+    border-left-color: #64748B;
+  }
+  .section-hero-card.fav-theme {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--surface) 100%);
+    border-left-color: #F59E0B;
+  }
+  .section-hero-card.set-theme {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.07) 0%, var(--surface) 100%);
+    border-left-color: #6366F1;
+  }
+  .section-hero-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .section-hero-title {
+    margin: 0 0 3px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-hero-desc {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .section-hero-badge {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
   }
 
   /* Inputs & Form controls */
@@ -322,15 +463,16 @@
   .form-row > * { flex: 1; }
   .form-control, .form-select {
     width: 100%;
-    padding: 9px 12px;
+    padding: 10px 14px;
     font-family: inherit;
     font-size: 14.5px;
     border: 1px solid var(--card-border);
-    border-radius: 8px;
+    border-radius: 12px;
     background: var(--surface);
     color: var(--ink);
     outline: none;
-    transition: border-color 0.15s ease;
+    transition: all 0.18s ease;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
   }
   .form-control:focus, .form-select:focus {
     border-color: var(--blue);
@@ -344,46 +486,63 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 16px;
+    padding: 11px 18px;
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
     width: 100%;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   }
-  .btn-primary { background: var(--blue); color: #FFF; }
-  .btn-primary:hover { background: var(--blue-dark); }
-  .btn-secondary { background: var(--surface-hover); color: var(--ink); border-color: var(--card-border); }
-  .btn-secondary:hover { background: var(--card-border); }
+  .btn-primary { 
+    background: var(--blue); 
+    color: #FFF; 
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  }
+  .btn-primary:hover { 
+    background: var(--blue-dark); 
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-secondary { 
+    background: var(--surface-hover); 
+    color: var(--ink); 
+    border-color: var(--card-border); 
+  }
+  .btn-secondary:hover { 
+    background: var(--card-border); 
+    transform: translateY(-1px);
+  }
   .btn-success { background: var(--green); color: #FFF; }
-  .btn-success:hover { filter: brightness(0.92); }
+  .btn-success:hover { filter: brightness(0.92); transform: translateY(-1px); }
   .btn-danger { background: var(--red); color: #FFF; }
-  .btn-danger:hover { filter: brightness(0.92); }
+  .btn-danger:hover { filter: brightness(0.92); transform: translateY(-1px); }
   .btn-outline { background: transparent; border-color: var(--card-border); color: var(--ink); }
   .btn-outline:hover { background: var(--surface-hover); border-color: var(--blue); }
-  .btn-sm { padding: 6px 10px; font-size: 12.5px; border-radius: 6px; width: auto; }
+  .btn-sm { padding: 6px 14px; font-size: 12.5px; border-radius: 20px; width: auto; }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* Result Box */
   .result-box {
-    background: var(--blue-light);
-    border: 1px solid rgba(29, 78, 216, 0.25);
-    border-radius: 10px;
-    padding: 14px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, var(--surface) 100%);
+    border: 1.5px solid rgba(29, 78, 216, 0.25);
+    border-radius: 16px;
+    padding: 16px;
     margin-top: 14px;
     position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
   }
   .result-box.success {
-    background: var(--green-light);
-    border-color: rgba(22, 163, 74, 0.3);
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.06) 0%, var(--surface) 100%);
+    border-color: rgba(22, 163, 74, 0.35);
   }
   .result-box.error {
-    background: var(--red-light);
-    border-color: rgba(220, 38, 38, 0.3);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.06) 0%, var(--surface) 100%);
+    border-color: rgba(220, 38, 38, 0.35);
   }
   .result-title {
     font-size: 12px;
@@ -417,19 +576,19 @@
   .calc-container {
     background: var(--surface);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow-sm);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 6px 24px -2px rgba(15, 23, 42, 0.08);
     margin-bottom: 16px;
   }
   .calc-screen {
     background: #0B132B;
     color: #F8FAFC;
-    border-radius: 10px;
-    padding: 16px 14px;
+    border-radius: 16px;
+    padding: 18px 16px;
     text-align: right;
-    margin-bottom: 14px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 16px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
   }
   .screen-mode {
     font-size: 11px;
@@ -441,8 +600,8 @@
   .screen-mode .badge {
     background: #1E293B;
     color: #38BDF8;
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
     font-weight: 600;
   }
   .screen-history {
@@ -481,26 +640,32 @@
     font-size: 17px;
     font-weight: 600;
     padding: 15px 4px;
-    border-radius: 9px;
+    border-radius: 14px;
     border: 1px solid var(--card-border);
     background: var(--surface);
     color: var(--ink);
     cursor: pointer;
     user-select: none;
-    transition: all 0.1s ease;
+    transition: all 0.15s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .key-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
   }
   .calc-keyboard.scientific-grid .key-btn {
-    padding: 11px 2px;
+    padding: 12px 2px;
     font-size: 13.5px;
+    border-radius: 12px;
   }
-  .key-btn:active { transform: scale(0.96); }
+  .key-btn:active { transform: scale(0.95); }
   .key-btn.key-op { color: var(--orange); background: var(--orange-light); border-color: rgba(217, 119, 6, 0.2); }
   .key-btn.key-fn { color: var(--purple); background: var(--purple-light); border-color: rgba(124, 58, 237, 0.2); }
   .key-btn.key-clear { color: var(--red); background: var(--red-light); border-color: rgba(220, 38, 38, 0.2); }
-  .key-btn.key-eq { background: var(--blue); color: #FFF; border-color: var(--blue); }
+  .key-btn.key-eq { background: var(--blue); color: #FFF; border-color: var(--blue); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
   .key-btn.key-wide { grid-column: span 2; }
   .key-btn.key-full { grid-column: span 4; }
   .calc-keyboard.scientific-grid .key-btn.key-full { grid-column: span 5; }
@@ -508,29 +673,39 @@
   /* Sub tool pills inside calculators */
   .pill-tabs {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 8px;
+    padding: 4px 2px 10px;
     margin-bottom: 14px;
     scrollbar-width: none;
   }
   .pill-tabs::-webkit-scrollbar { display: none; }
   .pill-tab {
-    padding: 6px 12px;
-    border-radius: 16px;
+    padding: 7px 15px;
+    border-radius: 22px;
     border: 1px solid var(--card-border);
     background: var(--surface);
     color: var(--ink-soft);
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .pill-tab:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-1px);
   }
   .pill-tab.active {
     background: var(--blue);
     color: #FFF;
     border-color: var(--blue);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.32);
   }
 
   /* History & Formula Lists */
@@ -1557,6 +1732,117 @@
     animation: highlightCardPulse 1.8s ease-out;
   }
 
+  /* Smart Multi-Tool Results & Future-Ready Search Styling */
+  .smart-tools-list {
+    margin-top: 14px;
+    border-top: 1px dashed var(--border);
+    padding-top: 12px;
+  }
+  .smart-tools-header {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .smart-tools-count {
+    background: var(--surface-hover);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    border: 1px solid var(--border);
+    color: var(--blue);
+  }
+  .smart-tools-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 290px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .smart-tool-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .smart-tool-item:hover {
+    border-color: var(--blue);
+    background: var(--surface);
+    transform: translateX(2px);
+  }
+  .smart-tool-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .smart-tool-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+  }
+  .smart-tool-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .smart-tool-cat-badge {
+    font-size: 10.5px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--blue);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .smart-tool-desc {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .smart-tool-go-btn {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.15s ease;
+  }
+  .smart-tool-go-btn:hover {
+    background: #1d4ed8;
+  }
+  .smart-no-results {
+    text-align: center;
+    padding: 18px 12px;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+  }
+  .smart-no-results p {
+    margin-bottom: 8px;
+  }
+
 
   /* ============================================== */
   /* HEALTH & FITNESS CALCULATOR STYLES             */
@@ -1912,89 +2198,106 @@
   <!-- ============================================== -->
   <section id="section-dashboard" class="section-view active">
     <div class="dashboard-grid">
-      <div class="dash-card" data-target="basic">
-        <span class="card-icon">🧮</span>
-        <div class="card-title">সাধারণ ক্যালকুলেটর</div>
-        <div class="card-sub">যোগ, বিয়োগ, গুণ, ভাগ ও বন্ধনী</div>
+      <!-- 1. Basic Calculator -->
+      <div class="dash-card" data-target="basic" style="border:1.5px solid #3B82F6; background:linear-gradient(135deg, var(--surface) 0%, rgba(59,130,246,0.08) 100%);">
+        <span class="card-icon" style="background:#DBEAFE; color:#1D4ED8;">🧮</span>
+        <div class="card-title" style="color:#2563EB; font-weight:700;">সাধারণ ক্যালকুলেটর</div>
+        <div class="card-sub">যোগ, বিয়োগ, গুণ, ভাগ ও বন্ধনী হিসাব</div>
       </div>
-      <div class="dash-card" data-target="scientific">
-        <span class="card-icon">🔬</span>
-        <div class="card-title">সায়েন্টিফিক ক্যালকুলেটর</div>
-        <div class="card-sub">ত্রিকোণমিতি, লগ, ঘাত ও ফ্যাক্টোরিয়াল</div>
-      </div>
-      <div class="dash-card" data-target="percentage">
-        <span class="card-icon">📊</span>
-        <div class="card-title">শতকরা ক্যালকুলেটর</div>
-        <div class="card-sub">ডিসকাউন্ট, ভ্যাট, লাভ-ক্ষতি ও বৃদ্ধি/হ্রাস</div>
-      </div>
-      <div class="dash-card" data-target="finance">
-        <span class="card-icon">💰</span>
-        <div class="card-title">ফিন্যান্স ক্যালকুলেটর</div>
-        <div class="card-sub">মুনাফা, লোন EMI, DPS ও FDR</div>
-      </div>
-      <div class="dash-card" data-target="age">
-        <span class="card-icon">🎂</span>
-        <div class="card-title">বয়স ও তারিখ</div>
-        <div class="card-sub">সঠিক বয়স, ব্যবধান ও দিন যোগ/বিয়োগ</div>
-      </div>
-      <div class="dash-card" data-target="geometry">
-        <span class="card-icon">📐</span>
-        <div class="card-title">জ্যামিতি ক্যালকুলেটর</div>
-        <div class="card-sub">১১টি আকারের ক্ষেত্রফল, পরিসীমা ও আয়তন</div>
-      </div>
-      <div class="dash-card" data-target="algebra">
-        <span class="card-icon">🔢</span>
-        <div class="card-title">বীজগণিত টুলস</div>
-        <div class="card-sub">সমীকরণ, লসাগু, গসাগু, মৌলিক ও গড়</div>
-      </div>
-      <div class="dash-card" data-target="fraction">
-        <span class="card-icon">➗</span>
-        <div class="card-title">ভগ্নাংশ ক্যালকুলেটর</div>
-        <div class="card-sub">ভগ্নাংশের যোগ-বিয়োগ, মিশ্র ও দশমিক</div>
-      </div>
-      <div class="dash-card" data-target="converter">
-        <span class="card-icon">⚖️</span>
-        <div class="card-title">একক রূপান্তর</div>
-        <div class="card-sub">দৈর্ঘ্য, ওজন, আয়তন, তাপমাত্রা ও ডাটা</div>
-      </div>
-      <div class="dash-card" data-target="bangladesh">
-        <span class="card-icon">🇧🇩</span>
-        <div class="card-title">বাংলাদেশ টুলস</div>
-        <div class="card-sub">টাকা কথায়, জমির মাপ, মণ-সের ও সংখ্যা রূপান্তর</div>
-      </div>
+      <!-- 2. QR Code Scanner & Maker -->
       <div class="dash-card" data-target="qrcode" style="border:1.5px solid var(--blue); background:linear-gradient(135deg, var(--surface) 0%, var(--blue-light) 100%);">
-        <span class="card-icon">📷</span>
+        <span class="card-icon" style="background:#DBEAFE; color:#1D4ED8;">📷</span>
         <div class="card-title" style="color:var(--blue-dark); font-weight:700;">QR কোড স্ক্যানার ও মেকার</div>
         <div class="card-sub">ক্যামেরা ও ছবি দিয়ে সরাসরি QR স্ক্যান এবং যেকোনো তথ্যের QR কোড তৈরি</div>
       </div>
-      <div class="dash-card" data-target="health" style="border:1.5px solid #EF4444; background:linear-gradient(135deg, var(--surface) 0%, rgba(239,68,68,0.08) 100%);">
-        <span class="card-icon">❤️</span>
-        <div class="card-title" style="color:#DC2626; font-weight:700;">স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</div>
-        <div class="card-sub">BMI, BMR, দৈনিক ক্যালোরি, আদর্শ ওজন, বডি ফ্যাট, পানি ও ম্যাক্রো ডায়েট</div>
-      </div>
-      <div class="dash-card" data-target="currency"  style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
-        <span class="card-icon">💱</span>
+      <!-- 3. Currency Converter -->
+      <div class="dash-card" data-target="currency" style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
+        <span class="card-icon" style="background:#D1FAE5; color:#065F46;">💱</span>
         <div class="card-title" style="color:#047857; font-weight:700;">কারেন্সি কনভার্টার</div>
         <div class="card-sub">ডলার, রিয়াল, ইউরো, পাউন্ড সহ ১৭+ আন্তর্জাতিক মুদ্রার টাকার বিনিময় হার</div>
       </div>
-      <div class="dash-card" data-target="custom">
-        <span class="card-icon">🧩</span>
-        <div class="card-title">কাস্টম সূত্র</div>
+      <!-- 4. Health & Fitness -->
+      <div class="dash-card" data-target="health" style="border:1.5px solid #EF4444; background:linear-gradient(135deg, var(--surface) 0%, rgba(239,68,68,0.08) 100%);">
+        <span class="card-icon" style="background:#FEE2E2; color:#B91C1C;">❤️</span>
+        <div class="card-title" style="color:#DC2626; font-weight:700;">স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</div>
+        <div class="card-sub">BMI, BMR, দৈনিক ক্যালোরি, আদর্শ ওজন, বডি ফ্যাট, পানি ও ম্যাক্রো ডায়েট</div>
+      </div>
+      <!-- 5. Scientific Calculator -->
+      <div class="dash-card" data-target="scientific" style="border:1.5px solid #8B5CF6; background:linear-gradient(135deg, var(--surface) 0%, rgba(139,92,246,0.08) 100%);">
+        <span class="card-icon" style="background:#EDE9FE; color:#6D28D9;">🔬</span>
+        <div class="card-title" style="color:#7C3AED; font-weight:700;">সায়েন্টিফিক ক্যালকুলেটর</div>
+        <div class="card-sub">ত্রিকোণমিতি, লগ, ঘাত ও ফ্যাক্টোরিয়াল</div>
+      </div>
+      <!-- 6. Percentage Calculator -->
+      <div class="dash-card" data-target="percentage" style="border:1.5px solid #10B981; background:linear-gradient(135deg, var(--surface) 0%, rgba(16,185,129,0.08) 100%);">
+        <span class="card-icon" style="background:#D1FAE5; color:#065F46;">📊</span>
+        <div class="card-title" style="color:#059669; font-weight:700;">শতকরা ক্যালকুলেটর</div>
+        <div class="card-sub">ডিসকাউন্ট, ভ্যাট, লাভ-ক্ষতি ও বৃদ্ধি/হ্রাস</div>
+      </div>
+      <!-- 7. Finance Calculator -->
+      <div class="dash-card" data-target="finance" style="border:1.5px solid #F59E0B; background:linear-gradient(135deg, var(--surface) 0%, rgba(245,158,11,0.08) 100%);">
+        <span class="card-icon" style="background:#FEF3C7; color:#92400E;">💰</span>
+        <div class="card-title" style="color:#D97706; font-weight:700;">ফিন্যান্স ক্যালকুলেটর</div>
+        <div class="card-sub">মুনাফা, লোন EMI, DPS ও FDR সঞ্চয়</div>
+      </div>
+      <!-- 8. Age & Date -->
+      <div class="dash-card" data-target="age" style="border:1.5px solid #A855F7; background:linear-gradient(135deg, var(--surface) 0%, rgba(168,85,247,0.08) 100%);">
+        <span class="card-icon" style="background:#F3E8FF; color:#7E22CE;">🎂</span>
+        <div class="card-title" style="color:#9333EA; font-weight:700;">বয়স ও তারিখ</div>
+        <div class="card-sub">সঠিক বয়স, ব্যবধান ও দিন যোগ/বিয়োগ</div>
+      </div>
+      <!-- 9. Geometry -->
+      <div class="dash-card" data-target="geometry" style="border:1.5px solid #0EA5E9; background:linear-gradient(135deg, var(--surface) 0%, rgba(14,165,233,0.08) 100%);">
+        <span class="card-icon" style="background:#E0F2FE; color:#0369A1;">📐</span>
+        <div class="card-title" style="color:#0284C7; font-weight:700;">জ্যামিতি ক্যালকুলেটর</div>
+        <div class="card-sub">১১টি আকারের ক্ষেত্রফল, পরিসীমা ও আয়তন</div>
+      </div>
+      <!-- 10. Algebra -->
+      <div class="dash-card" data-target="algebra" style="border:1.5px solid #6366F1; background:linear-gradient(135deg, var(--surface) 0%, rgba(99,102,241,0.08) 100%);">
+        <span class="card-icon" style="background:#E0E7FF; color:#3730A3;">🔢</span>
+        <div class="card-title" style="color:#4F46E5; font-weight:700;">বীজগণিত টুলস</div>
+        <div class="card-sub">সমীকরণ, লসাগু, গসাগু, মৌলিক ও গড়</div>
+      </div>
+      <!-- 11. Fraction -->
+      <div class="dash-card" data-target="fraction" style="border:1.5px solid #EC4899; background:linear-gradient(135deg, var(--surface) 0%, rgba(236,72,153,0.08) 100%);">
+        <span class="card-icon" style="background:#FCE7F3; color:#9D174D;">➗</span>
+        <div class="card-title" style="color:#DB2777; font-weight:700;">ভগ্নাংশ ক্যালকুলেটর</div>
+        <div class="card-sub">ভগ্নাংশের যোগ-বিয়োগ, মিশ্র ও দশমিক</div>
+      </div>
+      <!-- 12. Unit Converter -->
+      <div class="dash-card" data-target="converter" style="border:1.5px solid #14B8A6; background:linear-gradient(135deg, var(--surface) 0%, rgba(20,184,166,0.08) 100%);">
+        <span class="card-icon" style="background:#CCFBF1; color:#115E59;">⚖️</span>
+        <div class="card-title" style="color:#0D9488; font-weight:700;">একক রূপান্তর</div>
+        <div class="card-sub">দৈর্ঘ্য, ওজন, আয়তন, তাপমাত্রা ও ডাটা</div>
+      </div>
+      <!-- 13. Bangladesh Tools -->
+      <div class="dash-card" data-target="bangladesh" style="border:1.5px solid #059669; background:linear-gradient(135deg, var(--surface) 0%, rgba(5,150,105,0.09) 100%);">
+        <span class="card-icon" style="background:#D1FAE5; color:#065F46;">🇧🇩</span>
+        <div class="card-title" style="color:#047857; font-weight:700;">বাংলাদেশ টুলস</div>
+        <div class="card-sub">টাকা কথায়, জমির মাপ, মণ-সের ও সংখ্যা রূপান্তর</div>
+      </div>
+      <!-- 14. Custom Formula -->
+      <div class="dash-card" data-target="custom" style="border:1.5px solid #F97316; background:linear-gradient(135deg, var(--surface) 0%, rgba(249,115,22,0.08) 100%);">
+        <span class="card-icon" style="background:#FFEDD5; color:#9A3412;">🧩</span>
+        <div class="card-title" style="color:#EA580C; font-weight:700;">কাস্টম সূত্র</div>
         <div class="card-sub">নিজের সূত্র লিখুন, সেভ করুন ও হিসাব করুন</div>
       </div>
-      <div class="dash-card" data-target="history">
-        <span class="card-icon">📜</span>
-        <div class="card-title">হিসাবের ইতিহাস</div>
+      <!-- 15. History -->
+      <div class="dash-card" data-target="history" style="border:1.5px solid #64748B; background:linear-gradient(135deg, var(--surface) 0%, rgba(100,116,139,0.08) 100%);">
+        <span class="card-icon" style="background:#F1F5F9; color:#334155;">📜</span>
+        <div class="card-title" style="color:#475569; font-weight:700;">হিসাবের ইতিহাস</div>
         <div class="card-sub">সব ক্যালকুলেটরের হিস্ট্রি ও ফেভারিট</div>
       </div>
+      <!-- 16. App Stats & Ratings -->
       <div class="dash-card" data-target="appstats" style="border:1.5px solid #F59E0B; background:linear-gradient(135deg, var(--surface) 0%, rgba(245,158,11,0.08) 100%);">
-        <span class="card-icon">⭐</span>
+        <span class="card-icon" style="background:#FEF3C7; color:#92400E;">⭐</span>
         <div class="card-title" style="color:#B45309; font-weight:700;">ডাউনলোড, শেয়ার ও ইউজার রেটিং</div>
         <div class="card-sub">২৫,৮৫০+ ডাউনলোড • ৩,৪২০+ শেয়ার • ৪.৮★ ইউজার রিভিউ</div>
       </div>
-      <div class="dash-card" data-target="settings">
-        <span class="card-icon">⚙️</span>
-        <div class="card-title">সেটিংস</div>
+      <!-- 17. Settings -->
+      <div class="dash-card" data-target="settings" style="border:1.5px solid #8B5CF6; background:linear-gradient(135deg, var(--surface) 0%, rgba(139,92,246,0.08) 100%);">
+        <span class="card-icon" style="background:#EDE9FE; color:#6D28D9;">⚙️</span>
+        <div class="card-title" style="color:#6D28D9; font-weight:700;">সেটিংস</div>
         <div class="card-sub">থিম, ফন্ট সাইজ, দশমিক ও প্রিফারেন্স</div>
       </div>
     </div>
@@ -2004,6 +2307,17 @@
   <!-- 1. BASIC CALCULATOR                            -->
   <!-- ============================================== -->
   <section id="section-basic" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card basic-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🧮</span> সাধারণ ক্যালকুলেটর (Standard)</h2>
+          <p class="section-hero-desc">দৈনন্দিন সাধারণ হিসাব, যোগ, বিয়োগ, গুণ, ভাগ ও বন্ধনী হিসাব</p>
+        </div>
+        <span class="section-hero-badge" style="background:#DBEAFE; color:#1D4ED8;">স্মার্ট এক্সপ্রেশন</span>
+      </div>
+    </div>
+
     <div class="calc-container">
       <div class="calc-screen">
         <div class="screen-mode">
@@ -2053,6 +2367,17 @@
   <!-- 2. SCIENTIFIC CALCULATOR                       -->
   <!-- ============================================== -->
   <section id="section-scientific" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card sci-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🔬</span> সায়েন্টিফিক ক্যালকুলেটর (Scientific)</h2>
+          <p class="section-hero-desc">ত্রিকোণমিতি (sin, cos, tan), লগারিদম, সূচক (xʸ), বর্গমূল ও ফ্যাক্টোরিয়াল</p>
+        </div>
+        <span class="section-hero-badge" style="background:#EDE9FE; color:#6D28D9;">ডিগ্রি / রেডিয়ান</span>
+      </div>
+    </div>
+
     <div class="calc-container">
       <div class="calc-screen">
         <div class="screen-mode">
@@ -2119,14 +2444,25 @@
   <!-- 3. PERCENTAGE CALCULATOR                       -->
   <!-- ============================================== -->
   <section id="section-percentage" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card pct-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📊</span> শতকরা ক্যালকুলেটর (Percentage)</h2>
+          <p class="section-hero-desc">যেকোনো সংখ্যার শতকরা, বৃদ্ধি/হ্রাস, ডিসকাউন্ট, ভ্যাট ও লাভ-ক্ষতি নির্ভুল হিসাব</p>
+        </div>
+        <span class="section-hero-badge" style="background:#D1FAE5; color:#065F46;">৭টি ফর্মুলা টুলস</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab pct-subtab active" data-target="a">A. X এর Y%</button>
-      <button class="pill-tab pct-subtab" data-target="b">B. X কত শতাংশ</button>
-      <button class="pill-tab pct-subtab" data-target="c">C. % বৃদ্ধি</button>
-      <button class="pill-tab pct-subtab" data-target="d">D. % হ্রাস</button>
-      <button class="pill-tab pct-subtab" data-target="e">E. ডিসকাউন্ট</button>
-      <button class="pill-tab pct-subtab" data-target="f">F. ভ্যাট</button>
-      <button class="pill-tab pct-subtab" data-target="g">G. লাভ-ক্ষতি</button>
+      <button class="pill-tab pct-subtab active" data-target="a">📊 X এর Y%</button>
+      <button class="pill-tab pct-subtab" data-target="b">📈 X কত %</button>
+      <button class="pill-tab pct-subtab" data-target="c">🔺 % বৃদ্ধি</button>
+      <button class="pill-tab pct-subtab" data-target="d">🔻 % হ্রাস</button>
+      <button class="pill-tab pct-subtab" data-target="e">🏷️ ডিসকাউন্ট</button>
+      <button class="pill-tab pct-subtab" data-target="f">🧾 ভ্যাট (VAT)</button>
+      <button class="pill-tab pct-subtab" data-target="g">💼 লাভ-ক্ষতি</button>
     </div>
 
     <!-- A: X এর Y% কত? -->
@@ -2253,12 +2589,23 @@
   <!-- 4. FINANCE CALCULATOR                          -->
   <!-- ============================================== -->
   <section id="section-finance" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card fin-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>💰</span> ফিন্যান্স ও ব্যাংক ক্যালকুলেটর (Finance)</h2>
+          <p class="section-hero-desc">সরল ও চক্রবৃদ্ধি মুনাফা, ব্যাংক লোন EMI, ডিপিএস (DPS) এবং এফডিআর (FDR) হিসাব</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEF3C7; color:#92400E;">৫টি আর্থিক ক্যালকুলেটর</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab fin-subtab active" data-target="a">সরল মুনাফা (SI)</button>
-      <button class="pill-tab fin-subtab" data-target="b">চক্রবৃদ্ধি মুনাফা (CI)</button>
-      <button class="pill-tab fin-subtab" data-target="c">লোন EMI</button>
-      <button class="pill-tab fin-subtab" data-target="d">DPS ক্যালকুলেটর</button>
-      <button class="pill-tab fin-subtab" data-target="e">FDR ক্যালকুলেটর</button>
+      <button class="pill-tab fin-subtab active" data-target="a">💵 সরল মুনাফা (SI)</button>
+      <button class="pill-tab fin-subtab" data-target="b">📈 চক্রবৃদ্ধি (CI)</button>
+      <button class="pill-tab fin-subtab" data-target="c">💳 লোন EMI</button>
+      <button class="pill-tab fin-subtab" data-target="d">🏦 DPS সঞ্চয়</button>
+      <button class="pill-tab fin-subtab" data-target="e">🔒 FDR মেয়াদি</button>
     </div>
 
     <!-- Simple Interest -->
@@ -2335,10 +2682,21 @@
   <!-- 5. AGE & DATE CALCULATOR                       -->
   <!-- ============================================== -->
   <section id="section-age" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card age-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🎂</span> বয়স ও তারিখ ক্যালকুলেটর (Age & Date)</h2>
+          <p class="section-hero-desc">বছর, মাস, দিন, ঘণ্টা ও মিনিটে বয়স, দুটি তারিখের ব্যবধান এবং দিন যোগ/বিয়োগ</p>
+        </div>
+        <span class="section-hero-badge" style="background:#F3E8FF; color:#7E22CE;">সঠিক সময় হিসাব</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab age-subtab active" data-target="exact">বয়স গণনা</button>
-      <button class="pill-tab age-subtab" data-target="diff">তারিখের ব্যবধান</button>
-      <button class="pill-tab age-subtab" data-target="add">দিন যোগ / বিয়োগ</button>
+      <button class="pill-tab age-subtab active" data-target="exact">🎂 বয়স গণনা</button>
+      <button class="pill-tab age-subtab" data-target="diff">📅 তারিখের ব্যবধান</button>
+      <button class="pill-tab age-subtab" data-target="add">➕ দিন যোগ / বিয়োগ</button>
     </div>
 
     <!-- Exact Age -->
@@ -2384,6 +2742,32 @@
   <!-- 6. GEOMETRY CALCULATOR                         -->
   <!-- ============================================== -->
   <section id="section-geometry" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card geom-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📐</span> জ্যামিতি ক্যালকুলেটর (Geometry)</h2>
+          <p class="section-hero-desc">১১টি দ্বিমাত্রিক ও ত্রিমাত্রিক আকারের ক্ষেত্রফল, পরিসীমা ও আয়তন নিখুঁত নির্ণয়</p>
+        </div>
+        <span class="section-hero-badge" style="background:#E0F2FE; color:#0369A1;">১১টি জ্যামিতিক আকার</span>
+      </div>
+    </div>
+
+    <!-- Shape Sub-tabs matching Health/QR pill style -->
+    <div class="pill-tabs" id="geomShapePills">
+      <button type="button" class="pill-tab geom-subtab active" data-shape="square">⏹️ বর্গক্ষেত্র</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="rectangle">▭ আয়তক্ষেত্র</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="triangle">△ ত্রিভুজ</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="circle">◯ বৃত্ত</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="parallelogram">▱ সামান্তরিক</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="trapezium">⏢ ট্রাপিজিয়াম</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cube">🧊 ঘনক</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cuboid">📦 আয়তাকার ঘনবস্তু</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cylinder">🛢️ সিলিন্ডার</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="cone">🍦 কোণক</button>
+      <button type="button" class="pill-tab geom-subtab" data-shape="sphere">⚽ গোলক</button>
+    </div>
+
     <div class="tool-card">
       <h3>জ্যামিতি ক্যালকুলেটর (Geometry)</h3>
       <p class="desc">আকার নির্বাচন করুন এবং প্রয়োজনীয় মান দিন</p>
@@ -2413,13 +2797,24 @@
   <!-- 7. ALGEBRA CALCULATOR                          -->
   <!-- ============================================== -->
   <section id="section-algebra" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card alg-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🔢</span> বীজগণিত ক্যালকুলেটর (Algebra)</h2>
+          <p class="section-hero-desc">রৈখিক ও দ্বিঘাত সমীকরণ, লসাগু-গসাগু, মৌলিক সংখ্যা ও পরিসংখ্যান গড়</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEE2E2; color:#B91C1C;">৬টি বীজগণিত টুলস</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab alg-subtab active" data-target="linear">রৈখিক সমীকরণ</button>
-      <button class="pill-tab alg-subtab" data-target="quad">দ্বিঘাত সমীকরণ</button>
-      <button class="pill-tab alg-subtab" data-target="lcm">লসাগু ও গসাগু</button>
-      <button class="pill-tab alg-subtab" data-target="prime">মৌলিক সংখ্যা</button>
-      <button class="pill-tab alg-subtab" data-target="factor">উৎপাদক</button>
-      <button class="pill-tab alg-subtab" data-target="avg">গড় ও পরিসংখ্যান</button>
+      <button class="pill-tab alg-subtab active" data-target="linear">📏 রৈখিক সমীকরণ</button>
+      <button class="pill-tab alg-subtab" data-target="quad">🔲 দ্বিঘাত সমীকরণ</button>
+      <button class="pill-tab alg-subtab" data-target="lcm">🔢 লসাগু ও গসাগু</button>
+      <button class="pill-tab alg-subtab" data-target="prime">✨ মৌলিক সংখ্যা</button>
+      <button class="pill-tab alg-subtab" data-target="factor">🧩 উৎপাদক</button>
+      <button class="pill-tab alg-subtab" data-target="avg">📊 গড় ও পরিসংখ্যান</button>
     </div>
 
     <!-- Linear: ax + b = c -->
@@ -2485,9 +2880,28 @@
   <!-- 8. FRACTION CALCULATOR                         -->
   <!-- ============================================== -->
   <section id="section-fraction" class="section-view">
-    <div class="tool-card">
-      <h3>ভগ্নাংশ ক্যালকুলেটর (Fraction)</h3>
-      <p class="desc">দুটি ভগ্নাংশের যোগ, বিয়োগ, গুণ ও ভাগ</p>
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card frac-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>½</span> ভগ্নাংশ ক্যালকুলেটর (Fraction)</h2>
+          <p class="section-hero-desc">দুটি সাধারণ ভগ্নাংশের যোগ, বিয়োগ, গুণ, ভাগ, মিশ্র রূপান্তর ও সরলীকরণ</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEF3C7; color:#B45309;">লব ও হর হিসাব</span>
+      </div>
+    </div>
+
+    <!-- Fraction Sub-tabs matching Health/QR pill style -->
+    <div class="pill-tabs" id="fracTabs">
+      <button type="button" class="pill-tab frac-subtab active" data-target="basic">➗ সাধারণ ভগ্নাংশ</button>
+      <button type="button" class="pill-tab frac-subtab" data-target="mixed">🔄 মিশ্র ↔ অপ্রকৃত</button>
+      <button type="button" class="pill-tab frac-subtab" data-target="decimal">📊 ভগ্নাংশ ↔ দশমিক</button>
+    </div>
+
+    <!-- 1: Basic Fractions -->
+    <div id="frac-view-basic" class="frac-view tool-card">
+      <h3>সাধারণ ভগ্নাংশ অপারেশন (+, −, ×, ÷)</h3>
+      <p class="desc">দুটি ভগ্নাংশের যোগ, বিয়োগ, গুণ ও ভাগ নির্ণয় করুন</p>
       <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:14px;">
         <div style="width:75px;">
           <input type="number" id="frac_n1" class="form-control mono-font" placeholder="লব ১" value="1">
@@ -2509,12 +2923,69 @@
       <button class="btn btn-primary" id="btnCalcFract">ভগ্নাংশ হিসাব করুন</button>
       <div class="result-box" id="resFraction"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
     </div>
+
+    <!-- 2: Mixed Fraction Converter -->
+    <div id="frac-view-mixed" class="frac-view tool-card" style="display:none;">
+      <h3>মিশ্র ↔ অপ্রকৃত ভগ্নাংশ রূপান্তর</h3>
+      <p class="desc">পূর্ণ সংখ্যা ও ভগ্নাংশ দিয়ে মিশ্র ভগ্নাংশকে অপ্রকৃত ভগ্নাংশে রূপান্তর করুন</p>
+      <div class="form-row" style="margin-bottom:12px;">
+        <div class="form-group" style="flex:1;">
+          <label class="form-label">পূর্ণ সংখ্যা (Whole)</label>
+          <input type="number" id="fracMixedWhole" class="form-control mono-font" placeholder="২" value="2">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label class="form-label">লব (Numerator)</label>
+          <input type="number" id="fracMixedNum" class="form-control mono-font" placeholder="৩" value="3">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label class="form-label">হর (Denominator)</label>
+          <input type="number" id="fracMixedDen" class="form-control mono-font" placeholder="৪" value="4">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btnCalcMixedFrac">মিশ্র রূপান্তর করুন</button>
+      <div class="result-box" id="resMixedFraction"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+    </div>
+
+    <!-- 3: Decimal <-> Fraction Converter -->
+    <div id="frac-view-decimal" class="frac-view tool-card" style="display:none;">
+      <h3>ভগ্নাংশ ↔ দশমিক রূপান্তর</h3>
+      <p class="desc">যেকোনো দশমিক সংখ্যা দিন ভগ্নাংশে রূপান্তর করতে, অথবা লব/হর দিন দশমিকে রূপান্তর করতে</p>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label class="form-label">দশমিক সংখ্যা (যেমন: 0.75 বা 0.375)</label>
+        <input type="number" step="any" id="fracDecInput" class="form-control mono-font" placeholder="যেমন: ০.৭৫" value="0.75">
+      </div>
+      <button class="btn btn-primary" id="btnCalcDecToFrac">দশমিক থেকে ভগ্নাংশ করুন</button>
+      <div class="result-box" id="resDecToFrac"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
+    </div>
   </section>
 
   <!-- ============================================== -->
   <!-- 9. UNIT CONVERTER                              -->
   <!-- ============================================== -->
   <section id="section-converter" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card conv-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🔄</span> একক রূপান্তর (Unit Converter)</h2>
+          <p class="section-hero-desc">দৈর্ঘ্য, ওজন, ক্ষেত্রফল, আয়তন, তাপমাত্রা, সময়, গতিবেগ ও ডাটা রূপান্তর</p>
+        </div>
+        <span class="section-hero-badge" style="background:#DCFCE7; color:#15803D;">৮টি ক্যাটাগরি</span>
+      </div>
+    </div>
+
+    <!-- Category Sub-tabs matching Health/QR pill style -->
+    <div class="pill-tabs" id="unitCategoryPills">
+      <button type="button" class="pill-tab unit-subtab active" data-cat="length">📏 দৈর্ঘ্য</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="weight">⚖️ ওজন</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="area">📐 ক্ষেত্রফল</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="volume">🧊 আয়তন</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="temperature">🌡️ তাপমাত্রা</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="time">⏱️ সময়</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="speed">🚀 গতিবেগ</button>
+      <button type="button" class="pill-tab unit-subtab" data-cat="data">💾 ডাটা</button>
+    </div>
+
     <div class="tool-card">
       <h3>একক রূপান্তর (Unit Converter)</h3>
       <div class="form-group">
@@ -2546,13 +3017,24 @@
   <!-- 10. BANGLADESH TOOLS 🇧🇩                       -->
   <!-- ============================================== -->
   <section id="section-bangladesh" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card bd-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🇧🇩</span> বাংলাদেশ স্পেশাল টুলস (BD Tools)</h2>
+          <p class="section-hero-desc">টাকা কথায় রূপান্তর, বাংলা-ইংরেজি সংখ্যা, শতক-বিঘা জমির মাপ ও মণ-সের ওজন</p>
+        </div>
+        <span class="section-hero-badge" style="background:#DCFCE7; color:#166534;">দেশীয় পরিমাপ</span>
+      </div>
+    </div>
+
     <div class="pill-tabs">
-      <button class="pill-tab bd-subtab active" data-target="taka">টাকা কথায়</button>
-      <button class="pill-tab bd-subtab" data-target="digits">বাংলা ↔ English সংখ্যা</button>
-      <button class="pill-tab bd-subtab" data-target="land">জমির পরিমাপ</button>
-      <button class="pill-tab bd-subtab" data-target="weight">মণ-সের-ভরি ওজন</button>
-      <button class="pill-tab bd-subtab" data-target="height">উচ্চতা কনভার্টার</button>
-      <button class="pill-tab bd-subtab" data-target="qrcode">কিউআর কোড (QR Code)</button>
+      <button class="pill-tab bd-subtab active" data-target="taka">💵 টাকা কথায়</button>
+      <button class="pill-tab bd-subtab" data-target="digits">🔤 বাংলা ↔ EN সংখ্যা</button>
+      <button class="pill-tab bd-subtab" data-target="land">🌾 জমির পরিমাপ</button>
+      <button class="pill-tab bd-subtab" data-target="weight">⚖️ মণ-সের-ভরি ওজন</button>
+      <button class="pill-tab bd-subtab" data-target="height">📏 উচ্চতা কনভার্টার</button>
+      <button class="pill-tab bd-subtab" data-target="qrcode">📷 কিউআর কোড</button>
     </div>
 
     <!-- Taka in words -->
@@ -2655,12 +3137,40 @@
       <div class="result-box" id="resHeight"><span class="muted">ফলাফল এখানে দেখাবে</span></div>
     </div>
 
+    <!-- QR Code Quick Launcher View inside BD tools -->
+    <div id="bd-view-qrcode" class="bd-view tool-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:16px;">কিউআর কোড স্ক্যানার ও জেনারেটর (QR Tools)</h3>
+        <span class="section-hero-badge" style="background:#dbeafe; color:#1d4ed8;">স্মার্ট কিউআর</span>
+      </div>
+      <p class="desc">মোবাইলের ক্যামেরা দিয়ে যেকোনো কিউআর কোড স্ক্যান করুন অথবা বিকাশ/নগদ পেমেন্ট, ওয়াইফাই ও ওয়েবসাইটের কিউআর তৈরি করুন।</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0;">
+        <button type="button" class="btn btn-primary" onclick="window.navigateTo('qrcode', 'qr', 'scanner')" style="padding:14px; font-size:13.5px;">
+          📷 কিউআর স্ক্যানার খুলুন
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="window.navigateTo('qrcode', 'qr', 'generator')" style="padding:14px; font-size:13.5px;">
+          ✏️ কিউআর তৈরি করুন
+        </button>
+      </div>
+    </div>
+
   </section>
 
   <!-- ============================================== -->
   <!-- 11. QR CODE SCANNER & GENERATOR                -->
   <!-- ============================================== -->
   <section id="section-qrcode" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card qr-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📷</span> কিউআর কোড টুলস (QR Code Hub)</h2>
+          <p class="section-hero-desc">লাইভ ক্যামেরা ও ছবি স্ক্যানার, টেক্সট, ইউআরএল ও বিকাশ/নগদ কিউআর জেনারেটর</p>
+        </div>
+        <span class="section-hero-badge" style="background:#E0E7FF; color:#3730A3;">স্ক্যানার ও জেনারেটর</span>
+      </div>
+    </div>
+
     <div class="pill-tabs" style="margin-bottom:12px;">
       <button type="button" class="pill-tab qr-subtab active" data-qrtab="scanner">📷 কিউআর স্ক্যানার (Scanner)</button>
       <button type="button" class="pill-tab qr-subtab" data-qrtab="generator">✏️ কিউআর জেনারেটর (Generator)</button>
@@ -2795,14 +3305,18 @@
   <!-- 12. CURRENCY CONVERTER                         -->
   <!-- ============================================== -->
   <section id="section-currency" class="section-view">
-    <div class="tool-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <h3 style="margin:0; font-size:18px; display:flex; align-items:center; gap:8px;">
-          <span>💱</span> কারেন্সি কনভার্টার (Currency Converter)
-        </h3>
-        <span class="badge" id="currRateSyncBadge" style="background:#d1fae5; color:#065f46; font-weight:600; padding:3px 10px; border-radius:12px; font-size:12px;">রেট: আপডেট</span>
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card curr-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>💱</span> কারেন্সি কনভার্টার (Currency Converter)</h2>
+          <p class="section-hero-desc">বাংলাদেশি টাকা (BDT) ও বিশ্বের জনপ্রিয় সকল বৈদেশিক মুদ্রার রিয়েল-টাইম ও অফলাইন বিনিময় হার</p>
+        </div>
+        <span class="section-hero-badge" id="currRateSyncBadge" style="background:#d1fae5; color:#065f46;">রেট: আপডেট</span>
       </div>
-      <p class="desc">বাংলাদেশি টাকা (BDT) ও বিশ্বের জনপ্রিয় সকল বৈদেশিক মুদ্রার রিয়েল-টাইম এবং অফলাইন বিনিময় হার রূপান্তর করুন।</p>
+    </div>
+
+    <div class="tool-card">
 
       <div style="background:var(--surface); border:1px solid var(--card-border); border-radius:var(--radius); padding:16px; margin:14px 0; box-shadow:var(--shadow-sm);">
         <div class="form-group" style="margin-bottom:12px;">
@@ -2895,24 +3409,23 @@
   <!-- 10.5 HEALTH & FITNESS CALCULATOR               -->
   <!-- ============================================== -->
   <section id="section-health" class="section-view">
-    <!-- Header & Profile Auto-Fill Card -->
-    <div class="tool-card" style="background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, var(--surface) 100%); border-left: 4px solid #EF4444; margin-bottom: 14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card health-theme">
+      <div class="section-hero-header">
         <div>
-          <h2 style="margin:0 0 3px; font-size:18px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:8px;">
-            <span>❤️</span> স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর
-          </h2>
-          <p style="margin:0; font-size:12px; color:var(--ink-soft);">
-            BMI, BMR, দৈনিক ক্যালোরি (TDEE), আদর্শ ওজন, বডি ফ্যাট %, পানির হিসাব ও ম্যাক্রো নিউট্রিয়েন্ট
-          </p>
+          <h2 class="section-hero-title"><span>❤️</span> স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর</h2>
+          <p class="section-hero-desc">BMI, BMR, দৈনিক ক্যালোরি (TDEE), আদর্শ ওজন, বডি ফ্যাট %, পানির হিসাব ও ম্যাক্রো নিউট্রিয়েন্ট</p>
         </div>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnToggleHealthProfile" style="font-size:12px; padding:5px 12px; display:inline-flex; align-items:center; gap:4px;">
-          <span>⚙️</span> কুইক প্রোফাইল
-        </button>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="section-hero-badge" style="background:#fee2e2; color:#b91c1c;">ফিটনেস ও ডায়েট</span>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnToggleHealthProfile" style="font-size:12px; padding:5px 12px; display:inline-flex; align-items:center; gap:4px;">
+            <span>⚙️</span> কুইক প্রোফাইল
+          </button>
+        </div>
       </div>
 
       <!-- Collapsible Profile Bar -->
-      <div class="health-quick-profile" id="healthQuickProfile" style="margin-top:12px; padding:12px; background:var(--surface); border:1px dashed var(--card-border); border-radius:10px;">
+      <div class="health-quick-profile" id="healthQuickProfile" style="margin-top:12px; padding:12px; background:var(--surface); border:1px dashed var(--card-border); border-radius:12px;">
         <div style="font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:8px; display:flex; align-items:center; gap:5px;">
           <span>👤</span> <strong>আপনার তথ্য (সব ক্যালকুলেটরে এক ক্লিকে স্বয়ংক্রিয় পূরণ হবে):</strong>
         </div>
@@ -3409,6 +3922,17 @@
   <!-- 11. CUSTOM FORMULA                             -->
   <!-- ============================================== -->
   <section id="section-custom" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card custom-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>🧪</span> কাস্টম সূত্র নির্মাতা (Custom Formulas)</h2>
+          <p class="section-hero-desc">যেকোনো গাণিতিক সূত্র নিজে লিখুন এবং স্বয়ংক্রিয় ইনপুট ফর্ম তৈরি করুন</p>
+        </div>
+        <span class="section-hero-badge" style="background:#EDE9FE; color:#6D28D9;">ডাইনামিক ফর্মুলা</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>নিজের কাস্টম সূত্র তৈরি করুন</h3>
       <div class="form-group">
@@ -3439,6 +3963,17 @@
   <!-- 12. GLOBAL HISTORY                             -->
   <!-- ============================================== -->
   <section id="section-history" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card hist-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📜</span> হিসাবের ইতিহাস (Global History)</h2>
+          <p class="section-hero-desc">পূর্ববর্তী সকল ক্যালকুলেশন ইতিহাস অনুসন্ধান, ফিল্টার ও এক্সপোর্ট করুন</p>
+        </div>
+        <span class="section-hero-badge" style="background:#F1F5F9; color:#475569;">অটো-সেভ হিস্ট্রি</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>হিসাবের ইতিহাস (Global History)</h3>
       <div class="form-row" style="margin-bottom:12px;">
@@ -3465,6 +4000,17 @@
   <!-- 13. FAVORITES                                  -->
   <!-- ============================================== -->
   <section id="section-favorites" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card fav-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>⭐</span> প্রিয় হিসাবসমূহ (Favorites)</h2>
+          <p class="section-hero-desc">আপনার পছন্দের ও বারবার প্রয়োজনীয় হিসাবগুলোর বুকমার্ক তালিকা</p>
+        </div>
+        <span class="section-hero-badge" style="background:#FEF3C7; color:#B45309;">তারকা চিহ্নিত</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>প্রিয় হিসাবসমূহ (Favorites ⭐)</h3>
       <p class="desc">গুরুত্বপূর্ণ হিসাবগুলো তারকা চিহ্নিত করে এখানে দ্রুত দেখতে পারবেন</p>
@@ -3476,6 +4022,17 @@
   <!-- 15. APP STATS & USER RATINGS                   -->
   <!-- ============================================== -->
   <section id="section-appstats" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card set-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>📊</span> অ্যাপ ডাউনলোড ও ব্যবহারকারী পরিসংখ্যান</h2>
+          <p class="section-hero-desc">গাণিতিক ক্যালকুলেটর অ্যাপটির মোট ডাউনলোড, লাইভ শেয়ার ট্র্যাকার এবং নিয়মিত ব্যবহারকারীদের বাস্তব মতামত ও রেটিং</p>
+        </div>
+        <span class="section-hero-badge" style="background:#fef3c7; color:#b45309;">৪.৮★ শীর্ষ রেটিং</span>
+      </div>
+    </div>
+
     <!-- Hero Stats Card -->
     <div class="stats-hero-card">
       <div class="stats-hero-title">
@@ -3642,6 +4199,17 @@
   <!-- 14. SETTINGS                                   -->
   <!-- ============================================== -->
   <section id="section-settings" class="section-view">
+    <!-- Header Hero Banner Card -->
+    <div class="section-hero-card set-theme">
+      <div class="section-hero-header">
+        <div>
+          <h2 class="section-hero-title"><span>⚙️</span> অ্যাপ সেটিংস (Settings)</h2>
+          <p class="section-hero-desc">থিম, ফন্ট সাইজ, দশমিক সংখ্যা, অফলাইন ব্যাকআপ ও সাউন্ড নিয়ন্ত্রণ</p>
+        </div>
+        <span class="section-hero-badge" style="background:#E0E7FF; color:#3730A3;">কনফিগারেশন</span>
+      </div>
+    </div>
+
     <div class="tool-card">
       <h3>অ্যাপ সেটিংস (Settings)</h3>
       <div class="form-group">
@@ -3714,11 +4282,10 @@
   </section>
 </div>
 
-<!-- Mobile Bottom Navigation Bar -->
-<nav class="bottom-nav">
+<!-- Mobile Bottom Navigation Bar (Fixed Core Tabs - New features must NOT be added here) -->
+<nav class="bottom-nav" id="mainBottomNav">
   <button class="nav-item active" data-target="dashboard"><span class="nav-icon">🏠</span>হোম</button>
   <button class="nav-item" data-target="basic"><span class="nav-icon">🧮</span>সাধারণ</button>
-  <button class="nav-item" data-target="health"><span class="nav-icon">❤️</span>ফিটনেস</button>
   <button class="nav-item" data-target="qrcode"><span class="nav-icon">📷</span>QR স্ক্যানার</button>
   <button class="nav-item" data-target="currency"><span class="nav-icon">💱</span>কারেন্সি</button>
   <button class="nav-item" data-target="history"><span class="nav-icon">📜</span>ইতিহাস</button>
@@ -5068,6 +5635,63 @@ function setupFractionCalc() {
       <div class="result-formula-text">হিসাব: (${toBn(n1)}/${toBn(d1)}) ${op} (${toBn(n2)}/${toBn(d2)})</div>`;
     addHistory("ভগ্নাংশ হিসাব", `(${toBn(n1)}/${toBn(d1)}) ${op} (${toBn(n2)}/${toBn(d2)})`, `${toBn(simNum)}/${toBn(simDen)}`);
   });
+
+  // Mixed Fraction Converter
+  const btnMixed = document.getElementById("btnCalcMixedFrac");
+  if (btnMixed) {
+    btnMixed.addEventListener("click", () => {
+      const w = parseInt(bnToLatin(document.getElementById("fracMixedWhole").value || "0"), 10);
+      const n = parseInt(bnToLatin(document.getElementById("fracMixedNum").value || "0"), 10);
+      const d = parseInt(bnToLatin(document.getElementById("fracMixedDen").value || "1"), 10);
+      const out = document.getElementById("resMixedFraction");
+      if (isNaN(w) || isNaN(n) || isNaN(d) || d === 0) {
+        out.innerHTML = '<span class="formula-error">সঠিক সংখ্যা দিন (হর শূন্য হতে পারবে না)</span>';
+        return;
+      }
+      const impNum = (Math.abs(w) * d) + n;
+      const finalNum = w < 0 ? -impNum : impNum;
+      const g = gcd(Math.abs(finalNum), Math.abs(d));
+      const simNum = finalNum / g;
+      const simDen = d / g;
+      const dec = simNum / simDen;
+
+      out.innerHTML = `<div>অপ্রকৃত ভগ্নাংশ (Improper): <strong>${toBn(simNum)} / ${toBn(simDen)}</strong></div>
+        <div>দশমিক মান: <strong>${formatNumber(dec)}</strong></div>
+        <div class="result-formula-text">সূত্র: (${toBn(w)} × ${toBn(d)} + ${toBn(n)}) / ${toBn(d)} = ${toBn(simNum)}/${toBn(simDen)}</div>`;
+      addHistory("মিশ্র ভগ্নাংশ", `${toBn(w)} পূর্ণ ${toBn(n)}/${toBn(d)}`, `${toBn(simNum)}/${toBn(simDen)}`);
+    });
+  }
+
+  // Decimal to Fraction Converter
+  const btnDecToFrac = document.getElementById("btnCalcDecToFrac");
+  if (btnDecToFrac) {
+    btnDecToFrac.addEventListener("click", () => {
+      const raw = bnToLatin(document.getElementById("fracDecInput").value.trim());
+      const val = parseFloat(raw);
+      const out = document.getElementById("resDecToFrac");
+      if (isNaN(val)) {
+        out.innerHTML = '<span class="formula-error">সঠিক দশমিক সংখ্যা দিন</span>';
+        return;
+      }
+      const len = (raw.split('.')[1] || '').length;
+      const den = Math.pow(10, len);
+      const num = Math.round(val * den);
+      const g = gcd(Math.abs(num), den);
+      const simNum = num / g;
+      const simDen = den / g;
+
+      let mixed = "";
+      if (Math.abs(simNum) >= simDen && simDen !== 1) {
+        const whole = Math.trunc(simNum / simDen);
+        const rem = Math.abs(simNum % simDen);
+        if (rem > 0) mixed = ` (মিশ্র: <strong>${toBn(whole)} পূর্ণ ${toBn(rem)}/${toBn(simDen)}</strong>)`;
+      }
+
+      out.innerHTML = `<div>ভগ্নাংশ মান: <strong>${toBn(simNum)} / ${toBn(simDen)}</strong>${mixed}</div>
+        <div>দশমিক মান: <strong>${formatNumber(val)}</strong></div>`;
+      addHistory("দশমিক থেকে ভগ্নাংশ", toBn(raw), `${toBn(simNum)}/${toBn(simDen)}`);
+    });
+  }
 }
 
 // ==========================================
@@ -6910,38 +7534,292 @@ function renderFavoritesUI() {
 // ==========================================
 // Settings, Themes & Navigation
 // ==========================================
-function setupSettingsAndNavigation() {
-  // Navigation Tabs & Views
-  function navigateTo(targetId) {
-    if (!targetId) return;
-    const targetSection = document.getElementById("section-" + targetId);
-    // If targetId is not a main section (e.g. subtabs like 'a', 'b', etc.), do NOT touch or hide the view!
-    if (!targetSection) {
-      console.warn("Section not found:", targetId);
+
+// Global Subtab Activator - switches any subtab smoothly
+window.activateSubtab = function(subtabType, subtabValue) {
+  if (!subtabType || !subtabValue) return;
+
+  // 1. Percentage
+  if (subtabType === "pct") {
+    const tab = document.querySelector(`.pct-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".pct-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".pct-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("pct-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 2. Finance
+  if (subtabType === "fin") {
+    const tab = document.querySelector(`.fin-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".fin-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".fin-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("fin-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 3. Age
+  if (subtabType === "age") {
+    const tab = document.querySelector(`.age-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".age-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".age-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("age-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 4. Algebra
+  if (subtabType === "alg") {
+    const tab = document.querySelector(`.alg-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".alg-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".alg-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("alg-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 5. Bangladesh
+  if (subtabType === "bd") {
+    const tab = document.querySelector(`.bd-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".bd-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".bd-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("bd-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 6. QR Code
+  if (subtabType === "qr" || subtabType === "qrcode") {
+    const tab = document.querySelector(`.qr-subtab[data-qrtab="${subtabValue}"]`);
+    document.querySelectorAll(".qr-subtab").forEach(t => t.classList.remove("active"));
+    if (tab) tab.classList.add("active");
+    if (subtabValue === "scanner") {
+      const vs = document.getElementById("qr-view-scanner");
+      const vg = document.getElementById("qr-view-generator");
+      if (vs) vs.style.display = "block";
+      if (vg) vg.style.display = "none";
+      if (typeof startCamera === "function") startCamera();
+    } else {
+      const vs = document.getElementById("qr-view-scanner");
+      const vg = document.getElementById("qr-view-generator");
+      if (vs) vs.style.display = "none";
+      if (vg) vg.style.display = "block";
+      if (typeof stopCamera === "function") stopCamera();
+    }
+    return;
+  }
+
+  // 7. Health Main Subtabs
+  if (subtabType === "health") {
+    const tab = document.querySelector(`.health-tab-btn[data-health="${subtabValue}"]`);
+    document.querySelectorAll(".health-tab-btn").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".health-subview").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("health-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 8. Health Others Subtabs
+  if (subtabType === "oth" || subtabType === "others") {
+    // activate health "others" first
+    window.activateSubtab("health", "others");
+    const tab = document.querySelector(`.others-tab-btn[data-oth="${subtabValue}"]`);
+    document.querySelectorAll(".others-tab-btn").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".oth-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("oth-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+
+  // 9. Geometry
+  if (subtabType === "geom" || subtabType === "geometry") {
+    const tab = document.querySelector(`.geom-subtab[data-shape="${subtabValue}"]`);
+    document.querySelectorAll(".geom-subtab").forEach(t => t.classList.remove("active"));
+    if (tab) tab.classList.add("active");
+    const shapeSel = document.getElementById("geomShapeSelect");
+    if (shapeSel) {
+      shapeSel.value = subtabValue;
+      shapeSel.dispatchEvent(new Event("change"));
+    }
+    return;
+  }
+
+  // 10. Unit Converter
+  if (subtabType === "unit" || subtabType === "converter") {
+    const tab = document.querySelector(`.unit-subtab[data-cat="${subtabValue}"]`);
+    document.querySelectorAll(".unit-subtab").forEach(t => t.classList.remove("active"));
+    if (tab) tab.classList.add("active");
+    const catSel = document.getElementById("unitCategory");
+    if (catSel) {
+      catSel.value = subtabValue;
+      catSel.dispatchEvent(new Event("change"));
+    }
+    return;
+  }
+
+  // 11. Fraction
+  if (subtabType === "frac" || subtabType === "fraction") {
+    const tab = document.querySelector(`.frac-subtab[data-target="${subtabValue}"]`);
+    document.querySelectorAll(".frac-subtab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".frac-view").forEach(v => v.style.display = "none");
+    if (tab) tab.classList.add("active");
+    const v = document.getElementById("frac-view-" + subtabValue);
+    if (v) v.style.display = "block";
+    return;
+  }
+};
+
+// Global Navigation Controller
+window.navigateTo = function(targetId, subtabType, subtabValue) {
+  if (!targetId) return;
+  const targetSection = document.getElementById("section-" + targetId);
+  if (!targetSection) {
+    console.warn("Section not found:", targetId);
+    return;
+  }
+
+  document.querySelectorAll(".section-view").forEach(v => v.classList.remove("active"));
+  document.querySelectorAll(".subnav-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+
+  targetSection.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const subnavBtn = document.querySelector(`.subnav-btn[data-target="${targetId}"]`);
+  if (subnavBtn) subnavBtn.classList.add("active");
+
+  const bottomBtn = document.querySelector(`.nav-item[data-target="${targetId}"]`);
+  if (bottomBtn) bottomBtn.classList.add("active");
+
+  if (targetId === "history" && typeof renderHistoryUI === "function") renderHistoryUI();
+  if (targetId === "favorites" && typeof renderFavoritesUI === "function") renderFavoritesUI();
+  if (targetId === "qrcode") {
+    if (window.onQRTabActivated) window.onQRTabActivated();
+  } else {
+    if (window.onQRTabDeactivated) window.onQRTabDeactivated();
+  }
+
+  // If subtab is specified, activate it immediately and synchronously
+  if (subtabType && subtabValue) {
+    if (typeof window.activateSubtab === "function") {
+      window.activateSubtab(subtabType, subtabValue);
+    }
+  } else {
+    // Ensure the default active sub-view is visible inside the opened section
+    const activePill = targetSection.querySelector(".pill-tab.active");
+    if (activePill) {
+      const t = activePill.dataset.target || activePill.dataset.health || activePill.dataset.qrtab;
+      if (t) {
+        const candidates = ["pct-view-" + t, "fin-view-" + t, "age-view-" + t, "alg-view-" + t, "bd-view-" + t, "health-view-" + t, "qr-view-" + t, "frac-view-" + t];
+        for (const cid of candidates) {
+          const el = document.getElementById(cid);
+          if (el) { el.style.display = "block"; break; }
+        }
+      }
+    }
+  }
+};
+
+const navigateTo = window.navigateTo;
+
+// Delegated Universal Subtab Click Listener - 100% reliable across all browsers & tabs
+window.setupUniversalSubtabs = function() {
+  document.addEventListener("click", (e) => {
+    const tab = e.target.closest(".pill-tab");
+    if (!tab) return;
+
+    // 1. Percentage
+    if (tab.classList.contains("pct-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("pct", tab.dataset.target);
       return;
     }
 
-    document.querySelectorAll(".section-view").forEach(v => v.classList.remove("active"));
-    document.querySelectorAll(".subnav-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
-
-    targetSection.classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    const subnavBtn = document.querySelector(`.subnav-btn[data-target="${targetId}"]`);
-    if (subnavBtn) subnavBtn.classList.add("active");
-
-    const bottomBtn = document.querySelector(`.nav-item[data-target="${targetId}"]`);
-    if (bottomBtn) bottomBtn.classList.add("active");
-
-    if (targetId === "history") renderHistoryUI();
-    if (targetId === "favorites") renderFavoritesUI();
-    if (targetId === "qrcode") {
-      if (window.onQRTabActivated) window.onQRTabActivated();
-    } else {
-      if (window.onQRTabDeactivated) window.onQRTabDeactivated();
+    // 2. Finance
+    if (tab.classList.contains("fin-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("fin", tab.dataset.target);
+      return;
     }
-  }
+
+    // 3. Age
+    if (tab.classList.contains("age-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("age", tab.dataset.target);
+      return;
+    }
+
+    // 4. Algebra
+    if (tab.classList.contains("alg-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("alg", tab.dataset.target);
+      return;
+    }
+
+    // 5. Bangladesh
+    if (tab.classList.contains("bd-subtab")) {
+      e.preventDefault();
+      if (tab.dataset.target === "qrcode") {
+        window.activateSubtab("bd", "qrcode");
+        return;
+      }
+      window.activateSubtab("bd", tab.dataset.target);
+      return;
+    }
+
+    // 6. Health Main Subtabs
+    if (tab.classList.contains("health-tab-btn")) {
+      e.preventDefault();
+      window.activateSubtab("health", tab.dataset.health);
+      return;
+    }
+
+    // 7. Health Others Subtabs
+    if (tab.classList.contains("others-tab-btn")) {
+      e.preventDefault();
+      window.activateSubtab("others", tab.dataset.oth);
+      return;
+    }
+
+    // 8. QR Code Subtabs
+    if (tab.classList.contains("qr-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("qr", tab.dataset.qrtab);
+      return;
+    }
+
+    // 9. Geometry Subtabs
+    if (tab.classList.contains("geom-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("geom", tab.dataset.shape);
+      return;
+    }
+
+    // 10. Unit Converter Subtabs
+    if (tab.classList.contains("unit-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("unit", tab.dataset.cat);
+      return;
+    }
+
+    // 11. Fraction Subtabs
+    if (tab.classList.contains("frac-subtab")) {
+      e.preventDefault();
+      window.activateSubtab("frac", tab.dataset.target);
+      return;
+    }
+  });
+};
+
+function setupSettingsAndNavigation() {
 
   // Bind navigation click ONLY to main section navigation elements (avoid hijacking sub-tabs!)
   document.querySelectorAll(".dash-card[data-target], .nav-item[data-target], .app-header [data-target], button[data-target='appstats']").forEach(btn => {
@@ -7422,8 +8300,17 @@ function setupAppStatsAndRatings() {
 
 
 // ==========================================
-// 16. Smart Search & Natural Language Assistant
+// 16. Smart Search & Natural Language Assistant (Universal & Future-Proof)
 // ==========================================
+// Global registry for future tool registration
+window.APP_CUSTOM_TOOLS = window.APP_CUSTOM_TOOLS || [];
+window.registerCalculatorTool = function(toolDef) {
+  if (!toolDef || !toolDef.id) return;
+  const exists = window.APP_CUSTOM_TOOLS.findIndex(t => t.id === toolDef.id);
+  if (exists >= 0) window.APP_CUSTOM_TOOLS[exists] = toolDef;
+  else window.APP_CUSTOM_TOOLS.push(toolDef);
+};
+
 function setupSmartSearch() {
   const searchInput = document.getElementById("smartSearchInput");
   const clearBtn = document.getElementById("btnSmartClear");
@@ -7462,16 +8349,663 @@ function setupSmartSearch() {
     return matches.map(n => parseFloat(n)).filter(n => !isNaN(n));
   }
 
-  function analyzeSmartQuery(raw) {
+  // Master Comprehensive Tool Catalog (All built-in calculators & sub-tools)
+  const MASTER_CATALOG = [
+    // 1. Basic Calculator
+    {
+      id: "tool_basic",
+      title: "🧮 সাধারণ ক্যালকুলেটর (Basic Math)",
+      category: "গণিত ও পাটিগণিত",
+      description: "যোগ, বিয়োগ, গুণ, ভাগ, বন্ধনী ও শতকরা মৌলিক হিসাব",
+      targetId: "basic",
+      keywords: ["সাধারণ", "basic", "ক্যালকুলেটর", "যোগ", "বিয়োগ", "গুণ", "ভাগ", "পাটিগণিত", "হিসাব", "প্লাস", "মাইনাস", "+", "-", "*", "/"]
+    },
+    // 2. Scientific Calculator
+    {
+      id: "tool_scientific",
+      title: "🔬 সায়েন্টিফিক ক্যালকুলেটর (Scientific)",
+      category: "উচ্চতর গণিত ও বিজ্ঞান",
+      description: "sin, cos, tan, log, ln, বর্গমূল (√), ঘাত (xʸ), ফ্যাক্টরিয়াল ও ডিগ্রি/রেডিয়ান",
+      targetId: "scientific",
+      keywords: ["সায়েন্টিফিক", "scientific", "বিজ্ঞান", "সাইন", "কস", "ট্যান", "sin", "cos", "tan", "log", "ln", "বর্গমূল", "sqrt", "রুট", "ঘাত", "power", "ফ্যাক্টরিয়াল", "ত্রিকোণমিতি", "trigonometry", "পাই", "pi"]
+    },
+    // 3. Percentage Calculator & Sub-tools
+    {
+      id: "tool_pct_main",
+      title: "📊 শতকরা ক্যালকুলেটর (Percentage)",
+      category: "শতকরা ও বাণিজ্যিক হিসাব",
+      description: "যেকোনো সংখ্যার শতকরা, বৃদ্ধি, হ্রাস, ডিসকাউন্ট, ভ্যাট ও লাভ-ক্ষতি",
+      targetId: "percentage",
+      keywords: ["শতকরা", "percentage", "শতাংশ", "পার্সেন্টেজ", "ভাগ", "%"]
+    },
+    {
+      id: "tool_pct_a",
+      title: "📊 X এর Y% কত? (What is % of)",
+      category: "শতকরা ও বাণিজ্যিক হিসাব",
+      description: "যেকোনো মূল্যের নির্দিষ্ট শতাংশ বের করুন",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "a",
+      keywords: ["x এর y%", "কত শতাংশ", "পার্সেন্ট", "এর শতকরা"]
+    },
+    {
+      id: "tool_pct_b",
+      title: "📊 X হলো Y এর কত শতাংশ?",
+      category: "শতকরা ও বাণিজ্যিক হিসাব",
+      description: "একটি সংখ্যা অন্যটির কত শতাংশ তা নির্ণয় করুন",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "b",
+      keywords: ["কত শতাংশ", "শতকরা হার", "অনুপাত শতকরা"]
+    },
+    {
+      id: "tool_pct_c",
+      title: "📈 শতকরা বৃদ্ধি ক্যালকুলেটর (% Increase)",
+      category: "শতকরা ও বাণিজ্যিক হিসাব",
+      description: "মূল্য বা মানের বৃদ্ধির হার শতাংশে নির্ণয়",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "c",
+      keywords: ["শতকরা বৃদ্ধি", "বৃদ্ধি", "growth", "increase", "দাম বৃদ্ধি"]
+    },
+    {
+      id: "tool_pct_d",
+      title: "📉 শতকরা হ্রাস ক্যালকুলেটর (% Decrease)",
+      category: "শতকরা ও বাণিজ্যিক হিসাব",
+      description: "মূল্য বা পরিমাণের হ্রাসের হার নির্ণয়",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "d",
+      keywords: ["শতকরা হ্রাস", "হ্রাস", "কমা", "decrease", "কমতি"]
+    },
+    {
+      id: "tool_pct_e",
+      title: "🏷️ ডিসকাউন্ট ও ছাড় ক্যালকুলেটর",
+      category: "শপিং ও রিটেল হিসাব",
+      description: "পণ্যের মূল দাম ও ডিসকাউন্টের পর সাশ্রয় এবং পরিশোধ মূল্য",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "e",
+      keywords: ["ডিসকাউন্ট", "ছাড়", "discount", "কমিশন", "অফার", "সাশ্রয়", "off", "মূল্যছাড়"]
+    },
+    {
+      id: "tool_pct_f",
+      title: "🧾 ভ্যাট ও কর ক্যালকুলেটর (VAT)",
+      category: "কর ও বাণিজ্যিক হিসাব",
+      description: "১৫% ভ্যাট সহ বা যেকোনো ভ্যাট হারে মোট পরিশোধ মূল্য",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "f",
+      keywords: ["ভ্যাট", "vat", "ট্যাক্স", "tax", "কর", "সরকারি ভ্যাট", "ভ্যাট চালান"]
+    },
+    {
+      id: "tool_pct_g",
+      title: "📈 লাভ ও ক্ষতি ক্যালকুলেটর (Profit & Loss)",
+      category: "বাণিজ্যিক ও ব্যবসা",
+      description: "ক্রয়মূল্য ও লাভ/ক্ষতির শতকরা হার থেকে বিক্রয়মূল্য বা আসল লাভ নির্ণয়",
+      targetId: "percentage",
+      subtabType: "pct",
+      subtabValue: "g",
+      keywords: ["লাভ", "ক্ষতি", "লাভ-ক্ষতি", "বিক্রয়মূল্য", "ক্রয়মূল্য", "profit", "loss", "মুনাফা", "লস"]
+    },
+
+    // 4. Finance & Loan
+    {
+      id: "tool_finance_main",
+      title: "💰 ফিন্যান্স ও লোন ক্যালকুলেটর",
+      category: "ব্যাংক ও বিনিয়োগ",
+      description: "সরল ও চক্রবৃদ্ধি মুনাফা, ব্যাংক লোন EMI, DPS ও FDR সঞ্চয়",
+      targetId: "finance",
+      keywords: ["ফিন্যান্স", "finance", "ব্যাংক", "লোন", "ঋণ", "মুনাফা", "টাকা জমানো"]
+    },
+    {
+      id: "tool_fin_a",
+      title: "💵 সরল মুনাফা ক্যালকুলেটর (Simple Interest)",
+      category: "ব্যাংক ও বিনিয়োগ",
+      description: "আসল টাকা, সুদের হার ও মেয়াদের ভিত্তিতে সরল সুদ",
+      targetId: "finance",
+      subtabType: "fin",
+      subtabValue: "a",
+      keywords: ["সরল মুনাফা", "simple interest", "সুদ", "আসল", "সুদের হার"]
+    },
+    {
+      id: "tool_fin_b",
+      title: "📈 চক্রবৃদ্ধি মুনাফা ক্যালকুলেটর (Compound Interest)",
+      category: "ব্যাংক ও বিনিয়োগ",
+      description: "মুনাফার ওপর মুনাফা (মাসিক/বার্ষিক চক্রবৃদ্ধি)",
+      targetId: "finance",
+      subtabType: "fin",
+      subtabValue: "b",
+      keywords: ["চক্রবৃদ্ধি মুনাফা", "compound interest", "চক্রবৃদ্ধি সুদ", "সুদে আসলে"]
+    },
+    {
+      id: "tool_fin_c",
+      title: "💳 লোন EMI ক্যালকুলেটর (Loan EMI)",
+      category: "ব্যাংক ও বিনিয়োগ",
+      description: "ব্যাংক লোনের পরিমাণ ও সুদে প্রতি মাসের কিস্তির পরিমাণ",
+      targetId: "finance",
+      subtabType: "fin",
+      subtabValue: "c",
+      keywords: ["লোন", "emi", "কিস্তি", "ঋণ", "মাসিক কিস্তি", "হোম লোন", "কার লোন", "পার্সোনাল লোন"]
+    },
+    {
+      id: "tool_fin_d",
+      title: "🪙 DPS ক্যালকুলেটর (DPS Savings)",
+      category: "ব্যাংক ও বিনিয়োগ",
+      description: "প্রতি মাসে সঞ্চয় ও মেয়াদে মোট প্রাপ্ত মুনাফা",
+      targetId: "finance",
+      subtabType: "fin",
+      subtabValue: "d",
+      keywords: ["ডিপিএস", "dps", "মাসিক সঞ্চয়", "ডিপিএস ক্যালকুলেটর", "সঞ্চয় হিসাব"]
+    },
+    {
+      id: "tool_fin_e",
+      title: "🏦 FDR ক্যালকুলেটর (Fixed Deposit)",
+      category: "ব্যাংক ও বিনিয়োগ",
+      description: "এককালীন ফিক্সড ডিপোজিটে মেয়াদে মোট মুনাফা",
+      targetId: "finance",
+      subtabType: "fin",
+      subtabValue: "e",
+      keywords: ["এফডিআর", "fdr", "ফিক্সড ডিপোজিট", "স্থায়ী আমানত", "এককালীন জমা"]
+    },
+
+    // 5. Age & Date
+    {
+      id: "tool_age_main",
+      title: "🎂 বয়স ও তারিখ ক্যালকুলেটর",
+      category: "তারিখ ও সঠিক বয়স",
+      description: "নিখুঁত বছর, মাস ও দিন ভিত্তিক বয়স এবং পরবর্তী জন্মদিন",
+      targetId: "age",
+      keywords: ["বয়স", "বয়স", "জন্ম", "জন্মদিন", "age", "বছর", "তারিখ", "জন্মতারিখ"]
+    },
+    {
+      id: "tool_age_diff",
+      title: "📅 তারিখের ব্যবধান ক্যালকুলেটর (Date Difference)",
+      category: "তারিখ ও দিন গণনা",
+      description: "দুইটি তারিখের মাঝে কত দিন, মাস ও বছর পার্থক্য",
+      targetId: "age",
+      subtabType: "age",
+      subtabValue: "diff",
+      keywords: ["তারিখের ব্যবধান", "date difference", "দিনের ব্যবধান", "পার্থক্য", "দিন গণনা"]
+    },
+    {
+      id: "tool_age_add",
+      title: "➕ দিন যোগ বা বিয়োগ (Date Add/Subtract)",
+      category: "তারিখ ও দিন গণনা",
+      description: "যেকোনো নির্দিষ্ট তারিখের সাথে দিন যোগ বা বিয়োগ করুন",
+      targetId: "age",
+      subtabType: "age",
+      subtabValue: "add",
+      keywords: ["দিন যোগ", "দিন বিয়োগ", "তারিখ যোগ", "তারিখ থেকে দিন বাদ", "date add"]
+    },
+
+    // 6. Geometry
+    {
+      id: "tool_geometry",
+      title: "📐 জ্যামিতি ক্যালকুলেটর (Geometry)",
+      category: "জ্যামিতি ও ক্ষেত্রফল",
+      description: "বৃত্ত, ত্রিভুজ, আয়তক্ষেত্র, বর্গক্ষেত্র, সিলিন্ডার ও গোলকের ক্ষেত্রফল ও আয়তন",
+      targetId: "geometry",
+      keywords: ["জ্যামিতি", "geometry", "ক্ষেত্রফল", "পরিধি", "পরিসীমা", "আয়তন", "বৃত্ত", "ত্রিভুজ", "আয়তক্ষেত্র", "বর্গক্ষেত্র", "সিলিন্ডার", "গোলক", "শঙ্কু", "area", "volume"]
+    },
+
+    // 7. Algebra
+    {
+      id: "tool_algebra_main",
+      title: "📐 বীজগণিত ক্যালকুলেটর (Algebra)",
+      category: "বীজগণিত ও সমীকরণ",
+      description: "রৈখিক ও দ্বিঘাত সমীকরণ, লসাগু-গসাগু, মৌলিক সংখ্যা ও গড়",
+      targetId: "algebra",
+      keywords: ["বীজগণিত", "algebra", "সমীকরণ", "লসাগু", "গসাগু", "মৌলিক", "উৎপাদক", "গড়"]
+    },
+    {
+      id: "tool_alg_linear",
+      title: "🔣 রৈখিক সমীকরণ সমাধান (ax + b = c)",
+      category: "বীজগণিত ও সমীকরণ",
+      description: "এক চলক বিশিষ্ট সমীকরণে x এর মান নির্ণয়",
+      targetId: "algebra",
+      subtabType: "alg",
+      subtabValue: "linear",
+      keywords: ["রৈখিক সমীকরণ", "linear equation", "x এর মান", "এক চলক"]
+    },
+    {
+      id: "tool_alg_quad",
+      title: "🔣 দ্বিঘাত সমীকরণ সমাধান (Quadratic)",
+      category: "বীজগণিত ও সমীকরণ",
+      description: "ax² + bx + c = 0 সমীকরণের দুটি মূল নির্ণয়",
+      targetId: "algebra",
+      subtabType: "alg",
+      subtabValue: "quad",
+      keywords: ["দ্বিঘাত সমীকরণ", "quadratic equation", "মূল নির্ণয়", "দ্বিঘাত"]
+    },
+    {
+      id: "tool_alg_lcm",
+      title: "🔢 লসাগু ও গসাগু (LCM & GCD)",
+      category: "পাটিগণিত ও বীজগণিত",
+      description: "যেকোনো সংখ্যামালার লঘিষ্ঠ ও গরিষ্ঠ সাধারণ গুণনীয়ক",
+      targetId: "algebra",
+      subtabType: "alg",
+      subtabValue: "lcm",
+      keywords: ["লসাগু", "গসাগু", "lcm", "gcd", "hcf", "গুণনীয়ক", "গুণিতক"]
+    },
+    {
+      id: "tool_alg_prime",
+      title: "🔍 মৌলিক সংখ্যা পরীক্ষক (Prime Checker)",
+      category: "পাটিগণিত ও সংখ্যাতত্ত্ব",
+      description: "কোনো সংখ্যা মৌলিক কিনা এবং নিকটবর্তী মৌলিক সংখ্যা",
+      targetId: "algebra",
+      subtabType: "alg",
+      subtabValue: "prime",
+      keywords: ["মৌলিক সংখ্যা", "prime number", "মৌলিক", "কম্পোজিট"]
+    },
+    {
+      id: "tool_alg_factor",
+      title: "🧩 উৎপাদক ও গুণনীয়ক (Factors)",
+      category: "পাটিগণিত ও বীজগণিত",
+      description: "সংখ্যার সকল ধনাত্মক উৎপাদক বা গুণনীয়ক বের করুন",
+      targetId: "algebra",
+      subtabType: "alg",
+      subtabValue: "factor",
+      keywords: ["উৎপাদক", "গুণনীয়ক", "factors", "divisors"]
+    },
+    {
+      id: "tool_alg_avg",
+      title: "📊 গড় ও পরিসংখ্যান (Average & Stats)",
+      category: "পরিসংখ্যান",
+      description: "গড় (Mean), মধ্যক (Median) ও সমষ্টি নির্ণয়",
+      targetId: "algebra",
+      subtabType: "alg",
+      subtabValue: "avg",
+      keywords: ["গড়", "average", "পরিসংখ্যান", "মধ্যক", "mean", "median"]
+    },
+
+    // 8. Fractions
+    {
+      id: "tool_fractions",
+      title: "➗ ভগ্নাংশ ক্যালকুলেটর (Fractions)",
+      category: "পাটিগণিত ও ভগ্নাংশ",
+      description: "ভগ্নাংশের যোগ, বিয়োগ, গুণ, ভাগ ও লঘিষ্ঠ আকারে রূপান্তর",
+      targetId: "fraction",
+      keywords: ["ভগ্নাংশ", "fraction", "লব", "হর", "লঘিষ্ঠ", "মিশ্র ভগ্নাংশ"]
+    },
+
+    // 9. Unit Converter
+    {
+      id: "tool_converter",
+      title: "🔄 একক রূপান্তরকারী (Unit Converter)",
+      category: "একক ও পরিমাপ",
+      description: "দৈর্ঘ্য, ওজন, ক্ষেত্রফল, তাপমাত্রা, গতিবেগ, সময় ও ডিজিটাল ডেটা রূপান্তর",
+      targetId: "converter",
+      keywords: ["একক", "কনভার্টার", "রূপান্তর", "unit", "converter", "মিটার", "ইঞ্চি", "ফুট", "কেজি", "গ্রাম", "পাউন্ড", "সেলসিয়াস", "ফারেনহাইট", "গতিবেগ"]
+    },
+
+    // 10. Bangladesh Special Tools
+    {
+      id: "tool_bangladesh_main",
+      title: "🇧🇩 বাংলাদেশ স্পেশাল টুলস (BD Tools)",
+      category: "বাংলাদেশ বিশেষ",
+      description: "টাকা কথায়, সংখ্যা রূপান্তর, জমি পরিমাপ ও ঐতিহ্যবাহী ওজন",
+      targetId: "bangladesh",
+      keywords: ["বাংলাদেশ", "bangladesh", "বিডি টুলস", "দেশীয় হিসাব"]
+    },
+    {
+      id: "tool_bd_taka",
+      title: "✍️ টাকা সংখ্যাকে কথায় রূপান্তর (Taka in Words)",
+      category: "বাংলাদেশ বিশেষ",
+      description: "যেকোনো টাকার অংক বাংলায় এবং চেকে লেখার ফরম্যাটে রূপান্তর",
+      targetId: "bangladesh",
+      subtabType: "bd",
+      subtabValue: "taka",
+      keywords: ["টাকা কথায়", "কথায় টাকা", "taka in words", "চেক লেখা", "বাংলায় টাকা"]
+    },
+    {
+      id: "tool_bd_digits",
+      title: "🔢 বাংলা ↔ English সংখ্যা কনভার্টার",
+      category: "বাংলাদেশ বিশেষ",
+      description: "বাংলা সংখ্যা ও ইংরেজি সংখ্যার পারস্পরিক দ্রুত রূপান্তর",
+      targetId: "bangladesh",
+      subtabType: "bd",
+      subtabValue: "digits",
+      keywords: ["বাংলা সংখ্যা", "ইংরেজি সংখ্যা", "bn to en", "en to bn", "সংখ্যা রূপান্তর"]
+    },
+    {
+      id: "tool_bd_land",
+      title: "🌾 জমির পরিমাপ ক্যালকুলেটর (Land Measurement)",
+      category: "ভূমি ও জমি হিসাব",
+      description: "শতক, কাঠা, বিঘা, একর, ডিসিমিল, গন্ডা ও কড়ায় জমির নিখুঁত হিসাব",
+      targetId: "bangladesh",
+      subtabType: "bd",
+      subtabValue: "land",
+      keywords: ["জমি", "জমির পরিমাপ", "শতক", "কাঠা", "বিঘা", "একর", "ডিসিমিল", "গন্ডা", "কড়া", "ভূমি", "খতিয়ান", "জমি মাপ", "বর্গফুট জমি"]
+    },
+    {
+      id: "tool_bd_weight",
+      title: "⚖️ মণ-সের-ভরি ওজন রূপান্তর",
+      category: "ঐতিহ্যবাহী ওজন",
+      description: "মণ, সের, পোয়া, ছটাক এবং স্বর্ণের ভরি, আনা ও রতি হিসাব",
+      targetId: "bangladesh",
+      subtabType: "bd",
+      subtabValue: "weight",
+      keywords: ["মণ", "সের", "পোয়া", "ছটাক", "ভরি", "আনা", "রতি", "স্বর্ণ", "সোনার হিসাব", "ওজন রূপান্তর"]
+    },
+    {
+      id: "tool_bd_height",
+      title: "📏 উচ্চতা কনভার্টার (Height Converter)",
+      category: "শারীরিক পরিমাপ",
+      description: "ফুট-ইঞ্চি থেকে সেন্টিমিটার ও মিটারে রূপান্তর",
+      targetId: "bangladesh",
+      subtabType: "bd",
+      subtabValue: "height",
+      keywords: ["উচ্চতা", "height", "ফুট ইঞ্চি", "সেমি", "সেন্টিমিটার"]
+    },
+
+    // 11. QR Code Scanner & Generator
+    {
+      id: "tool_qrcode_main",
+      title: "📷 কিউআর কোড স্ক্যানার ও জেনারেটর (QR Tools)",
+      category: "ক্যামেরা ও কিউআর",
+      description: "ক্যামেরা দিয়ে QR স্ক্যান এবং বিকাশ/নগদ পেমেন্ট ও টেক্সট QR তৈরি",
+      targetId: "qrcode",
+      keywords: ["কিউআর", "qr", "কিউআর স্ক্যানার", "কিউআর তৈরি", "বারকোড", "বিকাশ কিউআর", "নগদ কিউআর", "ওয়াইফাই"]
+    },
+    {
+      id: "tool_qr_scanner",
+      title: "🔍 কিউআর কোড স্ক্যানার (QR Scanner)",
+      category: "ক্যামেরা ও স্ক্যান",
+      description: "ক্যামেরা ও গ্যালারি ছবি থেকে দ্রুত কিউআর কোড স্ক্যান",
+      targetId: "qrcode",
+      subtabType: "qr",
+      subtabValue: "scanner",
+      keywords: ["কিউআর স্ক্যানার", "স্ক্যান", "ক্যামেরা স্ক্যান", "qr scanner"]
+    },
+    {
+      id: "tool_qr_generator",
+      title: "✨ কিউআর কোড জেনারেটর (QR Generator)",
+      category: "কিউআর তৈরি",
+      description: "বিকাশ, নগদ, লিংক ও টেক্সট এর রঙিন কিউআর কোড তৈরি করুন",
+      targetId: "qrcode",
+      subtabType: "qr",
+      subtabValue: "generator",
+      keywords: ["কিউআর তৈরি", "qr create", "qr generator", "পেমেন্ট কিউআর"]
+    },
+
+    // 12. Health & Fitness Suite
+    {
+      id: "tool_health_main",
+      title: "❤️ স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর",
+      category: "স্বাস্থ্য ও পুষ্টি",
+      description: "BMI, BMR, TDEE ক্যালোরি, আদর্শ ওজন, বডি ফ্যাট, পানি ও ম্যাক্রো নিউট্রিয়েন্ট",
+      targetId: "health",
+      keywords: ["স্বাস্থ্য", "ফিটনেস", "health", "fitness", "ওজন", "ডায়েট"]
+    },
+    {
+      id: "tool_health_bmi",
+      title: "⚖️ BMI ক্যালকুলেটর (বডি মাস ইনডেক্স)",
+      category: "স্বাস্থ্য ও ফিটনেস",
+      description: "উচ্চতা ও ওজনের ভিত্তিতে বডি মাস ইনডেক্স ও ক্যাটাগরি",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "bmi",
+      keywords: ["bmi", "বিএমআই", "বডি মাস", "ওজন বেশি", "স্বাভাবিক ওজন", "মোটা"]
+    },
+    {
+      id: "tool_health_bmr",
+      title: "🔥 BMR ক্যালকুলেটর (মৌলিক বিপাকীয় শক্তি)",
+      category: "স্বাস্থ্য ও ফিটনেস",
+      description: "বিশ্রামরত অবস্থায় শরীরের দৈনিক ন্যূনতম ক্যালোরি খরচ",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "bmr",
+      keywords: ["bmr", "বিএমআর", "বিপাক", "মেটাবলিজম", "মৌলিক ক্যালোরি"]
+    },
+    {
+      id: "tool_health_tdee",
+      title: "⚡ দৈনিক ক্যালোরি চাহিদা (TDEE)",
+      category: "স্বাস্থ্য ও ডায়েট",
+      description: "ওজন নিয়ন্ত্রণ, বৃদ্ধি বা কমানোর জন্য দৈনিক প্রয়োজনীয় ক্যালোরি",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "tdee",
+      keywords: ["ক্যালোরি", "calorie", "tdee", "টিডিইই", "ওজন কমানো", "ডায়েট চার্ট"]
+    },
+    {
+      id: "tool_health_ideal",
+      title: "🎯 আদর্শ ওজন ক্যালকুলেটর (Ideal Weight)",
+      category: "স্বাস্থ্য ও ফিটনেস",
+      description: "আপনার উচ্চতা ও লিঙ্গ অনুযায়ী আদর্শ ও সুস্থ ওজন কত হওয়া উচিত",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "ideal",
+      keywords: ["আদর্শ ওজন", "ideal weight", "সঠিক ওজন", "কত ওজন হওয়া উচিত"]
+    },
+    {
+      id: "tool_health_bodyfat",
+      title: "🧬 বডি ফ্যাট পার্সেন্টেজ (Body Fat %)",
+      category: "শারীরিক গঠন",
+      description: "শরীরের চর্বির শতকরা হার ও ফিটনেস স্তর",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "bodyfat",
+      keywords: ["বডি ফ্যাট", "body fat", "চর্বি", "ফ্যাট", "পেটের চর্বি"]
+    },
+    {
+      id: "tool_health_water",
+      title: "💧 দৈনিক পানির চাহিদা ও ট্র্যাকার",
+      category: "স্বাস্থ্য ও হাইড্রেশন",
+      description: "ওজন অনুযায়ী প্রতিদিন কত গ্লাস ও লিটার পানি পান করা প্রয়োজন",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "water",
+      keywords: ["পানি", "water", "পানির চাহিদা", "পানি ট্র্যাকার", "কত গ্লাস পানি"]
+    },
+    {
+      id: "tool_health_macros",
+      title: "🥗 ম্যাক্রো নিউট্রিয়েন্ট ক্যালকুলেটর (Macros)",
+      category: "পুষ্টি ও ডায়েট",
+      description: "প্রোটিন, কার্বোহাইড্রেট ও ফ্যাটের গ্রাম ও অনুপাত হিসাব",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "macros",
+      keywords: ["ম্যাক্রো", "macro", "প্রোটিন", "protein", "কার্বস", "ফ্যাট", "জিম ডায়েট"]
+    },
+    {
+      id: "tool_health_others",
+      title: "🩺 অতিরিক্ত স্বাস্থ্য টুলস (Others Option)",
+      category: "স্বাস্থ্য ও কার্ডিও",
+      description: "কোমর-উচ্চতা অনুপাত (WHtR), টার্গেট হার্ট রেট ও রক্তচাপ চেকার",
+      targetId: "health",
+      subtabType: "health",
+      subtabValue: "others",
+      keywords: ["অতিরিক্ত স্বাস্থ্য", "অন্যান্য", "others", "হার্ট রেট", "রক্তচাপ", "প্রেসার", "কোমর", "whtr"]
+    },
+
+    // 13. Currency Converter
+    {
+      id: "tool_currency",
+      title: "💱 আন্তর্জাতিক মুদ্রা রূপান্তরকারী (Currency)",
+      category: "মুদ্রা ও রেমিট্যান্স",
+      description: "ডলার, রিয়াল, রুপি, ইউরো সহ যেকোনো আন্তর্জাতিক মুদ্রার রেট",
+      targetId: "currency",
+      keywords: ["মুদ্রা", "কারেন্সি", "currency", "ডলার", "dollar", "টাকা রেট", "রিয়াল", "রুপি", "ইউরো", "দিনার"]
+    },
+
+    // 14. Custom Formulas
+    {
+      id: "tool_custom",
+      title: "📝 কাস্টম সূত্র তৈরি ও সংরক্ষণ (Custom Formula)",
+      category: "নিজস্ব সূত্র",
+      description: "নিজের পছন্দের গাণিতিক সূত্র সংরক্ষণ ও সহজে ব্যবহার",
+      targetId: "custom",
+      keywords: ["কাস্টম সূত্র", "custom formula", "ফর্মুলা", "নিজস্ব সূত্র", "সূত্র সেভ"]
+    },
+
+    // 15. History
+    {
+      id: "tool_history",
+      title: "🕒 হিসাবের ইতিহাস (History)",
+      category: "সংরক্ষিত হিসাব",
+      description: "অ্যাপে করা সকল অতীত হিসাবের তালিকা ও কপি করার সুবিধা",
+      targetId: "history",
+      keywords: ["ইতিহাস", "history", "হিস্ট্রি", "পূর্বের হিসাব", "অতীত হিসাব"]
+    },
+
+    // 16. Favorites
+    {
+      id: "tool_favorites",
+      title: "⭐ প্রিয় হিসাব ও ফেভারিট (Favorites)",
+      category: "বুকমার্ক",
+      description: "আপনার বুকমার্ক করা হিসাবের তালিকা",
+      targetId: "favorites",
+      keywords: ["ফেভারিট", "favorite", "প্রিয়", "স্টার", "বুকমার্ক"]
+    },
+
+    // 17. Settings
+    {
+      id: "tool_settings",
+      title: "⚙️ অ্যাপ সেটিংস (Settings)",
+      category: "সেটিংস ও থিম",
+      description: "ডার্ক মোড, লাইট মোড, ফন্ট সাইজ এবং অ্যাপের কাস্টমাইজেশন",
+      targetId: "settings",
+      keywords: ["সেটিংস", "settings", "ডার্ক মোড", "থিম", "ফন্ট", "ভাষা"]
+    },
+
+    // 18. App Stats & Rating
+    {
+      id: "tool_appstats",
+      title: "⭐ অ্যাপ পরিসংখ্যান ও রেটিং (App Stats)",
+      category: "রিভিউ ও রেটিং",
+      description: "ইউজার রিভিউ, রেটিং দেওয়া এবং ডাউনলোড পরিসংখ্যান",
+      targetId: "appstats",
+      keywords: ["রেটিং", "রিভিউ", "পরিসংখ্যান", "app stats", "rating", "রেট দিন"]
+    }
+  ];
+
+  // Dynamic Discovery of All Tools (Built-in + DOM elements + Future Tools)
+  function getAllDiscoveredTools() {
+    const list = [...MASTER_CATALOG];
+
+    // 1. Discover all current & future dashboard cards (.dash-card)
+    document.querySelectorAll(".dash-card[data-target]").forEach(card => {
+      const target = card.dataset.target;
+      if (!target) return;
+      const title = card.querySelector(".dash-title")?.textContent?.trim() || target;
+      const desc = card.querySelector(".dash-desc")?.textContent?.trim() || "";
+      const icon = card.querySelector(".dash-icon")?.textContent?.trim() || "🧮";
+
+      const exists = list.some(t => t.targetId === target && !t.subtabType);
+      if (!exists) {
+        list.push({
+          id: "dynamic_card_" + target,
+          title: `${icon} ${title}`,
+          category: "ক্যালকুলেটর বিভাগ",
+          description: desc,
+          targetId: target,
+          keywords: [title, desc, target]
+        });
+      }
+    });
+
+    // 2. Discover any DOM element tagged with [data-search-title]
+    document.querySelectorAll("[data-search-title]").forEach(el => {
+      const title = el.getAttribute("data-search-title");
+      const target = el.getAttribute("data-target") || el.getAttribute("data-search-target");
+      const subType = el.getAttribute("data-search-subtype");
+      const subVal = el.getAttribute("data-search-subval");
+      const desc = el.getAttribute("data-search-desc") || "";
+      const kw = (el.getAttribute("data-search-keywords") || "").split(",").map(s => s.trim());
+      const cat = el.getAttribute("data-search-cat") || "ফিচার";
+
+      if (title && target) {
+        list.push({
+          id: "dynamic_el_" + title.replace(/\s+/g, "_"),
+          title: title,
+          category: cat,
+          description: desc,
+          targetId: target,
+          subtabType: subType,
+          subtabValue: subVal,
+          keywords: [title, ...kw]
+        });
+      }
+    });
+
+    // 3. Merge future programmatic registrations (window.APP_CUSTOM_TOOLS)
+    if (Array.isArray(window.APP_CUSTOM_TOOLS)) {
+      window.APP_CUSTOM_TOOLS.forEach(tool => {
+        if (tool && tool.title && !list.some(t => t.id === tool.id)) {
+          list.push(tool);
+        }
+      });
+    }
+
+    return list;
+  }
+
+  // Universal Navigation & Subtool Opener
+  function openToolByReference(tool) {
+    if (!tool) return;
+    if (typeof tool.openAction === "function") {
+      tool.openAction();
+      return;
+    }
+    if (!tool.targetId) return;
+
+    // Navigate to target section and immediately activate subtab
+    navigateTo(tool.targetId, tool.subtabType, tool.subtabValue);
+
+    if (tool.subtabType && tool.subtabValue) {
+      if (typeof window.activateSubtab === "function") {
+        window.activateSubtab(tool.subtabType, tool.subtabValue);
+      }
+      setTimeout(() => {
+        try {
+          if (typeof window.activateSubtab === "function") {
+            window.activateSubtab(tool.subtabType, tool.subtabValue);
+          }
+          if (tool.subtabType === "pct") {
+            document.querySelector(`.pct-subtab[data-target="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "fin") {
+            document.querySelector(`.fin-subtab[data-target="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "age") {
+            document.querySelector(`.age-subtab[data-target="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "alg") {
+            document.querySelector(`.alg-subtab[data-target="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "bd") {
+            document.querySelector(`.bd-subtab[data-target="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "health") {
+            document.querySelector(`.health-tab-btn[data-health="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "others") {
+            document.querySelector(`.health-tab-btn[data-health="others"]`)?.click();
+            setTimeout(() => {
+              document.querySelector(`.others-tab-btn[data-oth="${tool.subtabValue}"]`)?.click();
+            }, 50);
+          } else if (tool.subtabType === "qr") {
+            document.querySelector(`.qr-subtab[data-qrtab="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "geom") {
+            document.querySelector(`.geom-subtab[data-shape="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "unit") {
+            document.querySelector(`.unit-subtab[data-cat="${tool.subtabValue}"]`)?.click();
+          } else if (tool.subtabType === "frac") {
+            document.querySelector(`.frac-subtab[data-target="${tool.subtabValue}"]`)?.click();
+          }
+        } catch (err) {
+          console.warn("Subtab trigger error:", err);
+        }
+      }, 40);
+    }
+    showToast(`${tool.title} খোলা হয়েছে ✔️`);
+  }
+
+  // Instant Mathematical & Formula Solver
+  function solveDirectCalculation(raw) {
     const q = raw.trim().toLowerCase();
     const numbers = extractNumbers(q);
 
-    // 1. Profit and Selling Price
+    // 1. Profit / Loss
     if (q.includes("লাভ") || q.includes("profit") || q.includes("বিক্রয়মূল্য") || q.includes("বিক্রয়মূল্য") || q.includes("ক্ষতি") || q.includes("লস") || q.includes("loss")) {
       const isLoss = q.includes("ক্ষতি") || q.includes("লস") || q.includes("loss");
       let cost = 1000;
       let pct = 15;
-
       if (numbers.length >= 2) {
         cost = numbers[0];
         pct = numbers[1];
@@ -7479,7 +9013,6 @@ function setupSmartSearch() {
         if (numbers[0] > 100) cost = numbers[0];
         else pct = numbers[0];
       }
-
       const diff = cost * (pct / 100);
       const finalPrice = isLoss ? (cost - diff) : (cost + diff);
 
@@ -7493,39 +9026,23 @@ function setupSmartSearch() {
         formulaText: `বিক্রয়মূল্য = ${toBn(cost)} ${isLoss ? "-" : "+"} (${toBn(cost)} × ${toBn(pct)}%) = ${toBn(finalPrice)} টাকা`,
         buttonText: `👉 লাভ ও ক্ষতি ক্যালকুলেটরে সরাসরি খুলুন`,
         openAction: () => {
-          navigateTo("percentage");
+          navigateTo("percentage", "pct", "g");
+          if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "g");
           const tabG = document.querySelector('.pct-subtab[data-target="g"]');
           if (tabG) tabG.click();
-
           const costInput = document.getElementById("pctG_cost");
           const typeSelect = document.getElementById("pctG_type");
           const pctInput = document.getElementById("pctG_profitPct");
-
           if (costInput && pctInput) {
             costInput.value = cost;
             pctInput.value = pct;
             if (typeSelect) typeSelect.value = isLoss ? "loss" : "profit";
             document.getElementById("btnPctG_fromPct")?.click();
           }
-
-          if (cost && pct) {
-            const buyInput = document.getElementById("pctG_buy");
-            const sellInput = document.getElementById("pctG_sell");
-            if (buyInput && sellInput) {
-              buyInput.value = cost;
-              sellInput.value = finalPrice;
-            }
-          }
-
-          const targetCard = document.getElementById("pct-view-g");
-          if (targetCard) {
-            targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
-            targetCard.classList.remove("highlight-pulse");
-            void targetCard.offsetWidth;
-            targetCard.classList.add("highlight-pulse");
-          }
-
-          showToast(`লাভ-ক্ষতি ক্যালকুলেটরে ${toBn(cost)} টাকার হিসাব স্বয়ংক্রিয়ভাবে খোলা হয়েছে ✔️`);
+          setTimeout(() => {
+            document.getElementById("pct-view-g")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 60);
+          showToast(`লাভ-ক্ষতি ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
         }
       };
     }
@@ -7541,13 +9058,14 @@ function setupSmartSearch() {
         id: "discount_calculator",
         toolName: "🏷️ ডিসকাউন্ট ও ছাড় ক্যালকুলেটর",
         category: "শপিং ও রিটেল হিসাব",
-        answerTitle: "ডিসকাউন্টের পর মূল্য:",
+        answerTitle: "ডিসকাউন্টের পর পরিশোধ মূল্য:",
         answerValue: `${formatNumber(finalPrice)} টাকা`,
         breakdownText: `মূল দাম: ${formatNumber(price)} টাকা • সাশ্রয় (${toBn(disc)}%): <strong>-${formatNumber(save)} টাকা</strong>`,
         formulaText: `পরিশোধ = ${toBn(price)} - (${toBn(price)} × ${toBn(disc)}%) = ${toBn(finalPrice)} টাকা`,
         buttonText: `👉 ডিসকাউন্ট ক্যালকুলেটরে সরাসরি খুলুন`,
         openAction: () => {
-          navigateTo("percentage");
+          navigateTo("percentage", "pct", "e");
+          if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "e");
           const tabE = document.querySelector('.pct-subtab[data-target="e"]');
           if (tabE) tabE.click();
           const pInput = document.getElementById("pctE_price");
@@ -7557,7 +9075,9 @@ function setupSmartSearch() {
             dInput.value = disc;
             document.getElementById("btnPctE")?.click();
           }
-          document.getElementById("pct-view-e")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            document.getElementById("pct-view-e")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 60);
           showToast(`ডিসকাউন্ট ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
         }
       };
@@ -7580,7 +9100,8 @@ function setupSmartSearch() {
         formulaText: `মোট = ${toBn(price)} + (${toBn(price)} × ${toBn(vat)}%) = ${toBn(total)} টাকা`,
         buttonText: `👉 ভ্যাট ক্যালকুলেটরে সরাসরি খুলুন`,
         openAction: () => {
-          navigateTo("percentage");
+          navigateTo("percentage", "pct", "f");
+          if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "f");
           const tabF = document.querySelector('.pct-subtab[data-target="f"]');
           if (tabF) tabF.click();
           const pInput = document.getElementById("pctF_price");
@@ -7590,21 +9111,23 @@ function setupSmartSearch() {
             vInput.value = vat;
             document.getElementById("btnPctF")?.click();
           }
-          document.getElementById("pct-view-f")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            document.getElementById("pct-view-f")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 60);
           showToast(`ভ্যাট ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
         }
       };
     }
 
-    // 4. Currency Conversion / ডলার / রিয়াল / রুপি
+    // 4. Currency / ডলার
     if (q.includes("ডলার") || q.includes("dollar") || q.includes("usd") || q.includes("রিয়াল") || q.includes("মুদ্রা") || q.includes("currency") || q.includes("ইউরো")) {
       const amount = numbers[0] || 100;
-      const rate = 121.50; // USD to BDT approx
+      const rate = 121.50;
       const bdt = amount * rate;
 
       return {
         id: "currency_converter",
-        toolName: "💱 মুদ্রা রূপান্তরকারী (Currency Converter)",
+        toolName: "💱 মুদ্রা রূপান্তরকারী (Currency)",
         category: "আন্তর্জাতিক মুদ্রা রেট",
         answerTitle: `১ ডলার = ১২১.৫০ টাকা হিসেবে:`,
         answerValue: `${formatNumber(bdt)} টাকা`,
@@ -7625,171 +9148,7 @@ function setupSmartSearch() {
       };
     }
 
-    // 5. Age & Date / বয়স / জন্ম
-    if (q.includes("বয়স") || q.includes("বয়স") || q.includes("জন্ম") || q.includes("age") || q.includes("বছর")) {
-      return {
-        id: "age_calculator",
-        toolName: "🎂 বয়স ও তারিখ ক্যালকুলেটর (Age Calculator)",
-        category: "তারিখ ও সঠিক বয়স নির্ণয়",
-        answerTitle: "সঠিক বয়স ও দিন নির্ণয়:",
-        answerValue: "বছর, মাস ও দিন ভিত্তিক হিসাব",
-        breakdownText: "আপনার জন্মতারিখ নির্ধারণ করে নিখুঁত বয়স ও পরবর্তী জন্মদিনের কাউন্টডাউন দেখুন।",
-        formulaText: "বর্তমান তারিখ - জন্ম তারিখ = সঠিক বয়স",
-        buttonText: `👉 বয়স ও তারিখ ক্যালকুলেটর খুলুন`,
-        openAction: () => {
-          navigateTo("age");
-          document.getElementById("btnCalcAge")?.click();
-          showToast(`বয়স ক্যালকুলেটর খোলা হয়েছে ✔️`);
-        }
-      };
-    }
-
-    // 6. Loan EMI / কিস্তি / লোন / ডিপিএস / ফিন্যান্স
-    if (q.includes("লোন") || q.includes("ঋণ") || q.includes("emi") || q.includes("কিস্তি") || q.includes("ডিপিএস") || q.includes("dps") || q.includes("মুনাফা")) {
-      return {
-        id: "finance_calculator",
-        toolName: "💰 ফিন্যান্স ও লোন EMI ক্যালকুলেটর",
-        category: "ব্যাংক ও লোন কিস্তি",
-        answerTitle: "মাসিক কিস্তি ও মুনাফা হিসাব:",
-        answerValue: "লোন EMI ও সঞ্চয় প্ল্যান",
-        breakdownText: "লোনের পরিমাণ, সুদের হার ও মেয়াদ দিয়ে প্রতি মাসের কিস্তি এবং মোট সুদের পরিমাণ জানুন।",
-        formulaText: "EMI = [P x R x (1+R)^N] / [(1+R)^N - 1]",
-        buttonText: `👉 ফিন্যান্স ক্যালকুলেটরে সরাসরি খুলুন`,
-        openAction: () => {
-          navigateTo("finance");
-          const tabC = document.querySelector('.fin-subtab[data-target="c"]');
-          if (tabC) tabC.click();
-          showToast(`লোন EMI ক্যালকুলেটর খোলা হয়েছে ✔️`);
-        }
-      };
-    }
-
-
-    // 8. Health & Fitness / BMI / BMR / Calorie / Ideal Weight / Body Fat / Water / Macros
-    if (q.includes("bmi") || q.includes("বিএমআই") || q.includes("bmr") || q.includes("ক্যালোরি") || q.includes("calorie") || q.includes("tdee") || q.includes("স্বাস্থ্য") || q.includes("ফিটনেস") || q.includes("fitness") || q.includes("আদর্শ ওজন") || q.includes("ideal") || q.includes("বডি ফ্যাট") || q.includes("body fat") || q.includes("পানি") || q.includes("water") || q.includes("ম্যাক্রো") || q.includes("macro") || q.includes("প্রোটিন") || q.includes("প্রেসার") || q.includes("রক্তচাপ") || q.includes("হার্ট রেট") || q.includes("heart")) {
-      let subTarget = "bmi";
-      let toolName = "❤️ স্বাস্থ্য ও ফিটনেস ক্যালকুলেটর";
-      let ansTitle = "স্বাস্থ্য ও বডি মেজারমেন্ট:";
-      let ansVal = "BMI, ক্যালোরি, আদর্শ ওজন ও ডায়েট";
-      let breakdown = "উচ্চতা, ওজন ও বয়সের ওপর ভিত্তি করে সম্পূর্ণ স্বাস্থ্য রিপোর্ট ও ক্যালোরি চাহিদা।";
-      let btnText = "👉 স্বাস্থ্য ও ফিটনেস ক্যালকুলেটরে সরাসরি খুলুন";
-
-      if (q.includes("bmr") || q.includes("বিপাক")) {
-        subTarget = "bmr";
-        toolName = "🔥 মৌলিক বিপাকীয় শক্তি (BMR Calculator)";
-        ansVal = "দৈনিক মৌলিক ক্যালোরি খরচ";
-      } else if (q.includes("ক্যালোরি") || q.includes("calorie") || q.includes("tdee")) {
-        subTarget = "tdee";
-        toolName = "⚡ দৈনিক ক্যালোরি চাহিদা (TDEE Calculator)";
-        ansVal = "ওজন হ্রাস / বৃদ্ধি / মেইনটেইন ক্যালোরি";
-      } else if (q.includes("আদর্শ ওজন") || q.includes("ideal")) {
-        subTarget = "ideal";
-        toolName = "🎯 আদর্শ ওজন নির্ণয় (Ideal Body Weight)";
-        ansVal = "উচ্চতা অনুযায়ী সুস্থ ও আদর্শ ওজন";
-      } else if (q.includes("ফ্যাট") || q.includes("fat")) {
-        subTarget = "bodyfat";
-        toolName = "🧬 বডি ফ্যাট পার্সেন্টেজ (Body Fat %)";
-        ansVal = "শরীরের চর্বির শতকরা হার";
-      } else if (q.includes("পানি") || q.includes("water")) {
-        subTarget = "water";
-        toolName = "💧 দৈনিক পানির চাহিদা ও ট্র্যাকার";
-        ansVal = "ওজন অনুযায়ী প্রতিদিনের প্রয়োজনীয় পানি ও গ্লাস";
-      } else if (q.includes("ম্যাক্রো") || q.includes("macro") || q.includes("প্রোটিন")) {
-        subTarget = "macros";
-        toolName = "🥗 ম্যাক্রো নিউট্রিয়েন্ট ক্যালকুলেটর";
-        ansVal = "প্রোটিন, কার্বস ও ফ্যাটের গ্রাম ও অনুপাত";
-      } else if (q.includes("প্রেসার") || q.includes("রক্তচাপ") || q.includes("হার্ট") || q.includes("whtr")) {
-        subTarget = "others";
-        toolName = "🩺 অতিরিক্ত স্বাস্থ্য টুলস (Others Option)";
-        ansVal = "WHtR অনুপাত, হার্ট রেট ও রক্তচাপ ক্যাটাগরি";
-      }
-
-      return {
-        id: "health_fitness_calculator",
-        toolName: toolName,
-        category: "স্বাস্থ্য, পুষ্টি ও বডি মেজারমেন্ট",
-        answerTitle: ansTitle,
-        answerValue: ansVal,
-        breakdownText: breakdown,
-        formulaText: "BMI = ওজন (kg) / উচ্চতা² (m) • TDEE = BMR × অ্যাক্টিভিটি ফ্যাক্টর",
-        buttonText: btnText,
-        openAction: () => {
-          navigateTo("health");
-          const tab = document.querySelector(`.health-tab-btn[data-health="${subTarget}"]`);
-          if (tab) tab.click();
-          showToast(`${toolName} খোলা হয়েছে ✔️`);
-        }
-      };
-    }
-
-    // 7. QR Code / কিউআর কোড
-    if (q.includes("কিউআর") || q.includes("qr") || q.includes("স্ক্যান") || q.includes("বারকোড")) {
-      return {
-        id: "qrcode_tools",
-        toolName: "📷 কিউআর কোড স্ক্যানার ও জেনারেটর",
-        category: "ক্যামেরা স্ক্যান ও QR তৈরি",
-        answerTitle: "কিউআর কোড টুলস:",
-        answerValue: "তৈরি ও স্ক্যান করুন",
-        breakdownText: "টেক্সট, ইউআরএল, বিকাশ/নগদ পেমেন্ট কিউআর কোড তৈরি এবং ক্যামেরা দিয়ে স্ক্যান করুন।",
-        formulaText: "উচ্চগতির অফলাইন কিউআর কোড প্রসেসর",
-        buttonText: `👉 কিউআর কোড টুলস খুলুন`,
-        openAction: () => {
-          navigateTo("qrcode");
-          showToast(`কিউআর কোড টুলস খোলা হয়েছে ✔️`);
-        }
-      };
-    }
-
-    // 8. Bangladesh Tools (টাকা কথায়, জমি, সোনা)
-    if (q.includes("টাকা কথায়") || q.includes("কথায়") || q.includes("জমি") || q.includes("শতক") || q.includes("কাঠা") || q.includes("স্বর্ণ") || q.includes("সোনা") || q.includes("ভরি")) {
-      return {
-        id: "bangladesh_tools",
-        toolName: "🇧🇩 বাংলাদেশ স্পেশাল টুলস (BD Tools)",
-        category: "টাকা কথায় ও জমির শতক",
-        answerTitle: "বাংলাদেশি রূপান্তর ও ভূমি হিসাব:",
-        answerValue: "টাকা কথায় ও জমি পরিমাপ",
-        breakdownText: "টাকা কথায় রূপান্তর, জমির শতক-কাঠা হিসাব, স্বর্ণের ভরি-আনা এবং মণ-কেজি রূপান্তর।",
-        formulaText: "১ শতক = ৪৩৫.৬ বর্গফুট | ১ ভরি = ১৬ আনা",
-        buttonText: `👉 বাংলাদেশ টুলস খুলুন`,
-        openAction: () => {
-          navigateTo("bangladesh");
-          showToast(`বাংলাদেশ টুলস খোলা হয়েছে ✔️`);
-        }
-      };
-    }
-
-    // 9. Percentage General
-    if (q.includes("শতকরা") || q.includes("%") || q.includes("শতাংশ")) {
-      const x = numbers[0] || 100;
-      const y = numbers[1] || 15;
-      const ans = (x * y) / 100;
-
-      return {
-        id: "percentage_calculator",
-        toolName: "📊 শতকরা ক্যালকুলেটর (Percentage)",
-        category: "শতকরা হিসাব",
-        answerTitle: `${toBn(x)} এর ${toBn(y)}% হলো:`,
-        answerValue: `${formatNumber(ans)}`,
-        breakdownText: `হিসাব: (${toBn(x)} × ${toBn(y)}) ÷ ১০০`,
-        formulaText: `${toBn(x)} × (${toBn(y)}/১০০) = ${toBn(ans)}`,
-        buttonText: `👉 শতকরা ক্যালকুলেটরে সরাসরি খুলুন`,
-        openAction: () => {
-          navigateTo("percentage");
-          const tabA = document.querySelector('.pct-subtab[data-target="a"]');
-          if (tabA) tabA.click();
-          const xInput = document.getElementById("pctA_x");
-          const yInput = document.getElementById("pctA_y");
-          if (xInput && yInput) {
-            xInput.value = x;
-            yInput.value = y;
-            document.getElementById("btnPctA")?.click();
-          }
-          showToast(`শতকরা ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
-        }
-      };
-    }
-
-    // 10. Direct Math Calculation (e.g. 15 * 80 + 20)
+    // 5. Direct Math Calculation (e.g. 15 * 80 + 20)
     if (numbers.length >= 2 && (q.includes("+") || q.includes("-") || q.includes("*") || q.includes("/") || q.includes("গুণ") || q.includes("ভাগ") || q.includes("যোগ") || q.includes("বিয়োগ"))) {
       try {
         let expr = bnDigitsToEn(q)
@@ -7822,74 +9181,300 @@ function setupSmartSearch() {
       } catch (e) {}
     }
 
-    // Fallback: search across all sections
-    return {
-      id: "search_fallback",
-      toolName: "🔍 ক্যালকুলেটর অনুসন্ধান",
-      category: "গাণিতিক অনুসন্ধান",
-      answerTitle: "স্মার্ট সাজেশন:",
-      answerValue: `"${raw}"`,
-      breakdownText: "আপনার প্রশ্নটি সমাধান করতে নিচের প্রাসঙ্গিক ক্যালকুলেটরে প্রবেশ করুন।",
-      formulaText: "লাভ-ক্ষতি, শতকরা, কারেন্সি, লোন ইএমআই, কিউআর কোড ইত্যাদি যেকোনো হিসাব সহজে করুন।",
-      buttonText: `👉 ড্যাশবোর্ড থেকে ক্যালকুলেটর বেছে নিন`,
-      openAction: () => {
-        navigateTo("dashboard");
+    // 6. Percentage General (X এর Y% কত)
+    if (q.includes("শতকরা") || q.includes("%") || q.includes("শতাংশ")) {
+      if (numbers.length >= 2) {
+        const x = numbers[0];
+        const y = numbers[1];
+        const ans = (x * y) / 100;
+        return {
+          id: "percentage_calculator",
+          toolName: "📊 শতকরা ক্যালকুলেটর (Percentage)",
+          category: "শতকরা হিসাব",
+          answerTitle: `${toBn(x)} এর ${toBn(y)}% হলো:`,
+          answerValue: `${formatNumber(ans)}`,
+          breakdownText: `হিসাব: (${toBn(x)} × ${toBn(y)}) ÷ ১০০`,
+          formulaText: `${toBn(x)} × (${toBn(y)}/১০০) = ${toBn(ans)}`,
+          buttonText: `👉 শতকরা ক্যালকুলেটরে সরাসরি খুলুন`,
+          openAction: () => {
+            navigateTo("percentage", "pct", "a");
+            if (typeof window.activateSubtab === "function") window.activateSubtab("pct", "a");
+            const tabA = document.querySelector('.pct-subtab[data-target="a"]');
+            if (tabA) tabA.click();
+            const xInput = document.getElementById("pctA_x");
+            const yInput = document.getElementById("pctA_y");
+            if (xInput && yInput) {
+              xInput.value = x;
+              yInput.value = y;
+              document.getElementById("btnPctA")?.click();
+            }
+            setTimeout(() => {
+              document.getElementById("pct-view-a")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 60);
+            showToast(`শতকরা ক্যালকুলেটরে হিসাব খোলা হয়েছে ✔️`);
+          }
+        };
       }
-    };
+    }
+
+    return null;
   }
 
-  let currentActiveAction = null;
+  // Universal Match & Rank Engine
+  function searchAllTools(queryText) {
+    if (!queryText || !queryText.trim()) return [];
+    const q = queryText.trim().toLowerCase();
+    const qClean = q.replace(/[?,।!._-]/g, " ").trim();
+    const tokens = qClean.split(/\s+/).filter(t => t.length > 0);
 
-  function renderSmartResults(result) {
-    if (!result) {
+    const catalog = getAllDiscoveredTools();
+    const scored = [];
+
+    catalog.forEach(tool => {
+      let score = 0;
+      const titleLower = tool.title.toLowerCase();
+      const catLower = (tool.category || "").toLowerCase();
+      const descLower = (tool.description || "").toLowerCase();
+      const keywords = (tool.keywords || []).map(k => String(k).toLowerCase());
+
+      // Exact title match
+      if (titleLower.includes(q)) score += 80;
+      if (q.includes(titleLower)) score += 70;
+
+      // Keywords match
+      keywords.forEach(kw => {
+        if (kw === q) score += 90;
+        else if (kw.includes(q) || q.includes(kw)) score += 50;
+        else {
+          tokens.forEach(tok => {
+            if (tok.length > 1 && (kw.includes(tok) || tok.includes(kw))) {
+              score += 25;
+            }
+          });
+        }
+      });
+
+      // Token matching on title & description
+      tokens.forEach(tok => {
+        if (tok.length > 1) {
+          if (titleLower.includes(tok)) score += 35;
+          if (descLower.includes(tok)) score += 15;
+          if (catLower.includes(tok)) score += 12;
+        }
+      });
+
+      if (score > 0) {
+        scored.push({ tool, score });
+      }
+    });
+
+    scored.sort((a, b) => b.score - a.score);
+    return scored.map(s => s.tool);
+  }
+
+  let currentPrimaryAction = null;
+  let currentCalculationResult = null;
+  let currentMatchedTools = [];
+
+  function renderSearchResults(query, calculationResult, matchedTools) {
+    if (!query) {
       resultsContainer.style.display = "none";
-      currentActiveAction = null;
+      currentPrimaryAction = null;
+      currentCalculationResult = null;
+      currentMatchedTools = [];
       return;
     }
 
-    currentActiveAction = result.openAction;
+    currentPrimaryAction = null;
+    currentCalculationResult = calculationResult || null;
+    currentMatchedTools = matchedTools || [];
+    let html = "";
 
-    resultsContainer.innerHTML = `
-      <div class="smart-result-card">
-        <div class="smart-result-header">
-          <span class="smart-detected-badge">🎯 ${result.category || "শনাক্তকৃত ক্যালকুলেটর"}</span>
-          <span class="smart-tool-name">${result.toolName}</span>
+    // 1. Render Calculation Card (if user asked a direct math or formula question)
+    if (calculationResult) {
+      currentPrimaryAction = calculationResult.openAction;
+      html += `
+        <div class="smart-result-card" data-action="open-calc" style="cursor:pointer;" role="button" tabindex="0">
+          <div class="smart-result-header">
+            <span class="smart-detected-badge">🎯 ${calculationResult.category || "শনাক্তকৃত ক্যালকুলেটর"}</span>
+            <span class="smart-tool-name">${calculationResult.toolName}</span>
+          </div>
+
+          <div class="smart-answer-box">
+            <div class="smart-answer-title">${calculationResult.answerTitle}</div>
+            <div class="smart-answer-val">${calculationResult.answerValue}</div>
+            <div class="smart-answer-breakdown">${calculationResult.breakdownText}</div>
+            <div class="smart-answer-formula">${calculationResult.formulaText}</div>
+          </div>
+
+          <button type="button" class="btn btn-primary smart-open-btn" id="btnSmartOpenDetected" data-action="open-calc">
+            ${calculationResult.buttonText}
+          </button>
         </div>
+      `;
+    }
 
-        <div class="smart-answer-box">
-          <div class="smart-answer-title">${result.answerTitle}</div>
-          <div class="smart-answer-val">${result.answerValue}</div>
-          <div class="smart-answer-breakdown">${result.breakdownText}</div>
-          <div class="smart-answer-formula">${result.formulaText}</div>
-        </div>
-
-        <button type="button" class="btn btn-primary smart-open-btn" id="btnSmartOpenDetected">
-          ${result.buttonText}
-        </button>
-      </div>
-    `;
-
-    resultsContainer.style.display = "block";
-
-    document.getElementById("btnSmartOpenDetected")?.addEventListener("click", () => {
-      if (typeof currentActiveAction === "function") {
-        currentActiveAction();
-        resultsContainer.style.display = "none";
+    // 2. Render Matching Tools List (Current & Future Tools)
+    if (matchedTools && matchedTools.length > 0) {
+      if (!currentPrimaryAction) {
+        currentPrimaryAction = () => openToolByReference(matchedTools[0]);
       }
-    });
+
+      html += `
+        <div class="smart-tools-list">
+          <div class="smart-tools-header">
+            <span>🔍 সংশ্লিষ্ট ক্যালকুলেটর ও ফিচার</span>
+            <span class="smart-tools-count">${matchedTools.length}টি পাওয়া গেছে</span>
+          </div>
+          <div class="smart-tools-grid">
+      `;
+
+      matchedTools.slice(0, 7).forEach((tool, idx) => {
+        html += `
+          <div class="smart-tool-item" data-tool-index="${idx}" style="cursor:pointer;" role="button" tabindex="0">
+            <div class="smart-tool-info">
+              <div class="smart-tool-title-row">
+                <span class="smart-tool-title">${tool.title}</span>
+                <span class="smart-tool-cat-badge">${tool.category || "টুল"}</span>
+              </div>
+              <div class="smart-tool-desc">${tool.description || "এই ফিচারে সরাসরি হিসাব করুন"}</div>
+            </div>
+            <button type="button" class="smart-tool-go-btn" data-tool-index="${idx}">
+              খুলুন 👉
+            </button>
+          </div>
+        `;
+      });
+
+      html += `
+          </div>
+        </div>
+      `;
+    } else if (!calculationResult) {
+      html += `
+        <div class="smart-no-results">
+          <p>⚠️ "<strong>${query}</strong>" এর জন্য নির্দিষ্ট কোনো ক্যালকুলেটর পাওয়া যায়নি।</p>
+          <button type="button" class="btn btn-primary smart-open-btn" id="btnGoDashboardFallback" data-action="go-dashboard">
+            👉 সকল ক্যালকুলেটর তালিকা দেখুন
+          </button>
+        </div>
+      `;
+      currentPrimaryAction = () => navigateTo("dashboard");
+    }
+
+    resultsContainer.innerHTML = html;
+    resultsContainer.style.display = "block";
   }
+
+  // Robust Delegated Event Handler for Touch and Click
+  let lastActionTimestamp = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isTouchScroll = false;
+
+  resultsContainer.addEventListener("touchstart", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isTouchScroll = false;
+    }
+  }, { passive: true });
+
+  resultsContainer.addEventListener("touchmove", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 8 || dy > 8) {
+        isTouchScroll = true;
+      }
+    }
+  }, { passive: true });
+
+  function executeSearchAction(interactiveTarget) {
+    if (!interactiveTarget) return;
+
+    // 1. Direct calculation result
+    const calcCard = interactiveTarget.closest('[data-action="open-calc"]');
+    if (calcCard && currentCalculationResult && typeof currentCalculationResult.openAction === "function") {
+      searchInput.blur();
+      resultsContainer.style.display = "none";
+      try {
+        currentCalculationResult.openAction();
+      } catch (err) {
+        console.error("Calculation openAction error:", err);
+      }
+      return;
+    }
+
+    // 2. Matching Tool
+    const toolEl = interactiveTarget.closest('[data-tool-index]');
+    if (toolEl) {
+      const idx = parseInt(toolEl.dataset.toolIndex, 10);
+      if (!isNaN(idx) && currentMatchedTools[idx]) {
+        searchInput.blur();
+        resultsContainer.style.display = "none";
+        try {
+          openToolByReference(currentMatchedTools[idx]);
+        } catch (err) {
+          console.error("openToolByReference error:", err);
+        }
+        return;
+      }
+    }
+
+    // 3. Fallback to Dashboard
+    const fallbackBtn = interactiveTarget.closest('[data-action="go-dashboard"], #btnGoDashboardFallback');
+    if (fallbackBtn) {
+      searchInput.blur();
+      resultsContainer.style.display = "none";
+      navigateTo("dashboard");
+      return;
+    }
+  }
+
+  function handleContainerInteraction(e) {
+    if (e.type === "touchend" && isTouchScroll) return;
+
+    const interactive = e.target.closest('[data-action="open-calc"], [data-tool-index], [data-action="go-dashboard"], #btnGoDashboardFallback');
+    if (!interactive) return;
+
+    const now = Date.now();
+    if (now - lastActionTimestamp < 350) {
+      e.stopPropagation();
+      return;
+    }
+    lastActionTimestamp = now;
+
+    if (e.type === "touchend") {
+      // Prevent delayed emulated click on mobile
+      try { e.preventDefault(); } catch (err) {}
+    }
+    e.stopPropagation();
+    executeSearchAction(interactive);
+  }
+
+  resultsContainer.addEventListener("click", handleContainerInteraction, true);
+  resultsContainer.addEventListener("touchend", handleContainerInteraction, { passive: false });
+
+  // Close dropdown on outside click
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#topStickyBar") && !e.target.closest("#smartResultsContainer")) {
+      resultsContainer.style.display = "none";
+    }
+  });
 
   function handleInput() {
     const val = searchInput.value.trim();
     if (!val) {
       clearBtn.style.display = "none";
       resultsContainer.style.display = "none";
-      currentActiveAction = null;
+      currentPrimaryAction = null;
       return;
     }
     clearBtn.style.display = "flex";
-    const res = analyzeSmartQuery(val);
-    renderSmartResults(res);
+    const calcResult = solveDirectCalculation(val);
+    const matched = searchAllTools(val);
+    renderSearchResults(val, calcResult, matched);
   }
 
   searchInput.addEventListener("input", handleInput);
@@ -7897,8 +9482,8 @@ function setupSmartSearch() {
   searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (typeof currentActiveAction === "function") {
-        currentActiveAction();
+      if (typeof currentPrimaryAction === "function") {
+        currentPrimaryAction();
         resultsContainer.style.display = "none";
       }
     }
@@ -7908,7 +9493,7 @@ function setupSmartSearch() {
     searchInput.value = "";
     clearBtn.style.display = "none";
     resultsContainer.style.display = "none";
-    currentActiveAction = null;
+    currentPrimaryAction = null;
     searchInput.focus();
   });
 
@@ -7920,16 +9505,15 @@ function setupSmartSearch() {
       const q = pill.dataset.query;
       searchInput.value = q;
       clearBtn.style.display = "flex";
-      const res = analyzeSmartQuery(q);
-      renderSmartResults(res);
-      if (res && res.id === "profit_calculator") {
-        res.openAction();
+      handleInput();
+      if (typeof currentPrimaryAction === "function") {
+        currentPrimaryAction();
         resultsContainer.style.display = "none";
       }
     });
   });
 
-  // Voice Recognition Flow (Native Android + Web Speech API + Voice Assistant Modal)
+  // Voice Recognition Flow (Native Android + Web Speech API)
   let recognition = null;
   let isWebListening = false;
   let pendingVoiceText = "";
@@ -7940,9 +9524,9 @@ function setupSmartSearch() {
     if (voiceOverlay) {
       voiceOverlay.style.display = "flex";
       if (voiceMicOrb) voiceMicOrb.classList.add("active-pulse");
-      if (voiceStatus) voiceStatus.textContent = "শুনছি... আপনার প্রশ্নটি মুখে বলুন 🎙️";
+      if (voiceStatus) voiceStatus.textContent = "শুনছি... আপনার প্রশ্ন বা হিসাবটি মুখে বলুন 🎙️";
       if (voiceTranscriptBox) {
-        voiceTranscriptBox.innerHTML = '<span class="voice-transcript-placeholder">যেমন: “১০০০ টাকার ১৫% লাভ করলে বিক্রয়মূল্য কত?”</span>';
+        voiceTranscriptBox.innerHTML = '<span class="voice-transcript-placeholder">যেমন: “বয়স ক্যালকুলেটর”, “১০০০ টাকার ১৫% লাভ কত?”, “জমির পরিমাপ”</span>';
       }
       voiceBtn.classList.add("listening");
     }
@@ -7963,17 +9547,30 @@ function setupSmartSearch() {
   function applyVoiceResult(text) {
     if (!text) return;
     searchInput.value = text;
-    handleInput();
+    clearBtn.style.display = "flex";
     closeVoiceModal();
-    showToast(`ভয়েস গৃহীত: "${text}" ✔️`);
-    const res = analyzeSmartQuery(text);
-    if (res && res.id === "profit_calculator") {
+
+    const calcResult = solveDirectCalculation(text);
+    const matched = searchAllTools(text);
+    renderSearchResults(text, calcResult, matched);
+
+    // Auto-launch if single strong match or direct formula
+    if (calcResult && typeof calcResult.openAction === "function") {
       setTimeout(() => {
-        if (typeof res.openAction === "function") {
-          res.openAction();
-          resultsContainer.style.display = "none";
-        }
-      }, 400);
+        calcResult.openAction();
+        resultsContainer.style.display = "none";
+      }, 450);
+      showToast(`🗣️ ভয়েস: "${text}" ➔ ফলাফল নির্ণয় করা হয়েছে ✔️`);
+    } else if (matched && matched.length > 0) {
+      const topMatch = matched[0];
+      // If voice strongly matches the tool name (or only 1-2 top matches)
+      setTimeout(() => {
+        openToolByReference(topMatch);
+        resultsContainer.style.display = "none";
+      }, 450);
+      showToast(`🗣️ ভয়েস: "${text}" ➔ ${topMatch.title} খোলা হয়েছে ✔️`);
+    } else {
+      showToast(`🗣️ ভয়েস গৃহীত: "${text}" ✔️`);
     }
   }
 
@@ -8054,14 +9651,11 @@ function setupSmartSearch() {
   }
 
   function handleVoiceClick() {
-    // 1. Check if native Android Voice Recognition is available
     if (window.AndroidInterface && typeof window.AndroidInterface.startVoiceRecognition === "function") {
       openVoiceModal();
       window.AndroidInterface.startVoiceRecognition();
       return;
     }
-
-    // 2. Web Speech API fallback
     startWebSpeech();
   }
 
@@ -9181,6 +10775,7 @@ function setupHealthAndFitnessCalc() {
 function initApplication() {
   if (window._appInitialized) return;
   window._appInitialized = true;
+  try { if (window.setupUniversalSubtabs) window.setupUniversalSubtabs(); } catch (e) { console.error(e); }
   try { setupPercentageCalc(); } catch (e) { console.error(e); }
   try { setupFinanceCalc(); } catch (e) { console.error(e); }
   try { setupAgeAndDateCalc(); } catch (e) { console.error(e); }

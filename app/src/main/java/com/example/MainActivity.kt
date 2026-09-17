@@ -142,7 +142,7 @@ class MainActivity : ComponentActivity() {
                 setSupportZoom(false)
                 builtInZoomControls = false
                 displayZoomControls = false
-                cacheMode = WebSettings.LOAD_DEFAULT
+                cacheMode = WebSettings.LOAD_NO_CACHE
                 allowFileAccess = true
                 allowContentAccess = true
                 allowFileAccessFromFileURLs = true
@@ -150,6 +150,7 @@ class MainActivity : ComponentActivity() {
                 mediaPlaybackRequiresUserGesture = false
             }
 
+            clearCache(true)
             addJavascriptInterface(WebAppInterface(this@MainActivity, this), "AndroidBridge")
 
             webChromeClient = object : WebChromeClient() {

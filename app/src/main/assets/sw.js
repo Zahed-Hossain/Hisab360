@@ -3,7 +3,7 @@
 // Cache-First with Network Fallback
 // ==========================================
 
-const CACHE_NAME = 'math-calc-v2-cache-v1';
+const CACHE_NAME = 'math-calc-v2-cache-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
