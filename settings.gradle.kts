@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "Calculator"
+rootProject.name = "Hisab360"
 
 include(":app")

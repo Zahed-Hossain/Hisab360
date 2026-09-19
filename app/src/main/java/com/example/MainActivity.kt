@@ -3,60 +3,70 @@ package com.example
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.PermissionRequest
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import java.lang.ref.WeakReference
+import java.util.Locale
+import java.util.concurrent.Executors
 
 class MainActivity : ComponentActivity() {
     private var webView: WebView? = null
     private var adView: AdView? = null
-    private var interstitialAd: InterstitialAd? = null
 
     private var pendingPermissionRequest: PermissionRequest? = null
     private var textToSpeech: android.speech.tts.TextToSpeech? = null
+    private var isTtsInitializing = false
+
+    private val bgExecutor = Executors.newSingleThreadExecutor()
 
     private val speechRecognizerLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 val matches = result.data?.getStringArrayListExtra(android.speech.RecognizerIntent.EXTRA_RESULTS)
                 if (!matches.isNullOrEmpty()) {
-                    val text = matches[0].replace("\\", "\\\\").replace("'", "\\'").replace("\"", "\\\"")
-                    webView?.evaluateJavascript("if(typeof window.onVoiceSearchResult === 'function') { window.onVoiceSearchResult('$text'); }", null)
+                    val text = matches[0]
+                        .replace("\\", "\\\\")
+                        .replace("'", "\\'")
+                        .replace("\"", "\\\"")
+                        .replace("\n", " ")
+                    webView?.evaluateJavascript(
+                        "if(typeof window.onVoiceSearchResult === 'function') { window.onVoiceSearchResult('$text'); }",
+                        null
+                    )
                 }
             } else {
-                webView?.evaluateJavascript("if(typeof window.onVoiceSearchDismissed === 'function') { window.onVoiceSearchDismissed(); }", null)
+                webView?.evaluateJavascript(
+                    "if(typeof window.onVoiceSearchDismissed === 'function') { window.onVoiceSearchDismissed(); }",
+                    null
+                )
             }
         }
 
     fun startNativeVoiceSearch() {
         try {
-            val intent = android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            val intent = Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
                 putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE, "bn-BD")
                 putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "bn-BD")
@@ -65,16 +75,54 @@ class MainActivity : ComponentActivity() {
             }
             speechRecognizerLauncher.launch(intent)
         } catch (e: Exception) {
-            Log.w("VoiceSearch", "Native voice recognition not available, fallback to web", e)
+            AppLog.w("VoiceSearch", { "Native voice recognition not available, fallback to web" }, e)
             webView?.evaluateJavascript("if(typeof window.fallbackWebSpeech === 'function') { window.fallbackWebSpeech(); }", null)
         }
     }
 
+    /**
+     * Lazy, thread-safe TextToSpeech initializer that does not block startup.
+     */
+    @Synchronized
+    private fun getOrInitTTS(onReady: (android.speech.tts.TextToSpeech) -> Unit) {
+        textToSpeech?.let {
+            onReady(it)
+            return
+        }
+
+        if (isTtsInitializing) return
+        isTtsInitializing = true
+
+        bgExecutor.execute {
+            try {
+                val appContext = applicationContext
+                val tts = android.speech.tts.TextToSpeech(appContext) { status ->
+                    isTtsInitializing = false
+                    if (status == android.speech.tts.TextToSpeech.SUCCESS) {
+                        try {
+                            textToSpeech?.language = Locale("bn", "BD")
+                        } catch (_: Exception) {}
+                        runOnUiThread {
+                            textToSpeech?.let { onReady(it) }
+                        }
+                    }
+                }
+                textToSpeech = tts
+            } catch (e: Exception) {
+                isTtsInitializing = false
+                AppLog.w("VoiceTTS", { "TTS init failed" }, e)
+            }
+        }
+    }
+
     fun speakVoice(text: String) {
+        if (text.isBlank()) return
         try {
-            textToSpeech?.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, null, "VoiceResult")
+            getOrInitTTS { tts ->
+                tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, null, "VoiceResult")
+            }
         } catch (e: Exception) {
-            Log.w("VoiceTTS", "TTS speak failed", e)
+            AppLog.w("VoiceTTS", { "TTS speak failed" }, e)
         }
     }
 
@@ -90,14 +138,22 @@ class MainActivity : ComponentActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
                 pendingPermissionRequest?.grant(pendingPermissionRequest?.resources)
+                webView?.evaluateJavascript("if(typeof window.onCameraPermissionGranted === 'function') { window.onCameraPermissionGranted(); }", null)
             } else {
                 pendingPermissionRequest?.deny()
+                val isPermanentlyDenied = !ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)
+                if (isPermanentlyDenied) {
+                    Toast.makeText(this, "ক্যামেরা পারমিশন স্থায়ীভাবে বন্ধ। সেটিংস থেকে পারমিশন দিন।", Toast.LENGTH_LONG).show()
+                }
+                webView?.evaluateJavascript("if(typeof window.onCameraPermissionDenied === 'function') { window.onCameraPermissionDenied($isPermanentlyDenied); }", null)
             }
             pendingPermissionRequest = null
         }
 
     fun requestCamera() {
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            webView?.evaluateJavascript("if(typeof window.onCameraPermissionGranted === 'function') { window.onCameraPermissionGranted(); }", null)
+        } else {
             requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
@@ -109,30 +165,6 @@ class MainActivity : ComponentActivity() {
             window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
         } catch (_: Exception) {}
 
-        try {
-            textToSpeech = android.speech.tts.TextToSpeech(this) { status ->
-                if (status == android.speech.tts.TextToSpeech.SUCCESS) {
-                    try {
-                        textToSpeech?.language = java.util.Locale("bn", "BD")
-                    } catch (_: Exception) {}
-                }
-            }
-        } catch (e: Exception) {
-            Log.w("VoiceTTS", "TTS init failed", e)
-        }
-
-        // Initialize Google Mobile Ads SDK
-        try {
-            MobileAds.initialize(this) { status ->
-                Log.d("AdMob", "AdMob SDK Initialized: $status")
-                runOnUiThread {
-                    loadInterstitialAd()
-                }
-            }
-        } catch (e: Exception) {
-            Log.e("AdMob", "Failed to initialize AdMob SDK", e)
-        }
-
         val rootLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             layoutParams = ViewGroup.LayoutParams(
@@ -141,6 +173,11 @@ class MainActivity : ComponentActivity() {
             )
             setBackgroundColor(Color.parseColor("#F8FAFC"))
             setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        }
+
+        // Initialize Google Mobile Ads SDK asynchronously in background without blocking UI startup
+        AdManager.initialize(applicationContext) {
+            AdManager.loadInterstitial(applicationContext)
         }
 
         val wv = WebView(this).apply {
@@ -163,20 +200,36 @@ class MainActivity : ComponentActivity() {
                 setSupportZoom(false)
                 builtInZoomControls = false
                 displayZoomControls = false
-                cacheMode = WebSettings.LOAD_NO_CACHE
+
+                // Use default cache mode to allow instant warm startups
+                cacheMode = WebSettings.LOAD_DEFAULT
+
+                // WebView Security Hardening
                 allowFileAccess = true
-                allowContentAccess = true
-                allowFileAccessFromFileURLs = true
-                allowUniversalAccessFromFileURLs = true
+                allowContentAccess = false
+                allowFileAccessFromFileURLs = false
+                allowUniversalAccessFromFileURLs = false
                 mediaPlaybackRequiresUserGesture = false
+
+                mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             }
 
-            clearCache(true)
-            addJavascriptInterface(WebAppInterface(this@MainActivity, this), "AndroidBridge")
+            // Expose minimal, secure JavaScript interfaces with WeakReference to prevent Activity leaks
+            val webBridge = WebAppInterface(this@MainActivity, this)
+            addJavascriptInterface(webBridge, "AndroidBridge")
+            addJavascriptInterface(webBridge, "AndroidInterface")
 
             webChromeClient = object : WebChromeClient() {
                 override fun onPermissionRequest(request: PermissionRequest?) {
                     if (request == null) return
+                    val isCameraResource = request.resources.any {
+                        it == PermissionRequest.RESOURCE_VIDEO_CAPTURE
+                    }
+                    if (!isCameraResource) {
+                        request.deny()
+                        return
+                    }
+
                     val hasCameraPermission = checkSelfPermission(android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED
                     if (hasCameraPermission) {
                         request.grant(request.resources)
@@ -186,21 +239,93 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+
             webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                    val url = request?.url?.toString() ?: return false
+                    return handleSafeUrlLoading(url)
+                }
+
+                @Deprecated("Deprecated in Java")
+                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                    if (url == null) return false
+                    return handleSafeUrlLoading(url)
+                }
+
+                private fun handleSafeUrlLoading(url: String): Boolean {
+                    val uri = Uri.parse(url)
+                    val scheme = uri.scheme?.lowercase() ?: return true
+
+                    // 1. Allow internal bundled asset navigation
+                    if (scheme == "file" && url.startsWith("file:///android_asset/")) {
+                        return false
+                    }
+
+                    // 2. Reject hazardous local file or internal scheme access
+                    if (scheme == "file" || scheme == "content" || scheme == "javascript") {
+                        AppLog.w("WebSecurity", { "Blocked untrusted scheme attempt: $scheme" })
+                        return true
+                    }
+
+                    // 3. Handle external telephone links
+                    if (scheme == "tel") {
+                        try {
+                            val intent = Intent(Intent.ACTION_DIAL, uri)
+                            startActivity(intent)
+                        } catch (e: Exception) {
+                            AppLog.w("WebSecurity", { "Cannot open tel link" }, e)
+                        }
+                        return true
+                    }
+
+                    // 4. Handle Play Store market links
+                    if (scheme == "market") {
+                        try {
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            startActivity(intent)
+                        } catch (e: Exception) {
+                            AppLog.w("WebSecurity", { "Cannot open market link" }, e)
+                        }
+                        return true
+                    }
+
+                    // 5. Open trusted external HTTP/HTTPS websites safely in external system browser
+                    if (scheme == "http" || scheme == "https") {
+                        try {
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            startActivity(intent)
+                        } catch (e: Exception) {
+                            AppLog.w("WebSecurity", { "Cannot launch external browser for $url" }, e)
+                        }
+                        return true
+                    }
+
+                    // 6. Block all unexpected or arbitrary intent/custom schemes
+                    AppLog.w("WebSecurity", { "Rejected untrusted scheme: $scheme" })
+                    return true
+                }
+
                 override fun onRenderProcessGone(view: WebView?, detail: RenderProcessGoneDetail?): Boolean {
                     view?.post {
-                        view.loadUrl("file:///android_asset/calculator_app.html")
+                        try {
+                            view.loadUrl("file:///android_asset/calculator_app.html")
+                        } catch (_: Exception) {}
                     }
                     return true
                 }
             }
 
-            loadUrl("file:///android_asset/calculator_app.html")
+            // Restore state if available, otherwise load asset cleanly
+            if (savedInstanceState != null) {
+                restoreState(savedInstanceState)
+            } else {
+                loadUrl("file:///android_asset/calculator_app.html")
+            }
         }
         webView = wv
         rootLayout.addView(wv)
 
-        // Google AdMob Banner Ad Container
+        // Google AdMob Banner Ad Container (bottom dock, never obscuring content)
         val adContainer = FrameLayout(this).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -209,26 +334,11 @@ class MainActivity : ComponentActivity() {
             setBackgroundColor(Color.TRANSPARENT)
         }
 
-        try {
-            val bannerAd = AdView(this).apply {
-                // Official AdMob test banner ad unit ID
-                adUnitId = "ca-app-pub-5034627477793952/9072198864"
-                setAdSize(AdSize.BANNER)
-                adListener = object : AdListener() {
-                    override fun onAdLoaded() {
-                        Log.d("AdMob", "Banner Ad Loaded successfully")
-                    }
-                    override fun onAdFailedToLoad(error: LoadAdError) {
-                        Log.w("AdMob", "Banner Ad Failed to load: ${error.message}")
-                    }
-                }
-            }
-            adView = bannerAd
-            adContainer.addView(bannerAd)
-            val adRequest = AdRequest.Builder().build()
-            bannerAd.loadAd(adRequest)
-        } catch (e: Exception) {
-            Log.e("AdMob", "Error creating banner AdView", e)
+        // Create Banner AdView using centralized AdManager
+        val banner = AdManager.createBannerAd(this)
+        if (banner != null) {
+            adView = banner
+            adContainer.addView(banner)
         }
 
         rootLayout.addView(adContainer)
@@ -236,8 +346,9 @@ class MainActivity : ComponentActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (webView?.canGoBack() == true) {
-                    webView?.goBack()
+                val wvRef = webView
+                if (wvRef != null && wvRef.canGoBack()) {
+                    wvRef.goBack()
                 } else {
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
@@ -246,85 +357,18 @@ class MainActivity : ComponentActivity() {
         })
     }
 
-    fun loadInterstitialAd() {
-        // Official AdMob test interstitial ad unit ID
-        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(
-            this,
-            "ca-app-pub-5034627477793952/5132953856",
-            adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(ad: InterstitialAd) {
-                    interstitialAd = ad
-                    Log.d("AdMob", "Interstitial Ad Loaded successfully")
-                }
-                override fun onAdFailedToLoad(error: LoadAdError) {
-                    interstitialAd = null
-                    Log.w("AdMob", "Interstitial Ad Failed to load: ${error.message}")
-                }
-            }
-        )
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        webView?.saveState(outState)
     }
 
-    fun showInterstitial() {
-        runOnUiThread {
-            if (interstitialAd != null) {
-                interstitialAd?.show(this)
-                interstitialAd = null
-                loadInterstitialAd()
-            } else {
-                Log.d("AdMob", "Interstitial Ad not ready yet, loading new one")
-                loadInterstitialAd()
-            }
-        }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        webView?.restoreState(savedInstanceState)
     }
 
-    fun showInterstitialForQR(): Boolean {
-        val ad = interstitialAd
-        if (ad != null) {
-            runOnUiThread {
-                ad.fullScreenContentCallback = object : FullScreenContentCallback() {
-                    override fun onAdDismissedFullScreenContent() {
-                        Log.d("AdMob", "QR Interstitial Ad dismissed by user")
-                        interstitialAd = null
-                        loadInterstitialAd()
-                        notifyQRAdCompleted(true)
-                    }
-
-                    override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                        Log.w("AdMob", "QR Interstitial Ad failed to show: ${adError.message}")
-                        interstitialAd = null
-                        loadInterstitialAd()
-                        notifyQRAdCompleted(false)
-                    }
-
-                    override fun onAdShowedFullScreenContent() {
-                        Log.d("AdMob", "QR Interstitial Ad displayed successfully")
-                    }
-                }
-                try {
-                    ad.show(this)
-                } catch (e: Exception) {
-                    Log.e("AdMob", "Error displaying interstitial", e)
-                    interstitialAd = null
-                    loadInterstitialAd()
-                    notifyQRAdCompleted(false)
-                }
-            }
-            return true
-        } else {
-            Log.d("AdMob", "Interstitial Ad not loaded yet for QR")
-            runOnUiThread {
-                loadInterstitialAd()
-            }
-            return false
-        }
-    }
-
-    private fun notifyQRAdCompleted(success: Boolean) {
-        runOnUiThread {
-            webView?.evaluateJavascript("if (typeof window.onAdCompletedForQR === 'function') { window.onAdCompletedForQR($success); }", null)
-        }
+    fun showInterstitial(onDismissed: (() -> Unit)? = null) {
+        AdManager.showInterstitial(this, onDismissed)
     }
 
     override fun onPause() {
@@ -343,40 +387,64 @@ class MainActivity : ComponentActivity() {
             textToSpeech?.shutdown()
             textToSpeech = null
         } catch (_: Exception) {}
-        adView?.destroy()
+
+        adView?.let { ad ->
+            try {
+                (ad.parent as? ViewGroup)?.removeView(ad)
+                ad.destroy()
+            } catch (_: Exception) {}
+        }
         adView = null
-        webView?.destroy()
+
+        webView?.let { wv ->
+            try {
+                (wv.parent as? ViewGroup)?.removeView(wv)
+                wv.stopLoading()
+                wv.removeJavascriptInterface("AndroidBridge")
+                wv.removeJavascriptInterface("AndroidInterface")
+                wv.webChromeClient = null
+                wv.webViewClient = WebViewClient()
+                wv.removeAllViews()
+                wv.destroy()
+            } catch (_: Exception) {}
+        }
         webView = null
+
         super.onDestroy()
     }
 }
 
-class WebAppInterface(private val activity: Activity?, private val webView: WebView) {
+/**
+ * Memory-safe WebAppInterface using WeakReferences to avoid Activity or WebView leaks.
+ */
+class WebAppInterface(activity: MainActivity, webView: WebView) {
+    private val activityRef = WeakReference(activity)
+    private val webViewRef = WeakReference(webView)
+
     @JavascriptInterface
     fun printPage() {
-        activity?.runOnUiThread {
+        val act = activityRef.get() ?: return
+        val wv = webViewRef.get() ?: return
+        act.runOnUiThread {
             try {
-                val printManager = activity.getSystemService(Context.PRINT_SERVICE) as? PrintManager
-                val printAdapter = webView.createPrintDocumentAdapter("Calculator_Print")
+                val printManager = act.getSystemService(Context.PRINT_SERVICE) as? PrintManager
+                val printAdapter = wv.createPrintDocumentAdapter("Calculator_Print")
                 printManager?.print("Calculator_QR_Code", printAdapter, PrintAttributes.Builder().build())
             } catch (e: Exception) {
-                e.printStackTrace()
+                AppLog.w("WebAppInterface", { "Print document failed" }, e)
             }
         }
     }
 
     @JavascriptInterface
     fun showInterstitialAd() {
-        if (activity is MainActivity) {
-            activity.showInterstitial()
-        }
+        val act = activityRef.get() ?: return
+        act.showInterstitial()
     }
 
     @JavascriptInterface
     fun showQRGenerationAd(): Boolean {
-        if (activity is MainActivity) {
-            return activity.showInterstitialForQR()
-        }
+        // Ads are not allowed to gate utility generation per Google Play policy
         return false
     }
 
@@ -387,38 +455,42 @@ class WebAppInterface(private val activity: Activity?, private val webView: WebV
 
     @JavascriptInterface
     fun shareApp(title: String, text: String) {
-        activity?.runOnUiThread {
+        val act = activityRef.get() ?: return
+        act.runOnUiThread {
             try {
-                val sendIntent = android.content.Intent().apply {
-                    action = android.content.Intent.ACTION_SEND
-                    putExtra(android.content.Intent.EXTRA_TITLE, title)
-                    putExtra(android.content.Intent.EXTRA_TEXT, text)
+                val safeTitle = title.take(100)
+                val safeText = text.take(1000)
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, safeTitle)
+                    putExtra(Intent.EXTRA_TEXT, safeText)
                     type = "text/plain"
                 }
-                val shareIntent = android.content.Intent.createChooser(sendIntent, title)
-                activity.startActivity(shareIntent)
+                val shareIntent = Intent.createChooser(sendIntent, safeTitle)
+                act.startActivity(shareIntent)
             } catch (e: Exception) {
-                e.printStackTrace()
+                AppLog.w("WebAppInterface", { "Share app failed" }, e)
             }
         }
     }
 
     @JavascriptInterface
     fun rateOnPlayStore() {
-        activity?.runOnUiThread {
+        val act = activityRef.get() ?: return
+        act.runOnUiThread {
             try {
-                val packageName = activity.packageName
-                val uri = android.net.Uri.parse("market://details?id=$packageName")
-                val goToMarket = android.content.Intent(android.content.Intent.ACTION_VIEW, uri)
-                activity.startActivity(goToMarket)
+                val packageName = act.packageName
+                val uri = Uri.parse("market://details?id=$packageName")
+                val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+                act.startActivity(goToMarket)
             } catch (e: Exception) {
                 try {
-                    val packageName = activity?.packageName ?: "com.example"
-                    val uri = android.net.Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
-                    val goToMarket = android.content.Intent(android.content.Intent.ACTION_VIEW, uri)
-                    activity?.startActivity(goToMarket)
+                    val packageName = act.packageName ?: "com.example"
+                    val uri = Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+                    act.startActivity(goToMarket)
                 } catch (e2: Exception) {
-                    e2.printStackTrace()
+                    AppLog.w("WebAppInterface", { "Open Play Store failed" }, e2)
                 }
             }
         }
@@ -426,29 +498,26 @@ class WebAppInterface(private val activity: Activity?, private val webView: WebV
 
     @JavascriptInterface
     fun requestCameraPermission() {
-        activity?.runOnUiThread {
-            if (activity is MainActivity) {
-                activity.requestCamera()
-            }
+        val act = activityRef.get() ?: return
+        act.runOnUiThread {
+            act.requestCamera()
         }
     }
 
     @JavascriptInterface
     fun startVoiceRecognition() {
-        activity?.runOnUiThread {
-            if (activity is MainActivity) {
-                activity.startNativeVoiceSearch()
-            }
+        val act = activityRef.get() ?: return
+        act.runOnUiThread {
+            act.startNativeVoiceSearch()
         }
     }
 
     @JavascriptInterface
     fun speakText(text: String) {
-        activity?.runOnUiThread {
-            if (activity is MainActivity) {
-                activity.speakVoice(text)
-            }
+        val act = activityRef.get() ?: return
+        act.runOnUiThread {
+            val sanitized = text.take(500)
+            act.speakVoice(sanitized)
         }
     }
 }
-

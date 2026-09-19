@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calculator</string>
+    <string name="app_name">Hisab360</string>
     <string name="google_app_id" translatable="false">1:219756109716:android:com.aistudio.calculator.bncalc</string>
     <string name="project_id" translatable="false">ais-calculator-app</string>
     <string name="gcm_defaultSenderId" translatable="false">219756109716</string>
