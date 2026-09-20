@@ -130,6 +130,8 @@ class MainActivity : ComponentActivity() {
         init {
             try {
                 android.system.Os.setenv("LIBGL_ALWAYS_SOFTWARE", "1", true)
+                android.system.Os.setenv("GALLIUM_DRIVER", "softpipe", true)
+                android.system.Os.setenv("MESA_LOADER_DRIVER_OVERRIDE", "softpipe", true)
             } catch (_: Throwable) {}
         }
     }

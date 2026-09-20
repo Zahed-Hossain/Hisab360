@@ -8,6 +8,8 @@ class CalculatorApp : Application() {
         init {
             try {
                 Os.setenv("LIBGL_ALWAYS_SOFTWARE", "1", true)
+                Os.setenv("GALLIUM_DRIVER", "softpipe", true)
+                Os.setenv("MESA_LOADER_DRIVER_OVERRIDE", "softpipe", true)
             } catch (_: Throwable) {}
         }
     }
@@ -16,6 +18,8 @@ class CalculatorApp : Application() {
         super.onCreate()
         try {
             Os.setenv("LIBGL_ALWAYS_SOFTWARE", "1", true)
+            Os.setenv("GALLIUM_DRIVER", "softpipe", true)
+            Os.setenv("MESA_LOADER_DRIVER_OVERRIDE", "softpipe", true)
         } catch (_: Throwable) {}
     }
 }
