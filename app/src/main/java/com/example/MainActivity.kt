@@ -100,7 +100,7 @@ class MainActivity : ComponentActivity() {
                     isTtsInitializing = false
                     if (status == android.speech.tts.TextToSpeech.SUCCESS) {
                         try {
-                            textToSpeech?.language = Locale("bn", "BD")
+                            textToSpeech?.language = Locale.Builder().setLanguage("bn").setRegion("BD").build()
                         } catch (_: Exception) {}
                         runOnUiThread {
                             textToSpeech?.let { onReady(it) }
