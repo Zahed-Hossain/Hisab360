@@ -3610,15 +3610,25 @@
       </div>
     </div>
 
-    <!-- Exchange Rate Table against Bangladeshi Taka -->
+    <!-- Exchange Rate Table against Bangladeshi Taka (Popular Currencies by Default) -->
     <div class="tool-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <h3 style="margin:0; font-size:16px;">🇧🇩 টাকার বিপরীতে আজকের রেট তালিকা</h3>
-        <span style="font-size:11px; color:var(--ink-soft);" id="currTableUpdateText">আন্তর্জাতিক বিনিময় হার</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+        <div>
+          <h3 style="margin:0; font-size:16px;">🇧🇩 টাকার বিপরীতে জনপ্রিয় মুদ্রার রেট তালিকা</h3>
+          <span style="font-size:11px; color:var(--ink-soft);" id="currTableUpdateText">আন্তর্জাতিক বিনিময় হার ও প্রবাসীদের জনপ্রিয় মুদ্রা</span>
+        </div>
+        <span class="badge" style="background:#e0f2fe; color:#0369a1; font-size:11px; padding:3px 8px;" id="currTableCountBadge">১৬টি জনপ্রিয় মুদ্রা</span>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="data-table" id="currRatesTable">
-          <thead>
+
+      <!-- Quick Search / Filter Bar for Table -->
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:10px;">
+        <input type="text" id="currTableSearchInput" class="form-control" placeholder="🔍 রেট তালিকায় খুঁজুন (যেমন: SAR, ডলার, ইউরো)..." style="font-size:12.5px; padding:6px 10px; flex:1;">
+        <button type="button" id="btnToggleAllCurrenciesTable" class="btn btn-sm btn-outline" style="font-size:11px; padding:6px 10px; white-space:nowrap;">সব মুদ্রা দেখুন</button>
+      </div>
+
+      <div style="overflow-x:auto; max-height:480px; overflow-y:auto; border-radius:6px; border:1px solid var(--border);">
+        <table class="data-table" id="currRatesTable" style="margin:0;">
+          <thead style="position:sticky; top:0; background:var(--surface); z-index:2;">
             <tr style="border-bottom:1.5px solid var(--border); font-size:12.5px; color:var(--ink-soft);">
               <th style="padding:8px 6px;">মুদ্রা</th>
               <th style="padding:8px 6px;">কোড</th>
@@ -7323,26 +7333,1004 @@ function setupQRCodeTools() {
 }
 
 // ==========================================
-// Currency Converter
+// Currency Converter (160+ Global & Offline Rates, Real-Time API Sync)
 // ==========================================
+const POPULAR_CURRENCY_CODES = [
+  'USD', 'SAR', 'AED', 'EUR', 'GBP', 'MYR', 'SGD', 'INR',
+  'KWD', 'QAR', 'OMR', 'BHD', 'CAD', 'AUD', 'JPY', 'CNY'
+];
+
 const CURRENCY_DATABASE = {
-  BDT: { name: "বাংলাদেশি টাকা", symbol: "৳", flag: "🇧🇩", rateToUSD: 122.50 },
-  USD: { name: "মার্কিন ডলার", symbol: "$", flag: "🇺🇸", rateToUSD: 1.0 },
-  SAR: { name: "সৌদি রিয়াল", symbol: "﷼", flag: "🇸🇦", rateToUSD: 3.75 },
-  AED: { name: "ইউএই দিরহাম", symbol: "د.إ", flag: "🇦🇪", rateToUSD: 3.67 },
-  EUR: { name: "ইউরো", symbol: "€", flag: "🇪🇺", rateToUSD: 0.92 },
-  GBP: { name: "ব্রিটিশ পাউন্ড", symbol: "£", flag: "🇬🇧", rateToUSD: 0.78 },
-  MYR: { name: "মালয়েশিয়ান রিঙ্গিত", symbol: "RM", flag: "🇲🇾", rateToUSD: 4.41 },
-  SGD: { name: "সিঙ্গাপুর ডলার", symbol: "S$", flag: "🇸🇬", rateToUSD: 1.31 },
-  INR: { name: "ভারতীয় রুপি", symbol: "₹", flag: "🇮🇳", rateToUSD: 85.20 },
-  KWD: { name: "কুয়েতি দিনার", symbol: "KD", flag: "🇰🇼", rateToUSD: 0.308 },
-  QAR: { name: "কাতারি রিয়াল", symbol: "QR", flag: "🇶🇦", rateToUSD: 3.64 },
-  OMR: { name: "ওমানি রিয়াল", symbol: "OMR", flag: "🇴🇲", rateToUSD: 0.385 },
-  BHD: { name: "বাহরাইনি দিনার", symbol: "BD", flag: "🇧🇭", rateToUSD: 0.377 },
-  CAD: { name: "কানাডিয়ান ডলার", symbol: "C$", flag: "🇨🇦", rateToUSD: 1.37 },
-  AUD: { name: "অস্ট্রেলিয়ান ডলার", symbol: "A$", flag: "🇦🇺", rateToUSD: 1.51 },
-  JPY: { name: "জাপানিজ ইয়েন", symbol: "¥", flag: "🇯🇵", rateToUSD: 151.20 },
-  CNY: { name: "চীনা ইউয়ান", symbol: "¥", flag: "🇨🇳", rateToUSD: 7.14 }
+  "USD": {
+    "name": "মার্কিন ডলার",
+    "symbol": "$",
+    "flag": "🇺🇸",
+    "rateToUSD": 1.0
+  },
+  "AED": {
+    "name": "ইউএই দিরহাম",
+    "symbol": "د.إ",
+    "flag": "🇦🇪",
+    "rateToUSD": 3.6725
+  },
+  "AFN": {
+    "name": "আফগান আফগানি",
+    "symbol": "Af",
+    "flag": "🇦🇫",
+    "rateToUSD": 64.919762
+  },
+  "ALL": {
+    "name": "আলবেনিয়ান লেক",
+    "symbol": "L",
+    "flag": "🇦🇱",
+    "rateToUSD": 80.194167
+  },
+  "AMD": {
+    "name": "আর্মেনিয়ান ড্রাম",
+    "symbol": "֏",
+    "flag": "🇦🇲",
+    "rateToUSD": 365.449542
+  },
+  "ANG": {
+    "name": "নেদারল্যান্ডস অ্যান্টিলিয়ান গিল্ডার",
+    "symbol": "NAƒ",
+    "flag": "🇨🇼",
+    "rateToUSD": 1.79
+  },
+  "AOA": {
+    "name": "অ্যাঙ্গোলান কোয়ানজা",
+    "symbol": "Kz",
+    "flag": "🇦🇴",
+    "rateToUSD": 927.3052
+  },
+  "ARS": {
+    "name": "আর্জেন্টাইন পেসো",
+    "symbol": "$",
+    "flag": "🇦🇷",
+    "rateToUSD": 1512.3332
+  },
+  "AUD": {
+    "name": "অস্ট্রেলিয়ান ডলার",
+    "symbol": "A$",
+    "flag": "🇦🇺",
+    "rateToUSD": 1.404923
+  },
+  "AWG": {
+    "name": "আরুবান ফ্লোরিন",
+    "symbol": "Afl.",
+    "flag": "🇦🇼",
+    "rateToUSD": 1.79
+  },
+  "AZN": {
+    "name": "আজারবাইজানি মানাত",
+    "symbol": "₼",
+    "flag": "🇦🇿",
+    "rateToUSD": 1.712408
+  },
+  "BAM": {
+    "name": "বসনিয়ান কনভার্টিবল মার্ক",
+    "symbol": "KM",
+    "flag": "🇧🇦",
+    "rateToUSD": 1.703713
+  },
+  "BBD": {
+    "name": "বার্বাডিয়ান ডলার",
+    "symbol": "Bds$",
+    "flag": "🇧🇧",
+    "rateToUSD": 2.0
+  },
+  "BDT": {
+    "name": "বাংলাদেশি টাকা",
+    "symbol": "৳",
+    "flag": "🇧🇩",
+    "rateToUSD": 123.324304
+  },
+  "BGN": {
+    "name": "বুলগেরিয়ান লেভ",
+    "symbol": "лв",
+    "flag": "🇧🇬",
+    "rateToUSD": 1.703713
+  },
+  "BHD": {
+    "name": "বাহরাইনি দিনার",
+    "symbol": "BD",
+    "flag": "🇧🇭",
+    "rateToUSD": 0.376
+  },
+  "BIF": {
+    "name": "বুরুন্ডিয়ান ফ্রাংক",
+    "symbol": "FBu",
+    "flag": "🇧🇮",
+    "rateToUSD": 3016.144109
+  },
+  "BMD": {
+    "name": "বারমুডিয়ান ডলার",
+    "symbol": "$",
+    "flag": "🇧🇲",
+    "rateToUSD": 1.0
+  },
+  "BND": {
+    "name": "ব্রুনাই ডলার",
+    "symbol": "B$",
+    "flag": "🇧🇳",
+    "rateToUSD": 1.276627
+  },
+  "BOB": {
+    "name": "বলিভিয়ান বলিভিয়ানো",
+    "symbol": "Bs.",
+    "flag": "🇧🇴",
+    "rateToUSD": 11.069118
+  },
+  "BRL": {
+    "name": "ব্রাজিলিয়ান রিয়াল",
+    "symbol": "R$",
+    "flag": "🇧🇷",
+    "rateToUSD": 5.134105
+  },
+  "BSD": {
+    "name": "বাহামিয়ান ডলার",
+    "symbol": "B$",
+    "flag": "🇧🇸",
+    "rateToUSD": 1.0
+  },
+  "BTN": {
+    "name": "ভুটানি নগুলট্রাম",
+    "symbol": "Nu.",
+    "flag": "🇧🇹",
+    "rateToUSD": 95.949129
+  },
+  "BWP": {
+    "name": "বতসোয়ানা পুলা",
+    "symbol": "P",
+    "flag": "🇧🇼",
+    "rateToUSD": 14.289653
+  },
+  "BYN": {
+    "name": "বেলারুশিয়ান রুবেল",
+    "symbol": "Br",
+    "flag": "🇧🇾",
+    "rateToUSD": 3.047153
+  },
+  "BZD": {
+    "name": "বেলিজ ডলার",
+    "symbol": "BZ$",
+    "flag": "🇧🇿",
+    "rateToUSD": 2.0
+  },
+  "CAD": {
+    "name": "কানাডিয়ান ডলার",
+    "symbol": "C$",
+    "flag": "🇨🇦",
+    "rateToUSD": 1.399127
+  },
+  "CDF": {
+    "name": "কঙ্গোলিজ ফ্রাংক",
+    "symbol": "FC",
+    "flag": "🇨🇩",
+    "rateToUSD": 2329.552631
+  },
+  "CHF": {
+    "name": "সুইস ফ্রাংক",
+    "symbol": "CHF",
+    "flag": "🇨🇭",
+    "rateToUSD": 0.823432
+  },
+  "CLF": {
+    "name": "চিলিয়ান ইউনিদাদ দে ফোমেন্তো",
+    "symbol": "UF",
+    "flag": "🇨🇱",
+    "rateToUSD": 0.024309
+  },
+  "CLP": {
+    "name": "চিলিয়ান পেসো",
+    "symbol": "$",
+    "flag": "🇨🇱",
+    "rateToUSD": 960.836786
+  },
+  "CNH": {
+    "name": "চীনা অফশোর ইউয়ান",
+    "symbol": "¥",
+    "flag": "🇨🇳",
+    "rateToUSD": 6.697429
+  },
+  "CNY": {
+    "name": "চীনা ইউয়ান",
+    "symbol": "¥",
+    "flag": "🇨🇳",
+    "rateToUSD": 6.718405
+  },
+  "COP": {
+    "name": "কলম্বিয়ান পেসো",
+    "symbol": "$",
+    "flag": "🇨🇴",
+    "rateToUSD": 3140.322314
+  },
+  "CRC": {
+    "name": "কোস্টারিকান কোলন",
+    "symbol": "₡",
+    "flag": "🇨🇷",
+    "rateToUSD": 451.508017
+  },
+  "CUP": {
+    "name": "কিউবান পেসো",
+    "symbol": "$",
+    "flag": "🇨🇺",
+    "rateToUSD": 24.0
+  },
+  "CVE": {
+    "name": "কেপ ভার্দে এসকুডো",
+    "symbol": "Esc",
+    "flag": "🇨🇻",
+    "rateToUSD": 96.051246
+  },
+  "CZK": {
+    "name": "চেক কোরোনা",
+    "symbol": "Kč",
+    "flag": "🇨🇿",
+    "rateToUSD": 21.205377
+  },
+  "DJF": {
+    "name": "জিবুতিয়ান ফ্রাংক",
+    "symbol": "Fdj",
+    "flag": "🇩🇯",
+    "rateToUSD": 177.721
+  },
+  "DKK": {
+    "name": "ড্যানিশ ক্রোন",
+    "symbol": "kr",
+    "flag": "🇩🇰",
+    "rateToUSD": 6.518522
+  },
+  "DOP": {
+    "name": "ডোমিনিকান পেসো",
+    "symbol": "RD$",
+    "flag": "🇩🇴",
+    "rateToUSD": 59.538816
+  },
+  "DZD": {
+    "name": "আলজেরিয়ান দিনার",
+    "symbol": "DA",
+    "flag": "🇩🇿",
+    "rateToUSD": 134.925065
+  },
+  "EGP": {
+    "name": "মিশরীয় পাউন্ড",
+    "symbol": "E£",
+    "flag": "🇪🇬",
+    "rateToUSD": 52.137035
+  },
+  "ERN": {
+    "name": "ইরিট্রিয়ান নাকফা",
+    "symbol": "Nkf",
+    "flag": "🇪🇷",
+    "rateToUSD": 15.0
+  },
+  "ETB": {
+    "name": "ইথিওপিয়ান বির",
+    "symbol": "Br",
+    "flag": "🇪🇹",
+    "rateToUSD": 161.759131
+  },
+  "EUR": {
+    "name": "ইউরো",
+    "symbol": "€",
+    "flag": "🇪🇺",
+    "rateToUSD": 0.871291
+  },
+  "FJD": {
+    "name": "ফিজিয়ান ডলার",
+    "symbol": "FJ$",
+    "flag": "🇫🇯",
+    "rateToUSD": 2.236838
+  },
+  "FKP": {
+    "name": "ফকল্যান্ড দ্বীপপুঞ্জ পাউন্ড",
+    "symbol": "£",
+    "flag": "🇫🇰",
+    "rateToUSD": 0.747702
+  },
+  "FOK": {
+    "name": "ফ্যারো দ্বীপপুঞ্জ ক্রোন",
+    "symbol": "kr",
+    "flag": "🇫🇴",
+    "rateToUSD": 6.514094
+  },
+  "GBP": {
+    "name": "ব্রিটিশ পাউন্ড",
+    "symbol": "£",
+    "flag": "🇬🇧",
+    "rateToUSD": 0.747943
+  },
+  "GEL": {
+    "name": "জর্জিয়ান লারি",
+    "symbol": "₾",
+    "flag": "🇬🇪",
+    "rateToUSD": 2.618913
+  },
+  "GGP": {
+    "name": "গার্নসি পাউন্ড",
+    "symbol": "£",
+    "flag": "🇬🇬",
+    "rateToUSD": 0.747702
+  },
+  "GHS": {
+    "name": "ঘানাইয়ান সেডি",
+    "symbol": "GH₵",
+    "flag": "🇬🇭",
+    "rateToUSD": 11.578138
+  },
+  "GIP": {
+    "name": "জিব্রাল্টার পাউন্ড",
+    "symbol": "£",
+    "flag": "🇬🇮",
+    "rateToUSD": 0.747702
+  },
+  "GMD": {
+    "name": "গাম্বিয়ান দালাসি",
+    "symbol": "D",
+    "flag": "🇬🇲",
+    "rateToUSD": 74.647348
+  },
+  "GNF": {
+    "name": "গিনিয়ান ফ্রাংক",
+    "symbol": "FG",
+    "flag": "🇬🇳",
+    "rateToUSD": 8824.531446
+  },
+  "GTQ": {
+    "name": "গুয়াতেমালান কুয়েটজাল",
+    "symbol": "Q",
+    "flag": "🇬🇹",
+    "rateToUSD": 7.703054
+  },
+  "GYD": {
+    "name": "গায়ানিজ ডলার",
+    "symbol": "GY$",
+    "flag": "🇬🇾",
+    "rateToUSD": 211.229752
+  },
+  "HKD": {
+    "name": "হংকং ডলার",
+    "symbol": "HK$",
+    "flag": "🇭🇰",
+    "rateToUSD": 7.845294
+  },
+  "HNL": {
+    "name": "হন্ডুরান লেম্পিরা",
+    "symbol": "L",
+    "flag": "🇭🇳",
+    "rateToUSD": 27.088325
+  },
+  "HRK": {
+    "name": "ক্রোয়েশিয়ান কুনা",
+    "symbol": "kn",
+    "flag": "🇭🇷",
+    "rateToUSD": 6.563262
+  },
+  "HTG": {
+    "name": "হাইতিয়ান গৌরদে",
+    "symbol": "G",
+    "flag": "🇭🇹",
+    "rateToUSD": 131.490837
+  },
+  "HUF": {
+    "name": "হাঙ্গেরিয়ান ফোরিন্ট",
+    "symbol": "Ft",
+    "flag": "🇭🇺",
+    "rateToUSD": 317.164426
+  },
+  "IDR": {
+    "name": "ইন্দোনেশিয়ান রুপিয়া",
+    "symbol": "Rp",
+    "flag": "🇮🇩",
+    "rateToUSD": 17767.843756
+  },
+  "ILS": {
+    "name": "ইসরায়েলি শেকেল",
+    "symbol": "₪",
+    "flag": "🇮🇱",
+    "rateToUSD": 3.03391
+  },
+  "IMP": {
+    "name": "আইল অব ম্যান পাউন্ড",
+    "symbol": "£",
+    "flag": "🇮🇲",
+    "rateToUSD": 0.747702
+  },
+  "INR": {
+    "name": "ভারতীয় রুপি",
+    "symbol": "₹",
+    "flag": "🇮🇳",
+    "rateToUSD": 95.940282
+  },
+  "IQD": {
+    "name": "ইরাকি দিনার",
+    "symbol": "ID",
+    "flag": "🇮🇶",
+    "rateToUSD": 1322.500221
+  },
+  "IRR": {
+    "name": "ইরানি রিয়াল",
+    "symbol": "﷼",
+    "flag": "🇮🇷",
+    "rateToUSD": 1475242.717281
+  },
+  "ISK": {
+    "name": "আইসল্যান্ডিক ক্রোনা",
+    "symbol": "kr",
+    "flag": "🇮🇸",
+    "rateToUSD": 121.53169
+  },
+  "JEP": {
+    "name": "জার্সি পাউন্ড",
+    "symbol": "£",
+    "flag": "🇯🇪",
+    "rateToUSD": 0.747702
+  },
+  "JMD": {
+    "name": "জ্যামাইকান ডলার",
+    "symbol": "J$",
+    "flag": "🇯🇲",
+    "rateToUSD": 159.069401
+  },
+  "JOD": {
+    "name": "জর্ডানিয়ান দিনার",
+    "symbol": "JD",
+    "flag": "🇯🇴",
+    "rateToUSD": 0.709
+  },
+  "JPY": {
+    "name": "জাপানিজ ইয়েন",
+    "symbol": "¥",
+    "flag": "🇯🇵",
+    "rateToUSD": 157.140885
+  },
+  "KES": {
+    "name": "কেনিয়ান শিলিং",
+    "symbol": "KSh",
+    "flag": "🇰🇪",
+    "rateToUSD": 129.51513
+  },
+  "KGS": {
+    "name": "কিরগিজস্তানি সোম",
+    "symbol": "с",
+    "flag": "🇰🇬",
+    "rateToUSD": 88.04322
+  },
+  "KHR": {
+    "name": "কম্বোডিয়ান রিয়েল",
+    "symbol": "៛",
+    "flag": "🇰🇭",
+    "rateToUSD": 4087.280256
+  },
+  "KID": {
+    "name": "কিরিবাতি ডলার",
+    "symbol": "$",
+    "flag": "🇰🇮",
+    "rateToUSD": 1.404433
+  },
+  "KMF": {
+    "name": "কমোরিয়ান ফ্রাংক",
+    "symbol": "CF",
+    "flag": "🇰🇲",
+    "rateToUSD": 428.55045
+  },
+  "KRW": {
+    "name": "দক্ষিণ কোরিয়ান ওন",
+    "symbol": "₩",
+    "flag": "🇰🇷",
+    "rateToUSD": 1386.744186
+  },
+  "KWD": {
+    "name": "কুয়েতি দিনার",
+    "symbol": "KD",
+    "flag": "🇰🇼",
+    "rateToUSD": 0.309208
+  },
+  "KYD": {
+    "name": "কেম্যান দ্বীপপুঞ্জ ডলার",
+    "symbol": "CI$",
+    "flag": "🇰🇾",
+    "rateToUSD": 0.833333
+  },
+  "KZT": {
+    "name": "কাজাখস্তানি টেঙ্গে",
+    "symbol": "₸",
+    "flag": "🇰🇿",
+    "rateToUSD": 446.686746
+  },
+  "LAK": {
+    "name": "লাও কিপ",
+    "symbol": "₭",
+    "flag": "🇱🇦",
+    "rateToUSD": 22558.919247
+  },
+  "LBP": {
+    "name": "লেবানিজ পাউন্ড",
+    "symbol": "L£",
+    "flag": "🇱🇧",
+    "rateToUSD": 89500.0
+  },
+  "LKR": {
+    "name": "শ্রীলঙ্কান রুপি",
+    "symbol": "Rs",
+    "flag": "🇱🇰",
+    "rateToUSD": 331.272976
+  },
+  "LRD": {
+    "name": "লাইবেরিয়ান ডলার",
+    "symbol": "L$",
+    "flag": "🇱🇷",
+    "rateToUSD": 174.979344
+  },
+  "LSL": {
+    "name": "লেসোথো লোটি",
+    "symbol": "L",
+    "flag": "🇱🇸",
+    "rateToUSD": 16.264738
+  },
+  "LYD": {
+    "name": "লিবিয়ান দিনার",
+    "symbol": "LD",
+    "flag": "🇱🇾",
+    "rateToUSD": 6.412501
+  },
+  "MAD": {
+    "name": "মরোক্কান দিরহাম",
+    "symbol": "DH",
+    "flag": "🇲🇦",
+    "rateToUSD": 9.496609
+  },
+  "MDL": {
+    "name": "মলদোভান লিউ",
+    "symbol": "L",
+    "flag": "🇲🇩",
+    "rateToUSD": 17.580073
+  },
+  "MGA": {
+    "name": "মালাগাসি আরিয়ারি",
+    "symbol": "Ar",
+    "flag": "🇲🇬",
+    "rateToUSD": 4365.94543
+  },
+  "MKD": {
+    "name": "মেসিডোনিয়ান দিনার",
+    "symbol": "den",
+    "flag": "🇲🇰",
+    "rateToUSD": 53.872392
+  },
+  "MMK": {
+    "name": "মিয়ানমার কিয়াট",
+    "symbol": "Ks",
+    "flag": "🇲🇲",
+    "rateToUSD": 2119.342522
+  },
+  "MNT": {
+    "name": "মঙ্গোলিয়ান তুগ্রিক",
+    "symbol": "₮",
+    "flag": "🇲🇳",
+    "rateToUSD": 3611.482899
+  },
+  "MOP": {
+    "name": "ম্যাকাও পাতাকা",
+    "symbol": "MOP$",
+    "flag": "🇲🇴",
+    "rateToUSD": 8.079609
+  },
+  "MRU": {
+    "name": "মৌরিতানিয়ান ওগুইয়া",
+    "symbol": "UM",
+    "flag": "🇲🇷",
+    "rateToUSD": 40.658242
+  },
+  "MUR": {
+    "name": "মরিশিয়ান রুপি",
+    "symbol": "Rs",
+    "flag": "🇲🇺",
+    "rateToUSD": 47.692636
+  },
+  "MVR": {
+    "name": "মালদ্বীপের রুফিয়া",
+    "symbol": "Rf",
+    "flag": "🇲🇻",
+    "rateToUSD": 15.583208
+  },
+  "MWK": {
+    "name": "মালাউইয়ান কোয়াচা",
+    "symbol": "MK",
+    "flag": "🇲🇼",
+    "rateToUSD": 1750.981174
+  },
+  "MXN": {
+    "name": "মেক্সিকান পেসো",
+    "symbol": "Mex$",
+    "flag": "🇲🇽",
+    "rateToUSD": 17.212297
+  },
+  "MYR": {
+    "name": "মালয়েশিয়ান রিঙ্গিত",
+    "symbol": "RM",
+    "flag": "🇲🇾",
+    "rateToUSD": 4.0815
+  },
+  "MZN": {
+    "name": "মোজাম্বিকান মেটিকাল",
+    "symbol": "MT",
+    "flag": "🇲🇿",
+    "rateToUSD": 64.116115
+  },
+  "NAD": {
+    "name": "নামিবিয়ান ডলার",
+    "symbol": "N$",
+    "flag": "🇳🇦",
+    "rateToUSD": 16.264738
+  },
+  "NGN": {
+    "name": "নাইজেরিয়ান নাইরা",
+    "symbol": "₦",
+    "flag": "🇳🇬",
+    "rateToUSD": 1335.694724
+  },
+  "NIO": {
+    "name": "নিকারাগুয়ান কর্ডোবা",
+    "symbol": "C$",
+    "flag": "🇳🇮",
+    "rateToUSD": 37.126808
+  },
+  "NOK": {
+    "name": "নরওয়েজিয়ান ক্রোন",
+    "symbol": "kr",
+    "flag": "🇳🇴",
+    "rateToUSD": 9.420484
+  },
+  "NPR": {
+    "name": "নেপালি রুপি",
+    "symbol": "Rs",
+    "flag": "🇳🇵",
+    "rateToUSD": 153.518606
+  },
+  "NZD": {
+    "name": "নিউজিল্যান্ড ডলার",
+    "symbol": "NZ$",
+    "flag": "🇳🇿",
+    "rateToUSD": 1.749184
+  },
+  "OMR": {
+    "name": "ওমানি রিয়াল",
+    "symbol": "OMR",
+    "flag": "🇴🇲",
+    "rateToUSD": 0.384497
+  },
+  "PAB": {
+    "name": "পানামানিয়ান বালবোয়া",
+    "symbol": "B/.",
+    "flag": "🇵🇦",
+    "rateToUSD": 1.0
+  },
+  "PEN": {
+    "name": "পেরুভিয়ান সোল",
+    "symbol": "S/.",
+    "flag": "🇵🇪",
+    "rateToUSD": 3.380373
+  },
+  "PGK": {
+    "name": "পাপুয়া নিউ গিনির কিনা",
+    "symbol": "K",
+    "flag": "🇵🇬",
+    "rateToUSD": 4.554234
+  },
+  "PHP": {
+    "name": "ফিলিপাইন পেসো",
+    "symbol": "₱",
+    "flag": "🇵🇭",
+    "rateToUSD": 62.839511
+  },
+  "PKR": {
+    "name": "পাকিস্তানি রুপি",
+    "symbol": "Rs",
+    "flag": "🇵🇰",
+    "rateToUSD": 278.631272
+  },
+  "PLN": {
+    "name": "পোলিশ জলটি",
+    "symbol": "zł",
+    "flag": "🇵🇱",
+    "rateToUSD": 3.802076
+  },
+  "PYG": {
+    "name": "প্যারাগুয়ান গুয়ারানি",
+    "symbol": "₲",
+    "flag": "🇵🇾",
+    "rateToUSD": 5971.47674
+  },
+  "QAR": {
+    "name": "কাতারি রিয়াল",
+    "symbol": "QR",
+    "flag": "🇶🇦",
+    "rateToUSD": 3.64
+  },
+  "RON": {
+    "name": "রোমানিয়ান লিউ",
+    "symbol": "lei",
+    "flag": "🇷🇴",
+    "rateToUSD": 4.587526
+  },
+  "RSD": {
+    "name": "সার্বিয়ান দিনার",
+    "symbol": "din.",
+    "flag": "🇷🇸",
+    "rateToUSD": 102.372828
+  },
+  "RUB": {
+    "name": "রাশিয়ান রুবল",
+    "symbol": "₽",
+    "flag": "🇷🇺",
+    "rateToUSD": 84.326779
+  },
+  "RWF": {
+    "name": "রুয়ান্ডান ফ্রাংক",
+    "symbol": "FRw",
+    "flag": "🇷🇼",
+    "rateToUSD": 1481.556114
+  },
+  "SAR": {
+    "name": "সৌদি রিয়াল",
+    "symbol": "﷼",
+    "flag": "🇸🇦",
+    "rateToUSD": 3.75
+  },
+  "SBD": {
+    "name": "সলোমন দ্বীপপুঞ্জ ডলার",
+    "symbol": "SI$",
+    "flag": "🇸🇧",
+    "rateToUSD": 8.006289
+  },
+  "SCR": {
+    "name": "সিসেলিজ রুপি",
+    "symbol": "SR",
+    "flag": "🇸🇨",
+    "rateToUSD": 14.515227
+  },
+  "SDG": {
+    "name": "সুদানি পাউন্ড",
+    "symbol": "SDG",
+    "flag": "🇸🇩",
+    "rateToUSD": 592.069389
+  },
+  "SEK": {
+    "name": "সুইডিশ ক্রোনা",
+    "symbol": "kr",
+    "flag": "🇸🇪",
+    "rateToUSD": 9.835574
+  },
+  "SGD": {
+    "name": "সিঙ্গাপুর ডলার",
+    "symbol": "S$",
+    "flag": "🇸🇬",
+    "rateToUSD": 1.276628
+  },
+  "SHP": {
+    "name": "সেন্ট হেলেনা পাউন্ড",
+    "symbol": "£",
+    "flag": "🇸🇭",
+    "rateToUSD": 0.747702
+  },
+  "SLE": {
+    "name": "সিয়েরা লিওন লিওন",
+    "symbol": "Le",
+    "flag": "🇸🇱",
+    "rateToUSD": 24.908744
+  },
+  "SLL": {
+    "name": "সিয়েরা লিওনিয় লিওন",
+    "symbol": "Le",
+    "flag": "🇸🇱",
+    "rateToUSD": 24908.744014
+  },
+  "SOS": {
+    "name": "সোমালি শিলিং",
+    "symbol": "Sh.So.",
+    "flag": "🇸🇴",
+    "rateToUSD": 577.013225
+  },
+  "SRD": {
+    "name": "সুরিনামিজ ডলার",
+    "symbol": "$",
+    "flag": "🇸🇷",
+    "rateToUSD": 38.073607
+  },
+  "SSP": {
+    "name": "দক্ষিণ সুদানি পাউন্ড",
+    "symbol": "£",
+    "flag": "🇸🇸",
+    "rateToUSD": 5676.046283
+  },
+  "STN": {
+    "name": "সাঁও তোমে ডোব্রা",
+    "symbol": "Db",
+    "flag": "🇸🇹",
+    "rateToUSD": 21.341818
+  },
+  "SYP": {
+    "name": "সিরিয়ান পাউন্ড",
+    "symbol": "LS",
+    "flag": "🇸🇾",
+    "rateToUSD": 123.082286
+  },
+  "SZL": {
+    "name": "সোয়াজিল্যান্ড লিলাঙ্গেনি",
+    "symbol": "E",
+    "flag": "🇸🇿",
+    "rateToUSD": 16.264738
+  },
+  "THB": {
+    "name": "থাই বাথ",
+    "symbol": "฿",
+    "flag": "🇹🇭",
+    "rateToUSD": 33.356156
+  },
+  "TJS": {
+    "name": "তাজিকিস্তানি সোমোনি",
+    "symbol": "SM",
+    "flag": "🇹🇯",
+    "rateToUSD": 9.295047
+  },
+  "TMT": {
+    "name": "তুর্কমেনিস্তানি মানাত",
+    "symbol": "T",
+    "flag": "🇹🇲",
+    "rateToUSD": 3.531517
+  },
+  "TND": {
+    "name": "তিউনিসিয়ান দিনার",
+    "symbol": "DT",
+    "flag": "🇹🇳",
+    "rateToUSD": 2.936316
+  },
+  "TOP": {
+    "name": "টোঙ্গান পাঙ্গা",
+    "symbol": "T$",
+    "flag": "🇹🇴",
+    "rateToUSD": 2.395054
+  },
+  "TRY": {
+    "name": "তুর্কি লিরা",
+    "symbol": "₺",
+    "flag": "🇹🇷",
+    "rateToUSD": 48.803762
+  },
+  "TTD": {
+    "name": "ত্রিনিদাদ ও টোবাগো ডলার",
+    "symbol": "TT$",
+    "flag": "🇹🇹",
+    "rateToUSD": 6.830651
+  },
+  "TVD": {
+    "name": "টুভালু ডলার",
+    "symbol": "$",
+    "flag": "🇹🇻",
+    "rateToUSD": 1.404433
+  },
+  "TWD": {
+    "name": "নিউ তাইওয়ান ডলার",
+    "symbol": "NT$",
+    "flag": "🇹🇼",
+    "rateToUSD": 31.836666
+  },
+  "TZS": {
+    "name": "তানজানিয়ান শিলিং",
+    "symbol": "TSh",
+    "flag": "🇹🇿",
+    "rateToUSD": 2659.314943
+  },
+  "UAH": {
+    "name": "ইউক্রেনিয়ান রিভনিয়া",
+    "symbol": "₴",
+    "flag": "🇺🇦",
+    "rateToUSD": 44.696159
+  },
+  "UGX": {
+    "name": "উগান্ডান শিলিং",
+    "symbol": "USh",
+    "flag": "🇺🇬",
+    "rateToUSD": 3899.068895
+  },
+  "UYU": {
+    "name": "উরুগুয়ান পেসো",
+    "symbol": "",
+    "flag": "🇺🇾",
+    "rateToUSD": 40.604152
+  },
+  "UZS": {
+    "name": "উজবেকিস্তানি সোম",
+    "symbol": "soʻm",
+    "flag": "🇺🇿",
+    "rateToUSD": 11883.876956
+  },
+  "VES": {
+    "name": "ভেনিজুয়েলান বলিভার",
+    "symbol": "Bs.S",
+    "flag": "🇻🇪",
+    "rateToUSD": 849.564
+  },
+  "VND": {
+    "name": "ভিয়েতনামী ডং",
+    "symbol": "₫",
+    "flag": "🇻🇳",
+    "rateToUSD": 26127.618517
+  },
+  "VUV": {
+    "name": "ভানুয়াতু ভাতু",
+    "symbol": "VT",
+    "flag": "🇻🇺",
+    "rateToUSD": 117.958052
+  },
+  "WST": {
+    "name": "সামোয়ান তালা",
+    "symbol": "WS$",
+    "flag": "🇼🇸",
+    "rateToUSD": 2.736671
+  },
+  "XAF": {
+    "name": "সেন্ট্রাল আফ্রিকান CFA ফ্রাংক",
+    "symbol": "FCFA",
+    "flag": "🇨🇲",
+    "rateToUSD": 571.4006
+  },
+  "XCD": {
+    "name": "ইস্ট ক্যারিবিয়ান ডলার",
+    "symbol": "EC$",
+    "flag": "🇦🇬",
+    "rateToUSD": 2.7
+  },
+  "XDR": {
+    "name": "আন্তর্জাতিক মুদ্রা তহবিল SDR",
+    "symbol": "SDR",
+    "flag": "🌐",
+    "rateToUSD": 0.732091
+  },
+  "XOF": {
+    "name": "ওয়েস্ট আফ্রিকান CFA ফ্রাংক",
+    "symbol": "CFA",
+    "flag": "🇸🇳",
+    "rateToUSD": 571.4006
+  },
+  "XPF": {
+    "name": "CFP ফ্রাংক",
+    "symbol": "₣",
+    "flag": "🇵🇫",
+    "rateToUSD": 103.949461
+  },
+  "YER": {
+    "name": "ইয়েমেনি রিয়াল",
+    "symbol": "﷼",
+    "flag": "🇾🇪",
+    "rateToUSD": 238.74819
+  },
+  "ZAR": {
+    "name": "দক্ষিণ আফ্রিকান র‍্যান্ড",
+    "symbol": "R",
+    "flag": "🇿🇦",
+    "rateToUSD": 16.267228
+  },
+  "ZMW": {
+    "name": "জাম্বিয়ান কোয়াচা",
+    "symbol": "ZK",
+    "flag": "🇿🇲",
+    "rateToUSD": 19.729536
+  },
+  "ZWG": {
+    "name": "জিম্বাবুয়ে গোল্ড",
+    "symbol": "ZiG",
+    "flag": "🇿🇼",
+    "rateToUSD": 26.6478
+  },
+  "ZWL": {
+    "name": "জিম্বাবুয়ান ডলার",
+    "symbol": "Z$",
+    "flag": "🇿🇼",
+    "rateToUSD": 26.6478
+  }
 };
 
 function setupCurrencyConverter() {
@@ -7362,42 +8350,127 @@ function setupCurrencyConverter() {
   const tableBody = document.getElementById("currRatesTableBody");
   const copyBtn = document.getElementById("btnCopyCurrResult");
   const saveBtn = document.getElementById("btnSaveCurrHistory");
+  const tableSearchInput = document.getElementById("currTableSearchInput");
+  const toggleAllTableBtn = document.getElementById("btnToggleAllCurrenciesTable");
+  const tableCountBadge = document.getElementById("currTableCountBadge");
+
+  let showAllInTable = false;
+
+  // Restore cached offline exchange rates if present in localStorage
+  try {
+    const cachedRates = localStorage.getItem("hisab360_currency_rates");
+    if (cachedRates) {
+      const parsed = JSON.parse(cachedRates);
+      if (parsed && typeof parsed === "object") {
+        Object.keys(parsed).forEach(code => {
+          if (CURRENCY_DATABASE[code] && typeof parsed[code] === "number" && parsed[code] > 0) {
+            CURRENCY_DATABASE[code].rateToUSD = parsed[code];
+          }
+        });
+      }
+    }
+  } catch (e) {
+    console.warn("Could not read cached currency rates:", e);
+  }
 
   function populateCurrencyOptions() {
+    const currentFrom = fromSelect.value || "USD";
+    const currentTo = toSelect.value || "BDT";
+
     fromSelect.innerHTML = "";
     toSelect.innerHTML = "";
-    Object.keys(CURRENCY_DATABASE).forEach(code => {
+
+    // Group 1: Popular Currencies
+    const grpFromPop = document.createElement("optgroup");
+    grpFromPop.label = "⭐ জনপ্রিয় মুদ্রা (Popular)";
+    const grpToPop = document.createElement("optgroup");
+    grpToPop.label = "⭐ জনপ্রিয় মুদ্রা (Popular)";
+
+    const popList = ["BDT", ...POPULAR_CURRENCY_CODES.filter(c => c !== "BDT")];
+    popList.forEach(code => {
       const c = CURRENCY_DATABASE[code];
+      if (!c) return;
       const optFrom = document.createElement("option");
       optFrom.value = code;
-      optFrom.textContent = `${c.flag} ${code} - ${c.name}`;
-      fromSelect.appendChild(optFrom);
+      optFrom.textContent = `${c.flag} ${code} - ${c.name} (${c.symbol})`;
+      grpFromPop.appendChild(optFrom);
 
       const optTo = document.createElement("option");
       optTo.value = code;
-      optTo.textContent = `${c.flag} ${code} - ${c.name}`;
-      toSelect.appendChild(optTo);
+      optTo.textContent = `${c.flag} ${code} - ${c.name} (${c.symbol})`;
+      grpToPop.appendChild(optTo);
     });
-    fromSelect.value = "USD";
-    toSelect.value = "BDT";
+
+    // Group 2: All Other 150+ World Currencies (Alphabetically sorted)
+    const grpFromOther = document.createElement("optgroup");
+    grpFromOther.label = "🌐 বিশ্বের অন্যান্য সকল মুদ্রা (All 150+ Currencies)";
+    const grpToOther = document.createElement("optgroup");
+    grpToOther.label = "🌐 বিশ্বের অন্যান্য সকল মুদ্রা (All 150+ Currencies)";
+
+    const otherCodes = Object.keys(CURRENCY_DATABASE).filter(c => !popList.includes(c)).sort();
+    otherCodes.forEach(code => {
+      const c = CURRENCY_DATABASE[code];
+      const optFrom = document.createElement("option");
+      optFrom.value = code;
+      optFrom.textContent = `${c.flag} ${code} - ${c.name} (${c.symbol})`;
+      grpFromOther.appendChild(optFrom);
+
+      const optTo = document.createElement("option");
+      optTo.value = code;
+      optTo.textContent = `${c.flag} ${code} - ${c.name} (${c.symbol})`;
+      grpToOther.appendChild(optTo);
+    });
+
+    fromSelect.appendChild(grpFromPop);
+    fromSelect.appendChild(grpFromOther);
+
+    toSelect.appendChild(grpToPop);
+    toSelect.appendChild(grpToOther);
+
+    fromSelect.value = CURRENCY_DATABASE[currentFrom] ? currentFrom : "USD";
+    toSelect.value = CURRENCY_DATABASE[currentTo] ? currentTo : "BDT";
   }
 
   function renderRatesTable() {
     if (!tableBody) return;
     tableBody.innerHTML = "";
-    const bdtRate = CURRENCY_DATABASE.BDT.rateToUSD;
+    const bdtRate = CURRENCY_DATABASE.BDT ? CURRENCY_DATABASE.BDT.rateToUSD : 123.32;
+    const query = tableSearchInput ? tableSearchInput.value.trim().toLowerCase() : "";
 
-    Object.keys(CURRENCY_DATABASE).forEach(code => {
-      if (code === "BDT") return;
+    let codesToDisplay = [];
+    if (query) {
+      codesToDisplay = Object.keys(CURRENCY_DATABASE).filter(code => {
+        if (code === "BDT") return false;
+        const c = CURRENCY_DATABASE[code];
+        return code.toLowerCase().includes(query) || c.name.toLowerCase().includes(query);
+      });
+      if (tableCountBadge) tableCountBadge.textContent = `${toBn(codesToDisplay.length)}টি ফলাফল`;
+    } else if (showAllInTable) {
+      codesToDisplay = Object.keys(CURRENCY_DATABASE).filter(c => c !== "BDT");
+      if (tableCountBadge) tableCountBadge.textContent = `মোট ${toBn(codesToDisplay.length)}টি দেশের মুদ্রা`;
+    } else {
+      codesToDisplay = POPULAR_CURRENCY_CODES.filter(c => c !== "BDT" && CURRENCY_DATABASE[c]);
+      if (tableCountBadge) tableCountBadge.textContent = `${toBn(codesToDisplay.length)}টি জনপ্রিয় মুদ্রা`;
+    }
+
+    if (codesToDisplay.length === 0) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="4" style="text-align:center; padding:16px; color:var(--ink-soft); font-size:13px;">কোনো মুদ্রা পাওয়া যায়নি</td>`;
+      tableBody.appendChild(tr);
+      return;
+    }
+
+    codesToDisplay.forEach(code => {
       const c = CURRENCY_DATABASE[code];
-      const inBdt = bdtRate / c.rateToUSD;
+      if (!c) return;
+      const inBdt = (c.rateToUSD > 0) ? (bdtRate / c.rateToUSD) : 0;
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td style="font-weight:600; font-size:13px; display:flex; align-items:center; gap:6px;">
-          <span>${c.flag}</span> <span>${c.name}</span>
+        <td style="font-weight:600; font-size:13px; display:flex; align-items:center; gap:6px; white-space:nowrap;">
+          <span style="font-size:16px;">${c.flag}</span> <span>${c.name}</span>
         </td>
         <td style="font-family:monospace; font-size:12.5px; font-weight:700;">${code}</td>
-        <td style="text-align:right; font-family:monospace; font-weight:700; color:var(--blue); font-size:13.5px;">
+        <td style="text-align:right; font-family:monospace; font-weight:700; color:var(--blue); font-size:13.5px; white-space:nowrap;">
           ${toBn(formatNumber(inBdt, 2))} ৳
         </td>
         <td style="text-align:center;">
@@ -7414,6 +8487,21 @@ function setupCurrencyConverter() {
         showToast(`${c.name} (${code}) সিলেক্ট করা হয়েছে`);
       });
       tableBody.appendChild(tr);
+    });
+  }
+
+  if (tableSearchInput) {
+    tableSearchInput.addEventListener("input", () => {
+      renderRatesTable();
+    });
+  }
+
+  if (toggleAllTableBtn) {
+    toggleAllTableBtn.addEventListener("click", () => {
+      showAllInTable = !showAllInTable;
+      toggleAllTableBtn.textContent = showAllInTable ? "শুধু জনপ্রিয় গুলো" : "সব মুদ্রা দেখুন";
+      if (tableSearchInput) tableSearchInput.value = "";
+      renderRatesTable();
     });
   }
 
@@ -7587,12 +8675,22 @@ function setupCurrencyConverter() {
       const data = await res.json();
       if (data && data.rates && typeof data.rates === "object") {
         let updatedCount = 0;
+        const ratesCache = {};
         Object.keys(CURRENCY_DATABASE).forEach(code => {
           if (data.rates[code] && typeof data.rates[code] === "number" && data.rates[code] > 0) {
             CURRENCY_DATABASE[code].rateToUSD = data.rates[code];
+            ratesCache[code] = data.rates[code];
             updatedCount++;
           }
         });
+
+        // Cache rates to localStorage for 100% offline persistence
+        try {
+          localStorage.setItem("hisab360_currency_rates", JSON.stringify(ratesCache));
+        } catch (e) {
+          console.warn("Storage error caching rates:", e);
+        }
+
         lastRateUpdateTime = new Date();
         const timeStr = lastRateUpdateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const dateStr = lastRateUpdateTime.toLocaleDateString();
@@ -7605,7 +8703,7 @@ function setupCurrencyConverter() {
           syncBadge.style.color = "#065f46";
         }
         const tableInfo = document.getElementById("currTableUpdateText");
-        if (tableInfo) tableInfo.textContent = `সর্বশেষ আন্তর্জাতিক লাইভ রেট: ${toBn(dateStr)} ${toBn(timeStr)}`;
+        if (tableInfo) tableInfo.textContent = `সর্বশেষ আন্তর্জাতিক লাইভ রেট: ${toBn(dateStr)} ${toBn(timeStr)} (${toBn(updatedCount)}টি মুদ্রা)`;
         showToast("আন্তর্জাতিক লাইভ এক্সচেঞ্জ রেট সফলভাবে আপডেট হয়েছে! ✔️");
       } else {
         throw new Error("Invalid response format");
@@ -7618,7 +8716,7 @@ function setupCurrencyConverter() {
         syncBadge.style.color = "#991b1b";
       }
       const tableInfo = document.getElementById("currTableUpdateText");
-      if (tableInfo) tableInfo.textContent = "লাইভ সার্ভার অনুপলব্ধ — ব্যাকআপ রেট সক্রিয়";
+      if (tableInfo) tableInfo.textContent = "লাইভ সার্ভার অনুপলব্ধ — ব্যাকআপ অফলাইন রেট সক্রিয়";
       showToast(err.name === 'AbortError' ? "নেটওয়ার্ক টাইমআউট! অফলাইন রেট বজায় রাখা হয়েছে।" : "রেট সার্ভার সংযোগ ব্যর্থ। অফলাইন রেট ব্যবহৃত হচ্ছে।");
     } finally {
       isRateSyncing = false;

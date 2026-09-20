@@ -130,8 +130,11 @@ class MainActivity : ComponentActivity() {
         init {
             try {
                 android.system.Os.setenv("LIBGL_ALWAYS_SOFTWARE", "1", true)
-                android.system.Os.setenv("GALLIUM_DRIVER", "softpipe", true)
-                android.system.Os.setenv("MESA_LOADER_DRIVER_OVERRIDE", "softpipe", true)
+                android.system.Os.setenv("GALLIUM_DRIVER", "llvmpipe", true)
+                android.system.Os.setenv("MESA_LOADER_DRIVER_OVERRIDE", "llvmpipe", true)
+                android.system.Os.setenv("MESA_GL_VERSION_OVERRIDE", "3.0", true)
+                android.system.Os.setenv("MESA_DEBUG", "0", true)
+                android.system.Os.setenv("LIBGL_DEBUG", "quiet", true)
             } catch (_: Throwable) {}
         }
     }

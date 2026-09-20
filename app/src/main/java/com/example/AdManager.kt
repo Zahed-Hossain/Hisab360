@@ -94,6 +94,7 @@ object AdManager {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
+                setLayerType(android.view.View.LAYER_TYPE_SOFTWARE, null)
                 adListener = object : AdListener() {
                     override fun onAdLoaded() {
                         AppLog.d(TAG) { "Banner ad loaded successfully." }
