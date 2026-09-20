@@ -4667,19 +4667,47 @@
 // Complete Vanilla JS Engine
 // ==========================================
 
+// Production-safe logging and global error containment
+if (typeof window !== "undefined") {
+  if (window.location.protocol === "file:" || !window.location.hostname.includes("localhost")) {
+    if (window.console) {
+      window.console.debug = function() {};
+      window.console.info = function() {};
+    }
+  }
+  window.onerror = function(msg, url, line, col, error) {
+    if (window.console && window.console.warn) {
+      window.console.warn("Handled application error:", msg);
+    }
+    return true; // Prevent default crash dialogs
+  };
+  window.onunhandledrejection = function(e) {
+    if (window.console && window.console.warn) {
+      window.console.warn("Handled unhandled promise rejection:", e.reason);
+    }
+    e.preventDefault();
+  };
+}
+
 const bnDigits = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 const toBn = (val) => {
   if (val === null || val === undefined) return "";
+  if (typeof val === "number") {
+    if (isNaN(val)) return "ত্রুটি (NaN)";
+    if (val === Infinity || val === -Infinity) return "সংজ্ঞাহীন (অসীম)";
+  }
   return String(val).replace(/[0-9]/g, d => bnDigits[d]);
 };
 const bnToLatin = (str) => {
-  if (!str) return "";
+  if (str === null || str === undefined) return "";
   return String(str).replace(/[০-৯]/g, d => bnDigits.indexOf(d).toString());
 };
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
 function formatNumber(num, maxDecimals = 8) {
-  if (typeof num !== "number" || isNaN(num) || !isFinite(num)) return String(num);
+  if (num === null || num === undefined) return "";
+  if (typeof num !== "number" || isNaN(num)) return "ত্রুটি";
+  if (!isFinite(num)) return "সংজ্ঞাহীন (অসীম)";
   const factor = Math.pow(10, maxDecimals);
   const rounded = Math.round(num * factor) / factor;
   return toBn(rounded.toLocaleString("en-IN", { maximumFractionDigits: maxDecimals }));
@@ -5085,6 +5113,19 @@ function handleBasicKey(k) {
       basicDisplayPrev.textContent = res.error;
     }
   } else {
+    const isOp = (c) => ["+", "-", "*", "/", "×", "÷"].includes(c);
+    if (isOp(k)) {
+      if (!basicExpr && (k === "×" || k === "÷" || k === "*" || k === "/")) {
+        return;
+      }
+      const lastChar = basicExpr.slice(-1);
+      if (isOp(lastChar)) {
+        basicExpr = basicExpr.slice(0, -1) + k;
+        updateBasicDisplay();
+        return;
+      }
+    }
+    if (basicExpr.length >= 100) return;
     basicExpr += k;
     updateBasicDisplay();
   }
@@ -5130,6 +5171,19 @@ function handleSciKey(k) {
     document.getElementById("degBadge").textContent = isDegMode ? "DEG (ডিগ্রি)" : "RAD (রেডিয়ান)";
     updateSciDisplay();
   } else {
+    const isOp = (c) => ["+", "-", "*", "/", "×", "÷"].includes(c);
+    if (isOp(k)) {
+      if (!sciExpr && (k === "×" || k === "÷" || k === "*" || k === "/")) {
+        return;
+      }
+      const lastChar = sciExpr.slice(-1);
+      if (isOp(lastChar)) {
+        sciExpr = sciExpr.slice(0, -1) + k;
+        updateSciDisplay();
+        return;
+      }
+    }
+    if (sciExpr.length >= 120) return;
     sciExpr += k;
     updateSciDisplay();
   }
@@ -7491,16 +7545,28 @@ function setupCurrencyConverter() {
   }
 
   let lastRateUpdateTime = null;
+  let isRateSyncing = false;
 
   async function fetchLiveRates() {
+    if (isRateSyncing) return;
+    isRateSyncing = true;
+    if (syncBtn) {
+      syncBtn.disabled = true;
+      syncBtn.textContent = "⏳ লোড হচ্ছে...";
+    }
     if (syncBadge) {
       syncBadge.textContent = "সিঙ্ক হচ্ছে...";
       syncBadge.style.background = "#fef3c7";
       syncBadge.style.color = "#92400e";
     }
     if (!navigator.onLine) {
+      isRateSyncing = false;
+      if (syncBtn) {
+        syncBtn.disabled = false;
+        syncBtn.textContent = "🔄 লাইভ রেট আপডেট";
+      }
       if (syncBadge) {
-        syncBadge.textContent = "অফলাইন রেট সক্রিয়";
+        syncBadge.textContent = "অফলাইন মোড সক্রিয়";
         syncBadge.style.background = "#e2e8f0";
         syncBadge.style.color = "#475569";
       }
@@ -7554,6 +7620,12 @@ function setupCurrencyConverter() {
       const tableInfo = document.getElementById("currTableUpdateText");
       if (tableInfo) tableInfo.textContent = "লাইভ সার্ভার অনুপলব্ধ — ব্যাকআপ রেট সক্রিয়";
       showToast(err.name === 'AbortError' ? "নেটওয়ার্ক টাইমআউট! অফলাইন রেট বজায় রাখা হয়েছে।" : "রেট সার্ভার সংযোগ ব্যর্থ। অফলাইন রেট ব্যবহৃত হচ্ছে।");
+    } finally {
+      isRateSyncing = false;
+      if (syncBtn) {
+        syncBtn.disabled = false;
+        syncBtn.textContent = "🔄 লাইভ রেট আপডেট";
+      }
     }
   }
 
@@ -7565,9 +7637,31 @@ function setupCurrencyConverter() {
   renderRatesTable();
   calculateCurrency();
 
-  if (navigator.onLine) {
-    fetchLiveRates();
+  let hasCheckedLiveRatesOnOpen = false;
+  window.checkAndSyncCurrencyRates = function() {
+    if (!hasCheckedLiveRatesOnOpen && navigator.onLine) {
+      hasCheckedLiveRatesOnOpen = true;
+      fetchLiveRates();
+    }
+  };
+
+  function updateOnlineStatus() {
+    if (!syncBadge) return;
+    if (navigator.onLine) {
+      if (!lastRateUpdateTime) {
+        syncBadge.textContent = "অনলাইন (সংরক্ষিত রেট)";
+        syncBadge.style.background = "#e0f2fe";
+        syncBadge.style.color = "#0369a1";
+      }
+    } else {
+      syncBadge.textContent = "অফলাইন মোড সক্রিয়";
+      syncBadge.style.background = "#e2e8f0";
+      syncBadge.style.color = "#475569";
+    }
   }
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+  updateOnlineStatus();
 }
 
 // ==========================================
@@ -7965,6 +8059,7 @@ window.navigateTo = function(targetId, subtabType, subtabValue) {
 
   if (targetId === "history" && typeof renderHistoryUI === "function") renderHistoryUI();
   if (targetId === "favorites" && typeof renderFavoritesUI === "function") renderFavoritesUI();
+  if (targetId === "currency" && typeof window.checkAndSyncCurrencyRates === "function") window.checkAndSyncCurrencyRates();
   if (targetId === "qrcode") {
     if (window.onQRTabActivated) window.onQRTabActivated();
   } else {
@@ -12043,10 +12138,17 @@ function initApplication() {
   }, 450);
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initApplication);
-} else {
+let appIsInitialized = false;
+function safeInitApplication() {
+  if (appIsInitialized) return;
+  appIsInitialized = true;
   initApplication();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", safeInitApplication);
+} else {
+  safeInitApplication();
 }
 
 // ==========================================

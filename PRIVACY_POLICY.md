@@ -1,15 +1,15 @@
-# Privacy Policy for গাণিতিক ক্যালকুলেটর (Bangla Math Calculator)
+# Privacy Policy for Hisab360
 
 **Last Updated:** September 2026  
 **Application Version:** 2.0  
-**Developer:** [DEVELOPER NAME]  
-**Contact Email:** [CONTACT EMAIL]  
-**Privacy Policy Web URL:** [PRIVACY POLICY URL]
+**Developer:** Hisab360 Team  
+**Contact Email:** hisab360.support@gmail.com  
+**Privacy Policy Web URL:** https://hisab360.app/privacy
 
 ---
 
 ## 1. Introduction
-This Privacy Policy outlines how **গাণিতিক ক্যালকুলেটর (Bangla Math Calculator)** handles your data and information when you use our Android application. We are committed to safeguarding user privacy and maintaining complete transparency regarding data processing practices.
+This Privacy Policy outlines how **Hisab360** handles your data and information when you use our Android application. We are committed to safeguarding user privacy and maintaining complete transparency regarding data processing practices.
 
 ---
 

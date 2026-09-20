@@ -1,8 +1,8 @@
 {
-  "id": "com.aistudio.bengali.math.calculator.v2",
-  "name": "Calculator",
-  "short_name": "Calculator",
-  "description": "বাংলা ভাষায় অল-ইন-ওয়ান ম্যাথ ও ইউটিলিটি ক্যালকুলেটর। শতভাগ অফলাইন ও দ্রুততম গাণিতিক হিসাব।",
+  "id": "com.aistudio.hisab360.calculator",
+  "name": "Hisab360 - সব হিসাব, এক স্মার্ট অ্যাপে",
+  "short_name": "Hisab360",
+  "description": "সব হিসাব, এক স্মার্ট অ্যাপে।",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

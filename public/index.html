@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#1D4ED8" />
-  <meta name="description" content="বাংলা ভাষার অল-ইন-ওয়ান ম্যাথ ও ইউটিলিটি ক্যালকুলেটর (Version 2.0)" />
+  <meta name="description" content="Hisab360 - সব হিসাব, এক স্মার্ট অ্যাপে" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <title>গাণিতিক ক্যালকুলেটর - All-in-One Math & Utility</title>
+  <title>Hisab360 - সব হিসাব, এক স্মার্ট অ্যাপে</title>
   <script src="./jsQR.min.js"></script>
   <style>
 
@@ -2134,9 +2134,116 @@
     color: #FFFFFF;
   }
 
+  /* Professional Splash Screen Overlay */
+  #appSplashScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: linear-gradient(145deg, #1E3A8A 0%, #1D4ED8 50%, #2563EB 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    user-select: none;
+  }
+  #appSplashScreen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .splash-brand-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    animation: splashPulse 1.8s ease-in-out infinite alternate;
+  }
+  @keyframes splashPulse {
+    0% { transform: scale(0.98); }
+    100% { transform: scale(1.02); }
+  }
+  .splash-icon-box {
+    width: 92px;
+    height: 92px;
+    border-radius: 22px;
+    background: transparent;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+  }
+  .splash-icon-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 22px;
+  }
+  .splash-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin: 0;
+    color: #FFFFFF;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .splash-tagline-bn {
+    font-size: 15px;
+    font-weight: 600;
+    color: #E0E7FF;
+    margin: 2px 0 0 0;
+  }
+  .splash-tagline-en {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: #BFDBFE;
+    margin: 2px 0 0 0;
+    letter-spacing: 0.3px;
+  }
+  .splash-loader {
+    margin-top: 36px;
+    width: 140px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+  .splash-loader-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 45%;
+    background: #FFFFFF;
+    border-radius: 99px;
+    animation: splashIndeterminate 1.2s infinite ease-in-out;
+  }
+  @keyframes splashIndeterminate {
+    0% { left: -45%; }
+    100% { left: 100%; }
+  }
+
 </style>
 </head>
 <body data-fontsize="medium">
+
+<!-- Professional App Splash Screen (PART 7 - Task 3) -->
+<div id="appSplashScreen" role="dialog" aria-modal="true" aria-label="Hisab360 Splash Screen">
+  <div class="splash-brand-wrap">
+    <div class="splash-icon-box">
+      <img src="./icon-192.png" alt="Hisab360 App Icon" />
+    </div>
+    <h1 class="splash-title">Hisab360</h1>
+    <p class="splash-tagline-bn">সব হিসাব, এক স্মার্ট অ্যাপে।</p>
+  </div>
+  <div class="splash-loader" aria-label="লোড হচ্ছে...">
+    <div class="splash-loader-bar"></div>
+  </div>
+</div>
 
 <div class="app-container">
   <!-- Unified Top Sticky Bar (Header + Search Bar) -->
@@ -2144,11 +2251,11 @@
     <header class="app-header">
       <div class="header-left">
         <button class="home-btn" id="btnHomeNav" title="হোম পেজ" style="display:flex; align-items:center; justify-content:center; padding:2px; overflow:hidden; border:none; background:transparent;">
-          <img src="./icon-192.png" alt="Logo" style="width:36px; height:36px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.18); object-fit:cover;" />
+          <img src="./icon-192.png" alt="Hisab360 Logo" style="width:36px; height:36px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.18); object-fit:cover;" />
         </button>
         <div class="header-titles">
-          <h1>গাণিতিক ক্যালকুলেটর</h1>
-          <p class="sub-title">All-in-One Math & Utility Calculator</p>
+          <h1 style="display:flex; align-items:center; gap:6px;">Hisab360 <span style="font-size:11.5px; font-weight:600; padding:2px 7px; background:rgba(37,99,235,0.12); color:var(--blue); border-radius:99px;">স্মার্ট ইউটিলিটি</span></h1>
+          <p class="sub-title">সব হিসাব, এক স্মার্ট অ্যাপে</p>
         </div>
       </div>
       <div class="header-actions">
@@ -2294,6 +2401,22 @@
   <!-- 0. HOME / DASHBOARD VIEW                       -->
   <!-- ============================================== -->
   <section id="section-dashboard" class="section-view active">
+    <!-- Professional Welcome Hero Banner -->
+    <div style="background:var(--surface); border:1px solid var(--card-border); border-radius:18px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);">
+      <div>
+        <div style="font-size:15.5px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:6px;">
+          <span>সব হিসাব, এক স্মার্ট অ্যাপে।</span>
+        </div>
+        <div style="font-size:12.5px; color:var(--ink-soft); margin-top:3px;">
+          ১৭টি শক্তিশালী হিসাব ও ইউটিলিটি টুলস • দ্রুত ও নির্ভরযোগ্য
+        </div>
+      </div>
+      <div style="background:var(--surface-hover); border:1px solid var(--card-border); border-radius:12px; padding:6px 12px; text-align:center; min-width:64px;">
+        <div style="font-size:15px; font-weight:800; color:var(--blue);">১৭+</div>
+        <div style="font-size:10.5px; color:var(--ink-soft); font-weight:600;">টুলস</div>
+      </div>
+    </div>
+
     <div class="dashboard-grid">
       <!-- 1. Basic Calculator -->
       <div class="dash-card" data-target="basic" style="border:1.5px solid #3B82F6;">
@@ -2703,6 +2826,11 @@
       <button class="pill-tab fin-subtab" data-target="c">💳 লোন EMI</button>
       <button class="pill-tab fin-subtab" data-target="d">🏦 DPS সঞ্চয়</button>
       <button class="pill-tab fin-subtab" data-target="e">🔒 FDR মেয়াদি</button>
+    </div>
+
+    <!-- Financial Estimation Disclaimer -->
+    <div style="background:var(--surface-hover); border-left:4px solid #F59E0B; border-radius:6px; padding:10px 12px; margin-bottom:14px; font-size:12px; line-height:1.5; color:var(--ink-soft);">
+      ⚠️ <strong>আর্থিক দাবিত্যাগ (Financial Disclaimer):</strong> Results are estimates based on the values entered and may differ from actual bank, financial institution, or market calculations. (এই ফলাফল শুধুমাত্র আপনার প্রদত্ত ইনপুটের ওপর ভিত্তি করে আনুমানিক হিসাব। প্রকৃত ব্যাংক, আর্থিক প্রতিষ্ঠান, কর বা বাজারভেদে হিসাবের তারতম্য হতে পারে। নিশ্চিত মুনাফার কোনো নিশ্চয়তা নেই।)
     </div>
 
     <!-- Simple Interest -->
@@ -3415,6 +3543,11 @@
 
     <div class="tool-card">
 
+      <!-- Currency Rate Disclaimer -->
+      <div style="background:var(--surface-hover); border-left:4px solid #10B981; border-radius:6px; padding:10px 12px; margin-bottom:12px; font-size:12px; line-height:1.5; color:var(--ink-soft);">
+        ⚠️ <strong>কারেন্সি রেট সংক্রান্ত তথ্য (Currency Disclaimer):</strong> Exchange rates are for informational purposes and may differ from rates offered by banks, exchange houses, card providers, or other financial institutions. (মুদ্রার বিনিময় হার শুধুমাত্র তথ্যগত উদ্দেশ্যে প্রদর্শিত। প্রকৃত ব্যাংক, মানি এক্সচেঞ্জ বা ক্রেডিট কার্ড রেটের সাথে ভিন্ন হতে পারে। অফলাইনে সংরক্ষিত পূর্ববর্তী রেট সক্রিয় থাকে।)
+      </div>
+
       <div style="background:var(--surface); border:1px solid var(--card-border); border-radius:var(--radius); padding:16px; margin:14px 0; box-shadow:var(--shadow-sm);">
         <div class="form-group" style="margin-bottom:12px;">
           <label class="form-label" style="font-weight:600;">মুদ্রার পরিমাণ (Amount)</label>
@@ -3569,6 +3702,11 @@
       <button class="pill-tab health-tab-btn" data-health="water">💧 পানির চাহিদা</button>
       <button class="pill-tab health-tab-btn" data-health="macros">🥗 ম্যাক্রো নিউট্রিয়েন্ট</button>
       <button class="pill-tab health-tab-btn" data-health="others">🩺 অতিরিক্ত টুলস</button>
+    </div>
+
+    <!-- Health & Medical Disclaimer -->
+    <div style="background:var(--surface-hover); border-left:4px solid #EF4444; border-radius:6px; padding:10px 12px; margin-bottom:14px; font-size:12px; line-height:1.5; color:var(--ink-soft);">
+      ⚠️ <strong>স্বাস্থ্য ও চিকিৎসা দাবিত্যাগ (Health Disclaimer):</strong> These calculations are estimates for informational purposes only and are not medical advice, diagnosis, or treatment. (এই গণনা ও নির্দেশনাবলী শুধুমাত্র তথ্যগত ও শিক্ষামূলক উদ্দেশ্যে সাধারণ সূত্রের ওপর ভিত্তি করে তৈরি। এটি কোনো পেশাদার চিকিৎসা পরামর্শ, রোগ নির্ণয় বা চিকিৎসার বিকল্প নয়। শারীরিক অসুস্থতা বা চিকিৎসার প্রয়োজনে সবসময় রেজিস্টার্ড ডাক্তারের পরামর্শ নিন। কোনো বাহ্যিক অনুমোদিত সেন্সর হার্ডওয়্যার ছাড়া কোনো অ্যাপ সরাসরি রক্তচাপ পরিমাপ করতে পারে না, এখানে শুধুমাত্র প্রদত্ত মানের চার্ট দেখানো হয়।)
     </div>
 
     <!-- ============================================== -->
@@ -3997,16 +4135,19 @@
 
       <!-- 8C: Blood Pressure Category -->
       <div id="oth-view-bp" class="oth-view" style="display:none;">
-        <h4 style="margin:0 0 8px; font-size:14.5px;">রক্তচাপ পরিমাপক (Blood Pressure Checker)</h4>
-        <p style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">আমেরিকান হার্ট অ্যাসোসিয়েশন (AHA) গাইডলাইন অনুযায়ী রক্তচাপের পর্যায় ও পরামর্শ।</p>
+        <h4 style="margin:0 0 8px; font-size:14.5px;">রক্তচাপ ক্যাটাগরি যাচাইকারী (BP Reading Checker)</h4>
+        <p style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">রক্তচাপ মাপক ডিজিটাল বা অ্যানালগ মেশিন দিয়ে মাপা রিডিং এখানে লিখে আমেরিকান হার্ট অ্যাসোসিয়েশন (AHA) গাইডলাইন অনুযায়ী পর্যায় জেনে নিন।</p>
+        <div style="font-size:11px; color:#b45309; background:#fef3c7; border:1px solid #fde68a; padding:6px 10px; border-radius:6px; margin-bottom:10px;">
+          ⚠️ <strong>সতর্কতা:</strong> এই অ্যাপ কোনো রক্তচাপ পরিমাপক হার্ডওয়্যার নয়। এটি শুধু আপনার দেওয়া রিডিং-এর বিশ্লেষণ ও সাধারণ তথ্য প্রদর্শন করে।
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">সিস্টোলিক / উপরের প্রেসার (mmHg)</label>
-            <input type="number" id="bpSystolic" class="form-control mono-font" placeholder="১২০" value="১২০">
+            <input type="number" id="bpSystolic" class="form-control mono-font" placeholder="120" value="120" min="40" max="300">
           </div>
           <div class="form-group">
             <label class="form-label">ডায়াস্টোলিক / নিচের প্রেসার (mmHg)</label>
-            <input type="number" id="bpDiastolic" class="form-control mono-font" placeholder="৮০" value="৮০">
+            <input type="number" id="bpDiastolic" class="form-control mono-font" placeholder="80" value="80" min="30" max="200">
           </div>
         </div>
         <button class="btn btn-primary" id="btnCalcBP">রক্তচাপ স্টেজ দেখুন</button>
@@ -4344,10 +4485,44 @@
           <button class="btn btn-danger" id="btnResetAllData">সব ডাটা ফ্যাক্টরি রিসেট করুন</button>
         </div>
       </div>
+
+      <!-- Professional About Hisab360 Section (PART 7 - Task 7) -->
+      <div class="form-group" style="margin-top:24px;">
+        <label class="form-label">অ্যাপ পরিচিতি ও তথ্য (About Hisab360)</label>
+        <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:12px; padding:16px; font-size:13px; line-height:1.6;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <div style="width:48px; height:48px; border-radius:12px; background:transparent; padding:0; box-shadow:0 2px 8px rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+              <img src="./icon-192.png" alt="Hisab360" style="width:100%; height:100%; border-radius:12px; object-fit:cover;" />
+            </div>
+            <div>
+              <div style="font-size:16px; font-weight:800; color:var(--blue-dark);">Hisab360</div>
+              <div style="font-size:12px; color:var(--ink-soft);">সব হিসাব, এক স্মার্ট অ্যাপে।</div>
+              <div style="font-size:11px; color:var(--blue); font-weight:600;">সংস্করণ (Version): 2.0 (Official Build)</div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--border); padding-top:10px; margin-top:10px;">
+            <div style="font-weight:700; color:var(--ink); margin-bottom:4px;">মুখ্য সুবিধাসমূহ:</div>
+            <ul style="margin:0; padding-left:18px; color:var(--ink-soft); font-size:12.5px;">
+              <li>১৭টি বহুমুখী ক্যালকুলেটর ও রূপান্তর টুলস</li>
+              <li>১০০% অফলাইন সুবিধা ও তাৎক্ষণিক হিসাবের ফলাফল</li>
+              <li>উন্নত প্রাইভেসি ও অন-ডিভাইস ডেটা প্রসেসিং</li>
+              <li>বাংলা, ইংরেজি এবং বৈশ্বিক মানক সংখ্যা সমর্থন</li>
+            </ul>
+          </div>
+
+          <div style="border-top:1px solid var(--border); padding-top:10px; margin-top:10px; display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--ink-soft);">
+            <div><strong>ডেভেলপার:</strong> Hisab360 Development Team</div>
+            <div><strong>সাপোর্ট ইমেইল:</strong> hisab360.support@gmail.com</div>
+            <div><strong>ওয়েবসাইট/পলিসি:</strong> https://hisab360.app/privacy</div>
+          </div>
+        </div>
+      </div>
+
       <div style="margin-top:20px; font-size:12.5px; color:var(--ink-soft); line-height:1.6; text-align:center;">
-        <strong>গাণিতিক ক্যালকুলেটর (Bangla Math Calculator)</strong><br>
-        Version 2.0 (All-in-One Offline Edition)<br>
-        সম্পূর্ণ অফলাইন এবং কোনো ইন্টারনেট ছাড়াই কাজ করে।
+        <strong>Hisab360 (সব হিসাব, এক স্মার্ট অ্যাপে)</strong><br>
+        Version 2.0 • Offline-First Smart Utility<br>
+        নিরাপদ, নির্ভরযোগ্য ও সম্পূর্ণ বিজ্ঞাপন-বান্ধব ইউটিলিটি।
       </div>
     </div>
   </section>
@@ -4426,8 +4601,8 @@
     <div class="modal-body" style="padding:20px; overflow-y:auto; font-size:13px; line-height:1.7; color:var(--ink);">
       <div style="margin-bottom:14px; padding:10px; background:var(--surface-hover); border-radius:8px; border-left:4px solid var(--primary); font-size:12.5px;">
         <strong>সর্বশেষ সংস্করণ:</strong> সেপ্টেম্বর ২০২৬<br>
-        <strong>অ্যাপের নাম:</strong> গাণিতিক ক্যালকুলেটর (Bangla Math Calculator) Version 2.0<br>
-        <strong>ডেভেলপার:</strong> [DEVELOPER NAME] (যোগাযোগ: [CONTACT EMAIL])
+        <strong>অ্যাপের নাম:</strong> Hisab360 (সব হিসাব, এক স্মার্ট অ্যাপে) Version 2.0<br>
+        <strong>ডেভেলপার:</strong> Hisab360 Development Team (যোগাযোগ: hisab360.support@gmail.com)
       </div>
 
       <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">১. ভূমিকা (Introduction)</h4>
@@ -4475,8 +4650,8 @@
       <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৯. যোগাযোগ (Contact Information)</h4>
       <p style="margin-bottom:4px;">
         এই গোপনীয়তা নীতিমালা বা ডেটা নিরাপত্তা সম্পর্কে কোনো জিজ্ঞাসা থাকলে আমাদের সাথে যোগাযোগ করতে পারেন:<br>
-        ইমেইল: <strong>[CONTACT EMAIL]</strong><br>
-        অনলাইন পলিসি লিংক: <strong>[PRIVACY POLICY URL]</strong>
+        ইমেইল: <strong>hisab360.support@gmail.com</strong><br>
+        অনলাইন পলিসি লিংক: <strong>https://hisab360.app/privacy</strong>
       </p>
     </div>
     <div class="modal-footer" style="padding:12px 20px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; background:var(--surface);">
@@ -4492,19 +4667,47 @@
 // Complete Vanilla JS Engine
 // ==========================================
 
+// Production-safe logging and global error containment
+if (typeof window !== "undefined") {
+  if (window.location.protocol === "file:" || !window.location.hostname.includes("localhost")) {
+    if (window.console) {
+      window.console.debug = function() {};
+      window.console.info = function() {};
+    }
+  }
+  window.onerror = function(msg, url, line, col, error) {
+    if (window.console && window.console.warn) {
+      window.console.warn("Handled application error:", msg);
+    }
+    return true; // Prevent default crash dialogs
+  };
+  window.onunhandledrejection = function(e) {
+    if (window.console && window.console.warn) {
+      window.console.warn("Handled unhandled promise rejection:", e.reason);
+    }
+    e.preventDefault();
+  };
+}
+
 const bnDigits = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 const toBn = (val) => {
   if (val === null || val === undefined) return "";
+  if (typeof val === "number") {
+    if (isNaN(val)) return "ত্রুটি (NaN)";
+    if (val === Infinity || val === -Infinity) return "সংজ্ঞাহীন (অসীম)";
+  }
   return String(val).replace(/[0-9]/g, d => bnDigits[d]);
 };
 const bnToLatin = (str) => {
-  if (!str) return "";
+  if (str === null || str === undefined) return "";
   return String(str).replace(/[০-৯]/g, d => bnDigits.indexOf(d).toString());
 };
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
 function formatNumber(num, maxDecimals = 8) {
-  if (typeof num !== "number" || isNaN(num) || !isFinite(num)) return String(num);
+  if (num === null || num === undefined) return "";
+  if (typeof num !== "number" || isNaN(num)) return "ত্রুটি";
+  if (!isFinite(num)) return "সংজ্ঞাহীন (অসীম)";
   const factor = Math.pow(10, maxDecimals);
   const rounded = Math.round(num * factor) / factor;
   return toBn(rounded.toLocaleString("en-IN", { maximumFractionDigits: maxDecimals }));
@@ -4910,6 +5113,19 @@ function handleBasicKey(k) {
       basicDisplayPrev.textContent = res.error;
     }
   } else {
+    const isOp = (c) => ["+", "-", "*", "/", "×", "÷"].includes(c);
+    if (isOp(k)) {
+      if (!basicExpr && (k === "×" || k === "÷" || k === "*" || k === "/")) {
+        return;
+      }
+      const lastChar = basicExpr.slice(-1);
+      if (isOp(lastChar)) {
+        basicExpr = basicExpr.slice(0, -1) + k;
+        updateBasicDisplay();
+        return;
+      }
+    }
+    if (basicExpr.length >= 100) return;
     basicExpr += k;
     updateBasicDisplay();
   }
@@ -4955,6 +5171,19 @@ function handleSciKey(k) {
     document.getElementById("degBadge").textContent = isDegMode ? "DEG (ডিগ্রি)" : "RAD (রেডিয়ান)";
     updateSciDisplay();
   } else {
+    const isOp = (c) => ["+", "-", "*", "/", "×", "÷"].includes(c);
+    if (isOp(k)) {
+      if (!sciExpr && (k === "×" || k === "÷" || k === "*" || k === "/")) {
+        return;
+      }
+      const lastChar = sciExpr.slice(-1);
+      if (isOp(lastChar)) {
+        sciExpr = sciExpr.slice(0, -1) + k;
+        updateSciDisplay();
+        return;
+      }
+    }
+    if (sciExpr.length >= 120) return;
     sciExpr += k;
     updateSciDisplay();
   }
@@ -5144,13 +5373,19 @@ function setupFinanceCalc() {
     const r = parseFloat(bnToLatin(document.getElementById("finA_r").value));
     const t = parseFloat(bnToLatin(document.getElementById("finA_t").value));
     const res = document.getElementById("resFinA");
-    if (isNaN(p) || isNaN(r) || isNaN(t)) { res.innerHTML = '<span class="formula-error">সব ফিল্ড পূরণ করুন</span>'; return; }
+    if (isNaN(p) || isNaN(r) || isNaN(t) || p <= 0 || r < 0 || t <= 0) {
+      res.innerHTML = '<span class="formula-error">দয়া করে সঠিক মূলধন (০-এর বেশি), হার (≥ ০) ও সময় লিখুন</span>'; return;
+    }
+    if (p > 1e14 || r > 1000 || t > 100) {
+      res.innerHTML = '<span class="formula-error">অস্বাভাবিক বড় মান গ্রহণযোগ্য নয়</span>'; return;
+    }
     const si = (p * r * t) / 100;
     const total = p + si;
-    res.innerHTML = `<div>মোট মুনাফা/সুদ: <strong>${formatNumber(si)} টাকা</strong></div>
-      <div>মোট আসলসহ পরিশোধ: <strong>${formatNumber(total)} টাকা</strong></div>
-      <div class="result-formula-text">সূত্র: SI = (P × R × T) ÷ ১০০ = (${toBn(p)} × ${toBn(r)} × ${toBn(t)}) ÷ ১০০</div>`;
-    addHistory("সরল মুনাফা", `মূলধন ${toBn(p)}, হার ${toBn(r)}%, সময় ${toBn(t)} বছর`, `মুনাফা: ${formatNumber(si)} টাকা`);
+    res.innerHTML = `<div>মোট আনুমানিক মুনাফা/সুদ: <strong>${formatNumber(si, 2)} টাকা</strong></div>
+      <div>মোট আসলসহ পরিশোধ: <strong>${formatNumber(total, 2)} টাকা</strong></div>
+      <div class="result-formula-text">সূত্র: SI = (P × R × T) ÷ ১০০ = (${toBn(p)} × ${toBn(r)} × ${toBn(t)}) ÷ ১০০</div>
+      <div style="font-size:11px; color:var(--ink-soft); margin-top:4px;">* আনুমানিক হিসাব, ব্যাংক বা আর্থিক প্রতিষ্ঠানভেদে সামান্য ভিন্ন হতে পারে।</div>`;
+    addHistory("সরল মুনাফা", `মূলধন ${toBn(p)}, হার ${toBn(r)}%, সময় ${toBn(t)} বছর`, `মুনাফা: ${formatNumber(si, 2)} টাকা`);
   });
 
   // B: Compound Interest
@@ -5158,17 +5393,23 @@ function setupFinanceCalc() {
     const p = parseFloat(bnToLatin(document.getElementById("finB_p").value));
     const r = parseFloat(bnToLatin(document.getElementById("finB_r").value));
     const t = parseFloat(bnToLatin(document.getElementById("finB_t").value));
-    const n = parseFloat(document.getElementById("finB_n").value);
+    const n = parseFloat(document.getElementById("finB_n").value) || 1;
     const res = document.getElementById("resFinB");
-    if (isNaN(p) || isNaN(r) || isNaN(t)) { res.innerHTML = '<span class="formula-error">সব ফিল্ড পূরণ করুন</span>'; return; }
+    if (isNaN(p) || isNaN(r) || isNaN(t) || isNaN(n) || p <= 0 || r < 0 || t <= 0 || n <= 0) {
+      res.innerHTML = '<span class="formula-error">দয়া করে সঠিক মান লিখুন (মূলধন ও সময় ০-এর বেশি হতে হবে)</span>'; return;
+    }
+    if (p > 1e14 || r > 1000 || t > 100) {
+      res.innerHTML = '<span class="formula-error">অস্বাভাবিক বড় মান গ্রহণযোগ্য নয়</span>'; return;
+    }
     const ratePerPeriod = (r / 100) / n;
     const totalPeriods = n * t;
     const finalAmount = p * Math.pow(1 + ratePerPeriod, totalPeriods);
     const interest = finalAmount - p;
-    res.innerHTML = `<div>চক্রবৃদ্ধি মুনাফা: <strong>${formatNumber(interest)} টাকা</strong></div>
-      <div>সর্বমোট অর্জিত টাকা: <strong>${formatNumber(finalAmount)} টাকা</strong></div>
-      <div class="result-formula-text">সূত্র: A = P × (১ + r/n)^(n×t)</div>`;
-    addHistory("চক্রবৃদ্ধি মুনাফা", `মূলধন ${toBn(p)}, হার ${toBn(r)}%, সময় ${toBn(t)} বছর`, `মুনাফা: ${formatNumber(interest)} টাকা`);
+    res.innerHTML = `<div>চক্রবৃদ্ধি মুনাফা (আনুমানিক): <strong>${formatNumber(interest, 2)} টাকা</strong></div>
+      <div>সর্বমোট অর্জিত টাকা: <strong>${formatNumber(finalAmount, 2)} টাকা</strong></div>
+      <div class="result-formula-text">সূত্র: A = P × (১ + r/n)^(n×t)</div>
+      <div style="font-size:11px; color:var(--ink-soft); margin-top:4px;">* চক্রবৃদ্ধি চক্র ও ট্যাক্স কর্তনের ওপর ভিত্তি করে চূড়ান্ত পরিমাণ ভিন্ন হতে পারে।</div>`;
+    addHistory("চক্রবৃদ্ধি মুনাফা", `মূলধন ${toBn(p)}, হার ${toBn(r)}%, সময় ${toBn(t)} বছর`, `মুনাফা: ${formatNumber(interest, 2)} টাকা`);
   });
 
   // C: EMI Calculator
@@ -5177,8 +5418,11 @@ function setupFinanceCalc() {
     const r = parseFloat(bnToLatin(document.getElementById("finC_r").value));
     const tenureMonths = parseFloat(bnToLatin(document.getElementById("finC_t").value));
     const res = document.getElementById("resFinC");
-    if (isNaN(p) || isNaN(r) || isNaN(tenureMonths) || tenureMonths <= 0) {
-      res.innerHTML = '<span class="formula-error">সঠিক ঋণ পরিমাণ, হার ও কিস্তির সংখ্যা দিন</span>'; return;
+    if (isNaN(p) || isNaN(r) || isNaN(tenureMonths) || p <= 0 || r < 0 || tenureMonths <= 0) {
+      res.innerHTML = '<span class="formula-error">সঠিক ঋণ পরিমাণ (>০), সুদের হার ও কিস্তির সংখ্যা (>০) দিন</span>'; return;
+    }
+    if (p > 1e14 || r > 100 || tenureMonths > 600) {
+      res.innerHTML = '<span class="formula-error">অস্বাভাবিক ঋণ বা কিস্তির মেয়াদ সীমার বাইরে</span>'; return;
     }
     const monthlyRate = (r / 12) / 100;
     let emi = 0;
@@ -5189,11 +5433,12 @@ function setupFinanceCalc() {
     }
     const totalPayment = emi * tenureMonths;
     const totalInterest = totalPayment - p;
-    res.innerHTML = `<div>মাসিক কিস্তি (EMI): <strong>${formatNumber(emi)} টাকা</strong></div>
-      <div>মোট সুদ: <strong>${formatNumber(totalInterest)} টাকা</strong></div>
-      <div>সর্বমোট পরিশোধ: <strong>${formatNumber(totalPayment)} টাকা</strong></div>
-      <div class="result-formula-text">সূত্র: EMI = P × r × (১+r)^n ÷ ((১+r)^n - ১)</div>`;
-    addHistory("লোন EMI", `লোন ${toBn(p)} টাকা, ${toBn(tenureMonths)} মাস`, `EMI: ${formatNumber(emi)} টাকা`);
+    res.innerHTML = `<div>মাসিক কিস্তি (আনুমানিক EMI): <strong>${formatNumber(emi, 2)} টাকা</strong></div>
+      <div>মোট সুদ: <strong>${formatNumber(totalInterest, 2)} টাকা</strong></div>
+      <div>সর্বমোট পরিশোধ: <strong>${formatNumber(totalPayment, 2)} টাকা</strong></div>
+      <div class="result-formula-text">সূত্র: EMI = P × r × (১+r)^n ÷ ((১+r)^n - ১)</div>
+      <div style="font-size:11px; color:var(--ink-soft); margin-top:4px;">* ব্যাংকভেদে প্রসেসিং ফি, পরিবর্তনশীল সুদের হার ও রাউন্ডিং নীতি অনুযায়ী কিস্তি সামান্য পরিবর্তিত হতে পারে।</div>`;
+    addHistory("লোন EMI", `লোন ${toBn(p)} টাকা, ${toBn(tenureMonths)} মাস`, `EMI: ${formatNumber(emi, 2)} টাকা`);
   });
 
   // D: DPS Calculator
@@ -5202,7 +5447,12 @@ function setupFinanceCalc() {
     const years = parseFloat(bnToLatin(document.getElementById("finD_y").value));
     const rate = parseFloat(bnToLatin(document.getElementById("finD_r").value));
     const res = document.getElementById("resFinD");
-    if (isNaN(monthly) || isNaN(years) || isNaN(rate)) { res.innerHTML = '<span class="formula-error">সব ফিল্ড পূরণ করুন</span>'; return; }
+    if (isNaN(monthly) || isNaN(years) || isNaN(rate) || monthly <= 0 || years <= 0 || rate < 0) {
+      res.innerHTML = '<span class="formula-error">সব ফিল্ডে সঠিক ইতিবাচক সংখ্যা লিখুন</span>'; return;
+    }
+    if (monthly > 1e10 || years > 50 || rate > 100) {
+      res.innerHTML = '<span class="formula-error">অস্বাভাবিক বড় মান গ্রহণযোগ্য নয়</span>'; return;
+    }
     const totalMonths = Math.round(years * 12);
     const totalDeposit = monthly * totalMonths;
     const r = (rate / 12) / 100;
@@ -5211,11 +5461,12 @@ function setupFinanceCalc() {
       maturity += monthly * Math.pow(1 + r, totalMonths - i + 1);
     }
     const profit = maturity - totalDeposit;
-    res.innerHTML = `<div>মেয়াদান্তে পাবেন: <strong>${formatNumber(maturity)} টাকা</strong></div>
-      <div>আপনার মোট জমা: <strong>${formatNumber(totalDeposit)} টাকা</strong></div>
-      <div>আনুমানিক মুনাফা: <strong>${formatNumber(profit)} টাকা</strong></div>
-      <div class="result-formula-text">প্রতি মাসে: ${toBn(monthly)} টাকা | সময়: ${toBn(years)} বছর | হার: ${toBn(rate)}%</div>`;
-    addHistory("DPS ক্যালকুলেটর", `মাসিক ${toBn(monthly)} টাকা, ${toBn(years)} বছর`, `মেয়াদান্তে: ${formatNumber(maturity)} টাকা`);
+    res.innerHTML = `<div>মেয়াদান্তে আনুমানিক পাবেন: <strong>${formatNumber(maturity, 2)} টাকা</strong></div>
+      <div>আপনার মোট জমা: <strong>${formatNumber(totalDeposit, 2)} টাকা</strong></div>
+      <div>আনুমানিক মুনাফা: <strong>${formatNumber(profit, 2)} টাকা</strong></div>
+      <div class="result-formula-text">প্রতি মাসে: ${toBn(monthly)} টাকা | সময়: ${toBn(years)} বছর | হার: ${toBn(rate)}%</div>
+      <div style="font-size:11px; color:var(--ink-soft); margin-top:4px;">* কোনো ব্যাংক বা এনবিএফআই-এর সরকারি আবগারি শুল্ক (Excise Duty) ও উৎসে কর (AIT) কাটার পর প্রকৃত পরিমাণ কম হতে পারে।</div>`;
+    addHistory("DPS ক্যালকুলেটর", `মাসিক ${toBn(monthly)} টাকা, ${toBn(years)} বছর`, `মেয়াদান্তে: ${formatNumber(maturity, 2)} টাকা`);
   });
 
   // E: FDR Calculator
@@ -5224,13 +5475,19 @@ function setupFinanceCalc() {
     const years = parseFloat(bnToLatin(document.getElementById("finE_y").value));
     const rate = parseFloat(bnToLatin(document.getElementById("finE_r").value));
     const res = document.getElementById("resFinE");
-    if (isNaN(p) || isNaN(years) || isNaN(rate)) { res.innerHTML = '<span class="formula-error">সব ফিল্ড পূরণ করুন</span>'; return; }
+    if (isNaN(p) || isNaN(years) || isNaN(rate) || p <= 0 || years <= 0 || rate < 0) {
+      res.innerHTML = '<span class="formula-error">সব ফিল্ডে সঠিক ইতিবাচক সংখ্যা দিন</span>'; return;
+    }
+    if (p > 1e14 || years > 50 || rate > 100) {
+      res.innerHTML = '<span class="formula-error">অস্বাভাবিক বড় মান গ্রহণযোগ্য নয়</span>'; return;
+    }
     const interest = (p * rate * years) / 100;
     const maturity = p + interest;
-    res.innerHTML = `<div>মেয়াদান্তে পাবেন: <strong>${formatNumber(maturity)} টাকা</strong></div>
-      <div>মোট মুনাফা: <strong>${formatNumber(interest)} টাকা</strong></div>
-      <div class="result-formula-text">মূলধন: ${toBn(p)} টাকা | মেয়াদ: ${toBn(years)} বছর | হার: ${toBn(rate)}%</div>`;
-    addHistory("FDR ক্যালকুলেটর", `আসল ${toBn(p)} টাকা, ${toBn(years)} বছর`, `মেয়াদান্তে: ${formatNumber(maturity)} টাকা`);
+    res.innerHTML = `<div>মেয়াদান্তে আনুমানিক পাবেন: <strong>${formatNumber(maturity, 2)} টাকা</strong></div>
+      <div>মোট মুনাফা: <strong>${formatNumber(interest, 2)} টাকা</strong></div>
+      <div class="result-formula-text">মূলধন: ${toBn(p)} টাকা | মেয়াদ: ${toBn(years)} বছর | হার: ${toBn(rate)}%</div>
+      <div style="font-size:11px; color:var(--ink-soft); margin-top:4px;">* সরকারি নিয়ম অনুযায়ী উৎসে কর (১০% বা ১৫% AIT) কর্তন প্রযোজ্য।</div>`;
+    addHistory("FDR ক্যালকুলেটর", `আসল ${toBn(p)} টাকা, ${toBn(years)} বছর`, `মেয়াদান্তে: ${formatNumber(maturity, 2)} টাকা`);
   });
 }
 
@@ -7165,7 +7422,14 @@ function setupCurrencyConverter() {
   function calculateCurrency() {
     const fromCode = fromSelect.value;
     const toCode = toSelect.value;
-    const amount = parseFloat(amountInput.value) || 0;
+    let amount = parseFloat(amountInput.value);
+    if (isNaN(amount) || amount < 0) {
+      amount = 0;
+    }
+    if (amount > 1e12) {
+      amount = 1e12;
+      amountInput.value = amount;
+    }
     const fromObj = CURRENCY_DATABASE[fromCode];
     const toObj = CURRENCY_DATABASE[toCode];
 
@@ -7175,9 +7439,14 @@ function setupCurrencyConverter() {
     const isCustom = customRateCheck.checked && parseFloat(customRateInput.value) > 0;
 
     if (isCustom) {
-      exchangeRate = parseFloat(customRateInput.value);
+      const customVal = parseFloat(customRateInput.value);
+      if (customVal > 0 && !isNaN(customVal) && customVal < 1e9) {
+        exchangeRate = customVal;
+      }
     } else {
-      exchangeRate = toObj.rateToUSD / fromObj.rateToUSD;
+      if (fromObj.rateToUSD > 0 && toObj.rateToUSD > 0) {
+        exchangeRate = toObj.rateToUSD / fromObj.rateToUSD;
+      }
     }
 
     const convertedAmount = amount * exchangeRate;
@@ -7275,37 +7544,87 @@ function setupCurrencyConverter() {
     });
   }
 
+  let lastRateUpdateTime = null;
+  let isRateSyncing = false;
+
   async function fetchLiveRates() {
+    if (isRateSyncing) return;
+    isRateSyncing = true;
+    if (syncBtn) {
+      syncBtn.disabled = true;
+      syncBtn.textContent = "⏳ লোড হচ্ছে...";
+    }
     if (syncBadge) {
       syncBadge.textContent = "সিঙ্ক হচ্ছে...";
       syncBadge.style.background = "#fef3c7";
       syncBadge.style.color = "#92400e";
     }
+    if (!navigator.onLine) {
+      isRateSyncing = false;
+      if (syncBtn) {
+        syncBtn.disabled = false;
+        syncBtn.textContent = "🔄 লাইভ রেট আপডেট";
+      }
+      if (syncBadge) {
+        syncBadge.textContent = "অফলাইন মোড সক্রিয়";
+        syncBadge.style.background = "#e2e8f0";
+        syncBadge.style.color = "#475569";
+      }
+      const tableInfo = document.getElementById("currTableUpdateText");
+      if (tableInfo) tableInfo.textContent = "ইন্টারনেট নেই — সংরক্ষিত অফলাইন রেট প্রদর্শিত হচ্ছে";
+      showToast("ইন্টারনেট সংযোগ নেই। সংরক্ষিত অফলাইন রেট ব্যবহৃত হচ্ছে।");
+      return;
+    }
+
     try {
-      const res = await fetch("https://open.er-api.com/v6/latest/USD");
-      if (!res.ok) throw new Error("Network error");
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
+      const res = await fetch("https://open.er-api.com/v6/latest/USD", { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (!res.ok) throw new Error("HTTP error " + res.status);
       const data = await res.json();
-      if (data && data.rates) {
+      if (data && data.rates && typeof data.rates === "object") {
+        let updatedCount = 0;
         Object.keys(CURRENCY_DATABASE).forEach(code => {
-          if (data.rates[code]) {
+          if (data.rates[code] && typeof data.rates[code] === "number" && data.rates[code] > 0) {
             CURRENCY_DATABASE[code].rateToUSD = data.rates[code];
+            updatedCount++;
           }
         });
+        lastRateUpdateTime = new Date();
+        const timeStr = lastRateUpdateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const dateStr = lastRateUpdateTime.toLocaleDateString();
+
         calculateCurrency();
         renderRatesTable();
         if (syncBadge) {
-          syncBadge.textContent = "লাইভ রেট সক্রিয় ✔️";
+          syncBadge.textContent = `লাইভ রেট (${toBn(timeStr)}) ✔️`;
           syncBadge.style.background = "#d1fae5";
           syncBadge.style.color = "#065f46";
         }
-        showToast("সর্বশেষ আন্তর্জাতিক লাইভ রেট আপডেট হয়েছে!");
+        const tableInfo = document.getElementById("currTableUpdateText");
+        if (tableInfo) tableInfo.textContent = `সর্বশেষ আন্তর্জাতিক লাইভ রেট: ${toBn(dateStr)} ${toBn(timeStr)}`;
+        showToast("আন্তর্জাতিক লাইভ এক্সচেঞ্জ রেট সফলভাবে আপডেট হয়েছে! ✔️");
+      } else {
+        throw new Error("Invalid response format");
       }
     } catch (err) {
-      console.warn("Live currency sync fallback to offline rates:", err);
+      console.warn("Live currency sync error, fallback to offline rates:", err);
       if (syncBadge) {
         syncBadge.textContent = "অফলাইন রেট সক্রিয়";
-        syncBadge.style.background = "#e2e8f0";
-        syncBadge.style.color = "#475569";
+        syncBadge.style.background = "#fee2e2";
+        syncBadge.style.color = "#991b1b";
+      }
+      const tableInfo = document.getElementById("currTableUpdateText");
+      if (tableInfo) tableInfo.textContent = "লাইভ সার্ভার অনুপলব্ধ — ব্যাকআপ রেট সক্রিয়";
+      showToast(err.name === 'AbortError' ? "নেটওয়ার্ক টাইমআউট! অফলাইন রেট বজায় রাখা হয়েছে।" : "রেট সার্ভার সংযোগ ব্যর্থ। অফলাইন রেট ব্যবহৃত হচ্ছে।");
+    } finally {
+      isRateSyncing = false;
+      if (syncBtn) {
+        syncBtn.disabled = false;
+        syncBtn.textContent = "🔄 লাইভ রেট আপডেট";
       }
     }
   }
@@ -7318,9 +7637,31 @@ function setupCurrencyConverter() {
   renderRatesTable();
   calculateCurrency();
 
-  if (navigator.onLine) {
-    fetchLiveRates();
+  let hasCheckedLiveRatesOnOpen = false;
+  window.checkAndSyncCurrencyRates = function() {
+    if (!hasCheckedLiveRatesOnOpen && navigator.onLine) {
+      hasCheckedLiveRatesOnOpen = true;
+      fetchLiveRates();
+    }
+  };
+
+  function updateOnlineStatus() {
+    if (!syncBadge) return;
+    if (navigator.onLine) {
+      if (!lastRateUpdateTime) {
+        syncBadge.textContent = "অনলাইন (সংরক্ষিত রেট)";
+        syncBadge.style.background = "#e0f2fe";
+        syncBadge.style.color = "#0369a1";
+      }
+    } else {
+      syncBadge.textContent = "অফলাইন মোড সক্রিয়";
+      syncBadge.style.background = "#e2e8f0";
+      syncBadge.style.color = "#475569";
+    }
   }
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+  updateOnlineStatus();
 }
 
 // ==========================================
@@ -7718,6 +8059,7 @@ window.navigateTo = function(targetId, subtabType, subtabValue) {
 
   if (targetId === "history" && typeof renderHistoryUI === "function") renderHistoryUI();
   if (targetId === "favorites" && typeof renderFavoritesUI === "function") renderFavoritesUI();
+  if (targetId === "currency" && typeof window.checkAndSyncCurrencyRates === "function") window.checkAndSyncCurrencyRates();
   if (targetId === "qrcode") {
     if (window.onQRTabActivated) window.onQRTabActivated();
   } else {
@@ -10684,12 +11026,31 @@ function setupHealthAndFitnessCalc() {
   const btnSaveProfile = document.getElementById("btnSaveHealthProfile");
   if (btnSaveProfile) {
     btnSaveProfile.addEventListener("click", () => {
-      profile.gender = hpGender.value;
-      profile.age = parseFloat(hpAge.value) || 25;
-      profile.feet = parseFloat(hpFeet.value) || 5;
-      profile.inches = parseFloat(hpInches.value) || 0;
+      const g = hpGender.value === "female" ? "female" : "male";
+      const a = parseFloat(hpAge.value);
+      const ft = parseFloat(hpFeet.value);
+      const inc = parseFloat(hpInches.value);
+      const wt = parseFloat(hpWeight.value);
+
+      if (isNaN(a) || a < 1 || a > 120) {
+        showToast("দয়া করে সঠিক বয়স (১ থেকে ১২০ বছর) লিখুন");
+        return;
+      }
+      if (isNaN(ft) || ft < 1 || ft > 8 || isNaN(inc) || inc < 0 || inc >= 12) {
+        showToast("দয়া করে সঠিক উচ্চতা লিখুন (ফিট ১-৮, ইঞ্চি ০-১১)");
+        return;
+      }
+      if (isNaN(wt) || wt < 10 || wt > 350) {
+        showToast("দয়া করে সঠিক ওজন (১০ থেকে ৩৫০ কেজি) লিখুন");
+        return;
+      }
+
+      profile.gender = g;
+      profile.age = a;
+      profile.feet = ft;
+      profile.inches = inc;
       profile.cm = (profile.feet * 12 + profile.inches) * 2.54;
-      profile.weight = parseFloat(hpWeight.value) || 65;
+      profile.weight = wt;
       setStorage(HEALTH_PROFILE_KEY, profile);
 
       syncProfileToSubtools();
@@ -11620,16 +11981,22 @@ function setupHealthAndFitnessCalc() {
   const btnCalcHR = document.getElementById("btnCalcHR");
   if (btnCalcHR) {
     btnCalcHR.addEventListener("click", () => {
-      const age = parseFloat(document.getElementById("hrAge").value) || 25;
+      const age = parseFloat(document.getElementById("hrAge").value);
       const rhr = parseFloat(document.getElementById("hrResting").value) || 70;
+
+      if (isNaN(age) || age < 10 || age > 110) {
+        showToast("সঠিক বয়স (১০ থেকে ১১০ বছর) লিখুন");
+        return;
+      }
       const maxHr = 220 - age;
 
       document.getElementById("resHR").innerHTML = `
         <div style="text-align:center; padding:6px 0;">
-          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">সর্বোচ্চ সম্ভাব্য হার্ট রেট (Max Heart Rate)</div>
+          <div style="font-size:12px; color:var(--ink-soft); font-weight:600;">সর্বোচ্চ সম্ভাব্য হার্ট রেট (আনুমানিক Max HR)</div>
           <div style="font-size:32px; font-weight:900; color:#DC2626; font-family:'JetBrains Mono',monospace; margin:4px 0;">
             ${toBn(maxHr)} <span style="font-size:14px; font-weight:600; color:var(--ink-soft);">BPM</span>
           </div>
+          <div style="font-size:11px; color:var(--ink-soft); margin-top:2px;">(হাস্কেল ও ফক্স সূত্র: ২২০ - বয়স)</div>
         </div>
         <table class="health-table" style="margin-top:10px;">
           <thead>
@@ -11667,6 +12034,9 @@ function setupHealthAndFitnessCalc() {
             </tr>
           </tbody>
         </table>
+        <div style="font-size:11px; color:var(--ink-soft); margin-top:8px; text-align:center;">
+          * আনুমানিক হিসাব। হৃদরোগ বা স্বাস্থ্যজনিত সমস্যা থাকলে শরীরচর্চার আগে চিকিৎসকের পরামর্শ নিন।
+        </div>
       `;
       addHistory("হার্ট রেট জোন", `বয়স: ${toBn(age)}`, `Max HR: ${toBn(maxHr)} BPM`);
     });
@@ -11676,8 +12046,13 @@ function setupHealthAndFitnessCalc() {
   const btnCalcBP = document.getElementById("btnCalcBP");
   if (btnCalcBP) {
     btnCalcBP.addEventListener("click", () => {
-      const sys = parseFloat(document.getElementById("bpSystolic").value) || 120;
-      const dia = parseFloat(document.getElementById("bpDiastolic").value) || 80;
+      const sys = parseFloat(document.getElementById("bpSystolic").value);
+      const dia = parseFloat(document.getElementById("bpDiastolic").value);
+
+      if (isNaN(sys) || isNaN(dia) || sys < 50 || sys > 300 || dia < 30 || dia > 200 || dia >= sys) {
+        showToast("সঠিক রক্তচাপ রিডিং দিন (সিস্টোলিক ৫০-৩০০, ডায়াস্টোলিক ৩০-২০০, ডায়াস্টোলিক সিস্টোলিকের চেয়ে কম হতে হবে)");
+        return;
+      }
 
       let category = "";
       let badgeClass = "";
@@ -11717,6 +12092,9 @@ function setupHealthAndFitnessCalc() {
           </div>
           <div class="health-status-badge ${badgeClass}">${category}</div>
           <p style="font-size:12.5px; color:var(--ink-soft); margin-top:8px;">💡 ${advice}</p>
+          <div style="font-size:11px; color:var(--ink-soft); border-top:1px dashed var(--border); padding-top:6px; margin-top:8px;">
+            * এটি চিকিৎসা পরামর্শ বা ডায়াগনোসিস নয়। নিয়মিত চিকিৎসকের পরামর্শ নিন।
+          </div>
         </div>
       `;
       addHistory("রক্তচাপ", `${toBn(sys)}/${toBn(dia)} mmHg`, category);
@@ -11749,12 +12127,28 @@ function initApplication() {
 
   try { updateBasicDisplay(); } catch (e) { console.error(e); }
   try { updateSciDisplay(); } catch (e) { console.error(e); }
+
+  // Gracefully dismiss splash screen once UI is ready
+  setTimeout(() => {
+    const splash = document.getElementById("appSplashScreen");
+    if (splash) {
+      splash.classList.add("hidden");
+      setTimeout(() => { splash.remove(); }, 400);
+    }
+  }, 450);
+}
+
+let appIsInitialized = false;
+function safeInitApplication() {
+  if (appIsInitialized) return;
+  appIsInitialized = true;
+  initApplication();
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initApplication);
+  document.addEventListener("DOMContentLoaded", safeInitApplication);
 } else {
-  initApplication();
+  safeInitApplication();
 }
 
 // ==========================================
