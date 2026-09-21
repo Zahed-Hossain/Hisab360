@@ -64,7 +64,28 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-    fun startNativeVoiceSearch() {
+    private val requestAudioPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                pendingAudioPermissionRequest?.grant(pendingAudioPermissionRequest?.resources)
+                launchSpeechRecognizer()
+            } else {
+                pendingAudioPermissionRequest?.deny()
+                val isPermanentlyDenied = !ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.RECORD_AUDIO)
+                if (isPermanentlyDenied) {
+                    Toast.makeText(this, "মাইক্রোফোন পারমিশন বন্ধ। সেটিংস থেকে পারমিশন দিন।", Toast.LENGTH_LONG).show()
+                }
+                webView?.evaluateJavascript(
+                    "if(typeof window.onVoiceSearchDismissed === 'function') { window.onVoiceSearchDismissed(); }",
+                    null
+                )
+            }
+            pendingAudioPermissionRequest = null
+        }
+
+    private var pendingAudioPermissionRequest: PermissionRequest? = null
+
+    private fun launchSpeechRecognizer() {
         try {
             val intent = Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -77,6 +98,14 @@ class MainActivity : ComponentActivity() {
         } catch (e: Exception) {
             AppLog.w("VoiceSearch", { "Native voice recognition not available, fallback to web" }, e)
             webView?.evaluateJavascript("if(typeof window.fallbackWebSpeech === 'function') { window.fallbackWebSpeech(); }", null)
+        }
+    }
+
+    fun startNativeVoiceSearch() {
+        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            launchSpeechRecognizer()
+        } else {
+            requestAudioPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
         }
     }
 
@@ -230,17 +259,28 @@ class MainActivity : ComponentActivity() {
                     val isCameraResource = request.resources.any {
                         it == PermissionRequest.RESOURCE_VIDEO_CAPTURE
                     }
-                    if (!isCameraResource) {
-                        request.deny()
-                        return
+                    val isAudioResource = request.resources.any {
+                        it == PermissionRequest.RESOURCE_AUDIO_CAPTURE
                     }
 
-                    val hasCameraPermission = checkSelfPermission(android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED
-                    if (hasCameraPermission) {
-                        request.grant(request.resources)
+                    if (isCameraResource) {
+                        val hasCameraPermission = checkSelfPermission(android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                        if (hasCameraPermission) {
+                            request.grant(request.resources)
+                        } else {
+                            pendingPermissionRequest = request
+                            requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                        }
+                    } else if (isAudioResource) {
+                        val hasAudioPermission = checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                        if (hasAudioPermission) {
+                            request.grant(request.resources)
+                        } else {
+                            pendingAudioPermissionRequest = request
+                            requestAudioPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+                        }
                     } else {
-                        pendingPermissionRequest = request
-                        requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                        request.deny()
                     }
                 }
             }
