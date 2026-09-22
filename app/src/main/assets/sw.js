@@ -3,11 +3,10 @@
 // Cache-First with Network Fallback
 // ==========================================
 
-const CACHE_NAME = 'math-calc-v2-cache-v2';
+const CACHE_NAME = 'math-calc-v2-cache-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './calculator_app.html',
   './manifest.json',
   './icon.svg',
   './icon-192.png',
@@ -84,7 +83,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // If navigation request fails while offline, return index.html
         if (event.request.mode === 'navigate') {
-          return caches.match('./index.html') || caches.match('./calculator_app.html');
+          return caches.match('./index.html');
         }
       });
     })

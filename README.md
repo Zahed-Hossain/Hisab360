@@ -83,7 +83,7 @@
 │       └── main/
 │           ├── AndroidManifest.xml  # পারমিশন, অ্যাক্টিভিটি ও প্রোভাইডার
 │           ├── assets/
-│           │   ├── calculator_app.html # সম্পূর্ণ অ্যাপ্লিকেশনের কোর ইঞ্জিন ও UI
+│           │   ├── index.html       # সম্পূর্ণ অ্যাপ্লিকেশনের কোর ইঞ্জিন ও UI
 │           │   ├── jsQR.min.js      # অফলাইন কিউআর ডিকোডার লাইব্রেরি
 │           │   └── manifest.json    # ওয়েব অ্যাপ মেটাডেটা
 │           ├── java/com/example/

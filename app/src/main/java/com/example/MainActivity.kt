@@ -155,19 +155,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    companion object {
-        init {
-            try {
-                android.system.Os.setenv("LIBGL_ALWAYS_SOFTWARE", "1", true)
-                android.system.Os.setenv("GALLIUM_DRIVER", "llvmpipe", true)
-                android.system.Os.setenv("MESA_LOADER_DRIVER_OVERRIDE", "llvmpipe", true)
-                android.system.Os.setenv("MESA_GL_VERSION_OVERRIDE", "3.0", true)
-                android.system.Os.setenv("MESA_DEBUG", "0", true)
-                android.system.Os.setenv("LIBGL_DEBUG", "quiet", true)
-            } catch (_: Throwable) {}
-        }
-    }
-
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -353,7 +340,7 @@ class MainActivity : ComponentActivity() {
                 override fun onRenderProcessGone(view: WebView?, detail: RenderProcessGoneDetail?): Boolean {
                     view?.post {
                         try {
-                            view.loadUrl("file:///android_asset/calculator_app.html")
+                            view.loadUrl("file:///android_asset/index.html")
                         } catch (_: Exception) {}
                     }
                     return true
@@ -364,7 +351,7 @@ class MainActivity : ComponentActivity() {
             if (savedInstanceState != null) {
                 restoreState(savedInstanceState)
             } else {
-                loadUrl("file:///android_asset/calculator_app.html")
+                loadUrl("file:///android_asset/index.html")
             }
         }
         webView = wv
