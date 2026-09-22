@@ -3276,9 +3276,9 @@
         <h3 style="margin:0; font-size:18px; display:flex; align-items:center; gap:8px;">
           <span>✏️</span> কিউআর কোড জেনারেটর (QR Code Generator)
         </h3>
-        <span class="badge" style="background:#dbeafe; color:#1d4ed8; font-weight:600; padding:3px 10px; border-radius:12px; font-size:12px;">১০০% অফলাইন</span>
+        <span class="badge" style="background:#dbeafe; color:#1d4ed8; font-weight:600; padding:3px 10px; border-radius:12px; font-size:12px;">অফলাইন ফিচার</span>
       </div>
-      <p class="desc">যেকোনো টেক্সট, ফোন নম্বর (বিকাশ/নগদ), ওয়েবসাইট লিংক বা ওয়াই-ফাই দিয়ে শতভাগ অফলাইনে তাত্ক্ষণিক কিউআর কোড তৈরি, ডাউনলোড ও প্রিন্ট করুন।</p>
+      <p class="desc">যেকোনো টেক্সট, ফোন নম্বর (বিকাশ/নগদ), ওয়েবসাইট লিংক বা ওয়াই-ফাই দিয়ে তাত্ক্ষণিক কিউআর কোড তৈরি, ডাউনলোড ও প্রিন্ট করুন।</p>
 
       <!-- Quick Preset Template Chips -->
       <div style="margin:12px 0 16px;">
@@ -4196,6 +4196,9 @@
             <span>অফলাইন ক্যাশ স্ট্যাটাস:</span>
             <span id="offlineStatusBadge" class="badge" style="background:#dcfce7; color:#15803d; font-weight:600; padding:2px 8px; border-radius:12px;">অফলাইন সক্ষম ✔️</span>
           </div>
+          <div style="font-size:12px; color:var(--ink-soft); margin-bottom:8px; line-height:1.5;">
+            মূল হিসাব ও অধিকাংশ utility feature offline কাজ করে; তবে live currency rates, বিজ্ঞাপন ও কিছু online service-এর জন্য internet connection প্রয়োজন হতে পারে।
+          </div>
           <button class="btn btn-primary" id="btnSettingsInstallPWA" style="width:100%; display:none; margin-top:6px;">📲 হোম স্ক্রিনে অ্যাপ যোগ করুন</button>
           <div id="pwaInstalledNotice" style="display:none; color:var(--ink-soft); text-align:center; margin-top:6px; font-size:12px;">অ্যাপ্লিকেশনটি হোম স্ক্রিনে ইনস্টল করা আছে।</div>
         </div>
@@ -4275,7 +4278,7 @@
             <div style="font-weight:700; color:var(--ink); margin-bottom:4px;">মুখ্য সুবিধাসমূহ:</div>
             <ul style="margin:0; padding-left:18px; color:var(--ink-soft); font-size:12.5px;">
               <li>১৭টি বহুমুখী ক্যালকুলেটর ও রূপান্তর টুলস</li>
-              <li>১০০% অফলাইন সুবিধা ও তাৎক্ষণিক হিসাবের ফলাফল</li>
+              <li>অধিকাংশ হিসাব offline ব্যবহার করা যায়। কিছু online feature-এর জন্য internet প্রয়োজন।</li>
               <li>উন্নত প্রাইভেসি ও অন-ডিভাইস ডেটা প্রসেসিং</li>
               <li>বাংলা, ইংরেজি এবং বৈশ্বিক মানক সংখ্যা সমর্থন</li>
             </ul>
@@ -8423,13 +8426,13 @@ function setupCurrencyConverter() {
         syncBtn.textContent = "🔄 লাইভ রেট আপডেট";
       }
       if (syncBadge) {
-        syncBadge.textContent = "অফলাইন মোড সক্রিয়";
-        syncBadge.style.background = "#e2e8f0";
-        syncBadge.style.color = "#475569";
+        syncBadge.textContent = "লাইভ রেট অনুপলব্ধ (অফলাইন)";
+        syncBadge.style.background = "#fee2e2";
+        syncBadge.style.color = "#991b1b";
       }
       const tableInfo = document.getElementById("currTableUpdateText");
-      if (tableInfo) tableInfo.textContent = "ইন্টারনেট নেই — সংরক্ষিত অফলাইন রেট প্রদর্শিত হচ্ছে";
-      showToast("ইন্টারনেট সংযোগ নেই। সংরক্ষিত অফলাইন রেট ব্যবহৃত হচ্ছে।");
+      if (tableInfo) tableInfo.textContent = "ইন্টারনেট সংযোগ নেই — লাইভ রেট অনুপলব্ধ (পূর্বে সংরক্ষিত রেট ব্যবহৃত হচ্ছে)";
+      showToast("ইন্টারনেট সংযোগ নেই। লাইভ রেট অনুপলব্ধ, সংরক্ষিত রেট ব্যবহৃত হচ্ছে।");
       return;
     }
 
@@ -8453,7 +8456,7 @@ function setupCurrencyConverter() {
           }
         });
 
-        // Cache rates to localStorage for 100% offline persistence
+        // Cache rates to localStorage for offline persistence
         try {
           localStorage.setItem("hisab360_currency_rates", JSON.stringify(ratesCache));
         } catch (e) {
@@ -8480,13 +8483,13 @@ function setupCurrencyConverter() {
     } catch (err) {
       console.warn("Live currency sync error, fallback to offline rates:", err);
       if (syncBadge) {
-        syncBadge.textContent = "অফলাইন রেট সক্রিয়";
+        syncBadge.textContent = "লাইভ রেট অনুপলব্ধ (সংরক্ষিত রেট)";
         syncBadge.style.background = "#fee2e2";
         syncBadge.style.color = "#991b1b";
       }
       const tableInfo = document.getElementById("currTableUpdateText");
-      if (tableInfo) tableInfo.textContent = "লাইভ সার্ভার অনুপলব্ধ — ব্যাকআপ অফলাইন রেট সক্রিয়";
-      showToast(err.name === 'AbortError' ? "নেটওয়ার্ক টাইমআউট! অফলাইন রেট বজায় রাখা হয়েছে।" : "রেট সার্ভার সংযোগ ব্যর্থ। অফলাইন রেট ব্যবহৃত হচ্ছে।");
+      if (tableInfo) tableInfo.textContent = "লাইভ সার্ভার অনুপলব্ধ — ব্যাকআপ হিসেবে পূর্বে সংরক্ষিত রেট সক্রিয়";
+      showToast(err.name === 'AbortError' ? "নেটওয়ার্ক টাইমআউট! সংরক্ষিত রেট বজায় রাখা হয়েছে।" : "লাইভ রেট সার্ভার সংযোগ ব্যর্থ। সংরক্ষিত রেট ব্যবহৃত হচ্ছে।");
     } finally {
       isRateSyncing = false;
       if (syncBtn) {
@@ -8521,9 +8524,9 @@ function setupCurrencyConverter() {
         syncBadge.style.color = "#0369a1";
       }
     } else {
-      syncBadge.textContent = "অফলাইন মোড সক্রিয়";
-      syncBadge.style.background = "#e2e8f0";
-      syncBadge.style.color = "#475569";
+      syncBadge.textContent = "লাইভ রেট অনুপলব্ধ (অফলাইন)";
+      syncBadge.style.background = "#fee2e2";
+      syncBadge.style.color = "#991b1b";
     }
   }
   window.addEventListener("online", updateOnlineStatus);
