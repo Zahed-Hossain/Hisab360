@@ -1067,154 +1067,6 @@
     color: var(--ink);
   }
 
-  /* Interactive Rating Form */
-  .review-form-card {
-    background: var(--surface);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 18px;
-    box-shadow: var(--shadow-sm);
-  }
-  .star-picker-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin: 12px 0 6px;
-  }
-  .star-btn {
-    background: none;
-    border: none;
-    font-size: 34px;
-    cursor: pointer;
-    color: #CBD5E1;
-    transition: transform 0.15s ease, color 0.15s ease;
-    padding: 4px;
-    line-height: 1;
-    touch-action: manipulation;
-  }
-  .star-btn.active, .star-btn.hovered {
-    color: #F59E0B;
-    transform: scale(1.15);
-  }
-  .star-rating-hint {
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--blue);
-    min-height: 20px;
-    margin-bottom: 12px;
-  }
-
-  /* Reviews List */
-  .reviews-list-card {
-    background: var(--surface);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
-  }
-  .reviews-feed {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 14px;
-  }
-  .review-item-card {
-    background: var(--surface-hover);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    transition: all 0.2s ease;
-  }
-  .review-item-card.is-user {
-    border: 1.5px solid var(--blue);
-    background: var(--blue-light);
-  }
-  .review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-  .review-author-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .review-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--blue);
-    color: #FFFFFF;
-    font-weight: 700;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .review-author-name {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .verified-badge {
-    color: #10B981;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-  }
-  .review-author-meta {
-    font-size: 11px;
-    color: var(--ink-soft);
-  }
-  .review-stars-badge {
-    color: #F59E0B;
-    font-size: 14px;
-    white-space: nowrap;
-  }
-  .review-body-text {
-    font-size: 13px;
-    color: var(--ink);
-    line-height: 1.55;
-    margin-bottom: 8px;
-  }
-  .review-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11.5px;
-    color: var(--ink-subtle);
-  }
-  .helpful-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3px 10px;
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.15s ease;
-  }
-  .helpful-btn:hover, .helpful-btn.liked {
-    background: var(--blue-light);
-    color: var(--blue);
-    border-color: var(--blue);
-  }
-
   /* Share Card */
   .share-app-box {
     background: linear-gradient(135deg, rgba(29, 78, 216, 0.08) 0%, rgba(14, 165, 233, 0.12) 100%);
@@ -4262,10 +4114,24 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="form-label">অ্যাপ রেটিং ও রিভিউ (Rating & Reviews)</label>
+        <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:8px; padding:14px; font-size:13px; text-align:center;">
+          <div style="font-weight:700; color:var(--ink); margin-bottom:6px; font-size:14px;">
+            ⭐ Google Play-এ আমাদের অ্যাপটি রেটিং ও রিভিউ দিন।
+          </div>
+          <div style="font-size:12px; color:var(--ink-soft); margin-bottom:12px; line-height:1.5;">
+            ক্যালকুলেটরটি আপনার ভালো লাগলে অথবা আপনার মূল্যবান মতামত ও পরামর্শ সরাসরি গুগল প্লে স্টোরে রিভিউ দিয়ে আমাদের উৎসাহিত করুন।
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" id="btnSettingsRatePlayStore" style="width:100%; max-width:280px; margin:0 auto; font-size:13px; padding:10px 16px;">
+            🌟 প্লে স্টোরে রেটিং ও রিভিউ দিন
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
         <label class="form-label">গোপনীয়তা ও নিরাপত্তা (Privacy & Data Safety)</label>
         <div style="background:var(--surface-hover); border:1px solid var(--border); border-radius:8px; padding:12px; font-size:13px;">
           <div style="font-size:12px; color:var(--ink-soft); margin-bottom:10px; line-height:1.5;">
-            আপনার সমস্ত হিসাব ও ব্যক্তিগত ডেটা ১০০% আপনার ডিভাইসেই সংরক্ষিত থাকে। কোনো সার্ভারে হিসাব পাঠানো হয় না।
+            আপনার সমস্ত হিসাব ও ডেটা সম্পূর্ণভাবে আপনার ডিভাইসেই সংরক্ষিত থাকে। কোনো ব্যক্তিগত তথ্য বা রিভিউ ডিভাইসে সংগ্রহ করা হয় না এবং কোনো সার্ভারে পাঠানো হয় না।
           </div>
           <button type="button" class="btn btn-secondary" id="btnOpenPrivacyPolicy" style="width:100%; font-size:12.5px;">
             🛡️ অ্যাপের সম্পূর্ণ প্রাইভেসি পলিসি (Privacy Policy) দেখুন
@@ -4404,44 +4270,49 @@
         ব্যবহারকারীর তথ্যের গোপনীয়তা ও নিরাপত্তাকে আমরা সর্বোচ্চ অগ্রাধিকার দেই। এই গোপনীয়তা নীতিমালায় স্পষ্টভাবে ব্যাখ্যা করা হয়েছে যে আমাদের অ্যাপ ব্যবহার করার সময় কোন কোন তথ্য প্রক্রিয়াকরণ হয়, কিভাবে হয় এবং কেন হয়।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">২. ব্যক্তিগত তথ্য সংগ্রহ না করা (Zero Personal Data Collection)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">২. ব্যক্তিগত তথ্য সংগ্রহ ও সংরক্ষণ না করা (Zero Personal Data Collection)</h4>
       <p style="margin-bottom:10px;">
-        আমাদের অ্যাপ ব্যবহার করার জন্য কোনো প্রকার রেজিস্ট্রেশন, অ্যাকাউন্ট তৈরি, সাইন-ইন বা ব্যক্তিগত তথ্য প্রদানের প্রয়োজন নেই। অ্যাপ কোনো ব্যবহারকারীর নাম, ইমেইল ঠিকানা, ফোন নম্বর, জন্মতারিখ, সুনির্দিষ্ট ভৌগোলিক অবস্থান (GPS Location), কন্টাক্ট লিস্ট বা ব্যক্তিগত ফাইল সংগ্রহ করে না।
+        আমাদের অ্যাপ ব্যবহার করার জন্য কোনো প্রকার রেজিস্ট্রেশন, অ্যাকাউন্ট তৈরি, সাইন-ইন বা ব্যক্তিগত তথ্য প্রদানের প্রয়োজন নেই। অ্যাপ কোনো ব্যবহারকারীর নাম, ইমেইল ঠিকানা, ফোন নম্বর, জন্মতারিখ, জেলা/শহর, ব্যক্তিগত মন্তব্য, সুনির্দিষ্ট ভৌগোলিক অবস্থান (GPS Location), কন্টাক্ট লিস্ট বা ব্যক্তিগত ফাইল সংগ্রহ বা সংরক্ষণ করে না।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৩. ক্যালকুলেটর ও লোকাল ডেটা (Local Calculation Data)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৩. অ্যাপ রেটিং ও রিভিউ (Ratings & Reviews on Google Play)</h4>
       <p style="margin-bottom:10px;">
-        ক্যালকুলেটর ব্যবহার করার সময় আপনার করা হিসাব-নিকাশ, হিসাবের ইতিহাস (History), সংরক্ষিত কাস্টম সূত্র (Custom Formulas), বুকমার্ক এবং থিম সেটিংস শুধুমাত্র আপনার ডিভাইসের লোকাল স্টোরেজে (Local Storage / IndexedDB) স্থানীয়ভাবে জমা থাকে। এই ডেটা কখনোই কোনো বাহ্যিক সার্ভারে পাঠানো হয় না। সেটিংস মেনুর "ডাটা মুছে ফেলার অপশন" থেকে যেকোনো সময় আপনি এক ক্লিকেই আপনার সম্পূর্ণ ডেটা মুছে ফেলতে পারেন।
+        আমাদের অ্যাপ্লিকেশনে কোনো অভ্যন্তরীণ/লোকাল রিভিউ বা ব্যক্তিগত মতামত সংরক্ষণের ব্যবস্থা নেই। সকল রেটিং ও রিভিউ সরাসরি অফিসিয়াল Google Play Store-এর মাধ্যমে সম্পন্ন হয়। আমরা ব্যবহারকারীর কোনো নাম, অবস্থান, রেটিং বা পর্যালোচনা নিজস্ব ডিভাইসে বা কোনো সার্ভারে সংগ্রহ বা সংরক্ষণ করি না।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৪. ক্যামেরা ও কিউআর স্ক্যানার (Camera & QR Scanner)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৪. ক্যালকুলেটর ও লোকাল ডেটা (Local Calculation Data)</h4>
+      <p style="margin-bottom:10px;">
+        ক্যালকুলেটর ব্যবহার করার সময় আপনার করা হিসাব-নিকাশ, হিসাবের ইতিহাস (History), সংরক্ষিত কাস্টম সূত্র (Custom Formulas), বুকমার্ক এবং থিম সেটিংস শুধুমাত্র আপনার ডিভাইসের লোকাল স্টোরেজে (Local Storage / IndexedDB) স্থানীয়ভাবে জমা থাকে। এতে কোনো ব্যক্তিগত তথ্য অন্তর্ভুক্ত থাকে না এবং এই ডেটা কখনোই কোনো বাহ্যিক সার্ভারে পাঠানো হয় না। সেটিংস মেনুর "ডাটা মুছে ফেলার অপশন" থেকে যেকোনো সময় আপনি এক ক্লিকেই আপনার সম্পূর্ণ ডেটা মুছে ফেলতে পারেন।
+      </p>
+
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৫. ক্যামেরা ও কিউআর স্ক্যানার (Camera & QR Scanner)</h4>
       <p style="margin-bottom:10px;">
         অ্যাপের কিউআর কোড স্ক্যানার ফিচারটি ব্যবহারের সময় তাৎক্ষণিক কিউআর কোড পড়ার জন্য ডিভাইসের ক্যামেরার অনুমতি (Camera Permission) প্রয়োজন হয়। ক্যামেরা থেকে প্রাপ্ত কোনো ভিডিও বা ছবি কোথাও রেকর্ড, সংরক্ষণ বা কোনো সার্ভারে আপলোড করা হয় না। স্ক্যান শেষ হওয়ার সাথে সাথেই ক্যামেরা নিষ্ক্রিয় হয়ে যায়। আপনি চাইলে ক্যামেরার পরিবর্তে গ্যালারি থেকে যেকোনো কিউআর কোডের ছবি সিলেক্ট করেও স্ক্যান করতে পারেন।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৫. আন্তর্জাতিক কারেন্সি রেট এপিআই (Currency Rate API)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৬. আন্তর্জাতিক কারেন্সি রেট এপিআই (Currency Rate API)</h4>
       <p style="margin-bottom:10px;">
         কারেন্সি কনভার্টারে সর্বশেষ আন্তর্জাতিক মুদ্রা বিনিময় হার প্রদর্শনের জন্য অ্যাপটি ওপেন কারেন্সি এপিআই (https://open.er-api.com) থেকে রেট লোড করে। এই নেটওয়ার্ক অনুরোধে ব্যবহারকারীর কোনো ব্যক্তিগত তথ্য, হিসাবকৃত টাকার পরিমাণ বা কোনো আইডেন্টিফায়ার পাঠানো হয় না। ইন্টারনেট সংযোগ না থাকলে অ্যাপটি স্বয়ংক্রিয়ভাবে সংরক্ষিত অফলাইন রেট ব্যবহার করে নির্বিঘ্নে কাজ করে।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৬. গুগল অ্যাডমব ও বিজ্ঞাপন (Google AdMob Monetization)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৭. গুগল অ্যাডমব ও বিজ্ঞাপন (Google AdMob Monetization)</h4>
       <p style="margin-bottom:10px;">
         অ্যাপের উন্নয়ন ও রক্ষণাবেক্ষণের স্বার্থে এতে Google AdMob SDK ব্যবহার করা হয়েছে। Google AdMob বিজ্ঞাপন পরিবেশন এবং জালিয়াতি প্রতিরোধের লক্ষ্যে Google Play পলিসি অনুযায়ী বিজ্ঞাপন আইডি (Advertising ID), ক্র্যাশ লগ ও আইপি ঠিকানা প্রক্রিয়াকরণ করতে পারে। গুগলের গোপনীয়তা নীতি জানতে দেখুন: <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--blue); font-weight:600;">policies.google.com/privacy</a>।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৭. শিশুদের গোপনীয়তা (Children's Privacy)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৮. শিশুদের গোপনীয়তা (Children's Privacy)</h4>
       <p style="margin-bottom:10px;">
         আমাদের অ্যাপ্লিকেশনটি ১৩ বছরের কম বয়সী শিশুদের কাছ থেকে জেনেশুনে কোনো ব্যক্তিগত তথ্য সংগ্রহ করে না। এটি একটি বিশুদ্ধ গাণিতিক ও শিক্ষামূলক ইউটিলিটি টুল।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৮. ব্যবহারকারীর অধিকার ও নিয়ন্ত্রণ (User Choices & Control)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৯. ব্যবহারকারীর অধিকার ও নিয়ন্ত্রণ (User Choices & Control)</h4>
       <p style="margin-bottom:10px;">
         - আপনি ডিভাইসের অ্যাপ সেটিংস থেকে যেকোনো সময় ক্যামেরা অনুমতি বন্ধ করতে পারেন।<br>
         - আপনি অ্যাপের সেটিংস থেকে "সব ডাটা ফ্যাক্টরি রিসেট করুন" চেপে মুহূর্তেই আপনার সব তথ্য মুছে ফেলতে পারেন।<br>
         - মূল হিসাব ও অধিকাংশ utility feature offline কাজ করে; তবে live currency rates, বিজ্ঞাপন ও কিছু online service-এর জন্য internet connection প্রয়োজন হতে পারে।
       </p>
 
-      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">৯. যোগাযোগ (Contact Information)</h4>
+      <h4 style="margin:16px 0 6px 0; font-size:14px; color:var(--primary);">১০. যোগাযোগ (Contact Information)</h4>
       <p style="margin-bottom:4px;">
         এই গোপনীয়তা নীতিমালা বা ডেটা নিরাপত্তা সম্পর্কে কোনো জিজ্ঞাসা থাকলে আমাদের সাথে যোগাযোগ করতে পারেন:<br>
         ইমেইল: <strong>hisab360.support@gmail.com</strong><br>
@@ -4524,10 +4395,14 @@ const STORAGE_KEYS = {
   FAVORITES: "bn_calc_favorites_v2",
   SETTINGS: "bn_calc_settings_v2",
   THEME: "bn_calc_theme",
-  APP_STATS: "bn_calc_app_stats_v2",
-  REVIEWS: "bn_calc_user_reviews_v2",
-  USER_SUBMISSION: "bn_calc_user_submission_v2"
+  APP_STATS: "bn_calc_app_stats_v2"
 };
+
+// Ensure any deprecated local review data is purged to guarantee zero personal data retention
+try {
+  localStorage.removeItem("bn_calc_user_reviews_v2");
+  localStorage.removeItem("bn_calc_user_submission_v2");
+} catch(e) {}
 
 function getStorage(key, fallback) {
   try {
@@ -9146,6 +9021,17 @@ function setupSettingsAndNavigation() {
   });
   privacyModal?.addEventListener("click", (e) => {
     if (e.target === privacyModal) privacyModal.style.display = "none";
+  });
+
+  // Official Google Play Store Rating Handler
+  document.getElementById("btnSettingsRatePlayStore")?.addEventListener("click", () => {
+    if (window.AndroidBridge && typeof window.AndroidBridge.rateOnPlayStore === "function") {
+      window.AndroidBridge.rateOnPlayStore();
+      showToast("গুগল প্লে স্টোর খোলা হচ্ছে...");
+    } else {
+      window.open("https://play.google.com/store/apps/details?id=com.example", "_blank");
+      showToast("গুগল প্লে স্টোরে রেটিং দিন ⭐");
+    }
   });
 
   document.getElementById("historyFilterSelect")?.addEventListener("change", renderHistoryUI);
