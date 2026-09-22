@@ -379,11 +379,25 @@ class MainActivity : ComponentActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val wvRef = webView
-                if (wvRef != null && wvRef.canGoBack()) {
-                    wvRef.goBack()
+                if (wvRef != null) {
+                    wvRef.evaluateJavascript(
+                        "if(typeof window.handleAndroidBackPressed === 'function') { window.handleAndroidBackPressed(); } else { false; }"
+                    ) { result ->
+                        val handled = result?.trim()?.equals("true", ignoreCase = true) == true
+                        if (!handled) {
+                            if (wvRef.canGoBack()) {
+                                wvRef.goBack()
+                            } else {
+                                isEnabled = false
+                                onBackPressedDispatcher.onBackPressed()
+                                isEnabled = true
+                            }
+                        }
+                    }
                 } else {
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
+                    isEnabled = true
                 }
             }
         })
@@ -550,6 +564,14 @@ class WebAppInterface(activity: MainActivity, webView: WebView) {
         act.runOnUiThread {
             val sanitized = text.take(500)
             act.speakVoice(sanitized)
+        }
+    }
+
+    @JavascriptInterface
+    fun exitApp() {
+        val act = activityRef.get() ?: return
+        act.runOnUiThread {
+            act.finish()
         }
     }
 }
