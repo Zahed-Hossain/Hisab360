@@ -1,0 +1,34 @@
+{
+  "id": "com.aistudio.hisab360.calculator",
+  "name": "Hisab360 - সব হিসাব, এক স্মার্ট অ্যাপে",
+  "short_name": "Hisab360",
+  "description": "সব হিসাব, এক স্মার্ট অ্যাপে।",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#FAFAF8",
+  "theme_color": "#1D4ED8",
+  "categories": ["utilities", "education", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
