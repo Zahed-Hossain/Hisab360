@@ -148,27 +148,6 @@
     transition: all 0.15s ease;
   }
   .home-btn:hover { background: var(--blue); color: #fff; }
-  .header-back-btn {
-    background: var(--surface);
-    color: var(--blue);
-    border: 1.5px solid var(--blue);
-    border-radius: 8px;
-    width: 36px;
-    height: 36px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 19px;
-    font-weight: 700;
-    transition: all 0.15s ease;
-    box-shadow: 0 1px 4px rgba(37,99,235,0.15);
-  }
-  .header-back-btn:active {
-    background: var(--blue);
-    color: #FFFFFF;
-    transform: scale(0.94);
-  }
   .header-titles h1 {
     margin: 0;
     font-size: 17px;
@@ -2123,11 +2102,6 @@
   <div class="top-sticky-bar" id="topStickyBar">
     <header class="app-header">
       <div class="header-left">
-        <button class="header-back-btn" id="btnHeaderBack" title="পেছনে যান" aria-label="Back">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
         <button class="home-btn" id="btnHomeNav" title="হোম পেজ" style="display:flex; align-items:center; justify-content:center; padding:2px; overflow:hidden; border:none; background:transparent;">
           <img src="./icon-192.png" alt="Hisab360 Logo" style="width:36px; height:36px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.18); object-fit:cover;" />
         </button>
@@ -8822,13 +8796,6 @@ window.activateSubtab = function(subtabType, subtabValue) {
 window.APP_NAV_STACK = ["dashboard"];
 window.APP_CURRENT_SECTION = "dashboard";
 
-window.updateBackButtonVisibility = function() {
-  const backBtn = document.getElementById("btnHeaderBack");
-  if (!backBtn) return;
-  const isHome = (window.APP_CURRENT_SECTION === "dashboard");
-  backBtn.style.display = isHome ? "none" : "flex";
-};
-
 // Global Navigation Controller
 window.navigateTo = function(targetId, subtabType, subtabValue, isBackAction = false) {
   if (!targetId) return;
@@ -8849,7 +8816,6 @@ window.navigateTo = function(targetId, subtabType, subtabValue, isBackAction = f
     }
   }
   window.APP_CURRENT_SECTION = targetId;
-  window.updateBackButtonVisibility();
 
   document.querySelectorAll(".section-view").forEach(v => v.classList.remove("active"));
   document.querySelectorAll(".subnav-btn").forEach(b => b.classList.remove("active"));
@@ -9044,14 +9010,6 @@ function setupSettingsAndNavigation() {
   });
 
   document.getElementById("btnHomeNav").addEventListener("click", () => navigateTo("dashboard"));
-
-  const backBtn = document.getElementById("btnHeaderBack");
-  if (backBtn) {
-    backBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      window.navigateBack();
-    });
-  }
 
   // Theme Toggle
   const themeToggleBtn = document.getElementById("themeToggleBtn");
