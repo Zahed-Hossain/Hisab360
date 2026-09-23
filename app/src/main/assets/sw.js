@@ -3,7 +3,7 @@
 // Cache-First with Network Fallback
 // ==========================================
 
-const CACHE_NAME = 'math-calc-v2-cache-v3';
+const CACHE_NAME = 'hisab360-cache-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

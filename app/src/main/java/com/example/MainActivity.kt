@@ -222,7 +222,7 @@ class MainActivity : ComponentActivity() {
                 builtInZoomControls = false
                 displayZoomControls = false
 
-                // Use default cache mode to allow instant warm startups
+                // Load from cache or asset directly without stale HTTP cache
                 cacheMode = WebSettings.LOAD_DEFAULT
 
                 // WebView Security Hardening
@@ -347,12 +347,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            // Restore state if available, otherwise load asset cleanly
-            if (savedInstanceState != null) {
-                restoreState(savedInstanceState)
-            } else {
-                loadUrl("file:///android_asset/index.html")
-            }
+            // Clear stale disk cache on startup to ensure latest index.html is loaded
+            clearCache(true)
+
+            // Always guarantee loading the core application entry point
+            loadUrl("file:///android_asset/index.html")
         }
         webView = wv
         rootLayout.addView(wv)
@@ -405,12 +404,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        webView?.saveState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        webView?.restoreState(savedInstanceState)
     }
 
     fun showInterstitial(onDismissed: (() -> Unit)? = null) {

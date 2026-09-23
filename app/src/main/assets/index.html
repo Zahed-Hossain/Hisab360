@@ -12768,16 +12768,32 @@ window.addEventListener("appinstalled", () => {
   showToast("অ্যাপ্লিকেশনটি সফলভাবে ইনস্টল সম্পন্ন হয়েছে! 🎉");
 });
 
-if ("serviceWorker" in navigator && (location.protocol === "http:" || location.protocol === "https:")) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js", { scope: "./" })
-      .then((reg) => {
-        console.log("Service Worker registered successfully with scope:", reg.scope);
-      })
-      .catch((err) => {
-        console.warn("Service Worker registration notice:", err);
-      });
-  });
+if ("serviceWorker" in navigator) {
+  if (location.protocol === "http:" || location.protocol === "https:") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js", { scope: "./" })
+        .then((reg) => {
+          console.log("Service Worker registered successfully with scope:", reg.scope);
+        })
+        .catch((err) => {
+          console.warn("Service Worker registration notice:", err);
+        });
+    });
+  } else {
+    // Under file:/// protocol (Android WebView), clear any orphaned service workers or stale caches
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      for (const reg of registrations) {
+        reg.unregister();
+      }
+    }).catch(() => {});
+    if ("caches" in window) {
+      caches.keys().then(names => {
+        for (const name of names) {
+          caches.delete(name);
+        }
+      }).catch(() => {});
+    }
+  }
 }
 
   </script>
