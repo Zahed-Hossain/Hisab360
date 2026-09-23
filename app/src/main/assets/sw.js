@@ -1,5 +1,5 @@
 // ==========================================
-// Service Worker for Math Calculator PWA
+// Service Worker for Hisab360 Smart Calculator PWA
 // Cache-First with Network Fallback
 // ==========================================
 

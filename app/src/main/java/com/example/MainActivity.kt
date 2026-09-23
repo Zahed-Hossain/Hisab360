@@ -468,6 +468,10 @@ class MainActivity : ComponentActivity() {
         }
         webView = null
 
+        try {
+            bgExecutor.shutdown()
+        } catch (_: Exception) {}
+
         super.onDestroy()
     }
 }
