@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -275,21 +276,26 @@ class MainActivity : ComponentActivity() {
             webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                     val url = request?.url?.toString() ?: return false
-                    return handleSafeUrlLoading(url)
+                    return handleSafeUrlLoading(view, url)
                 }
 
                 @Deprecated("Deprecated in Java")
                 override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                     if (url == null) return false
-                    return handleSafeUrlLoading(url)
+                    return handleSafeUrlLoading(view, url)
                 }
 
-                private fun handleSafeUrlLoading(url: String): Boolean {
+                private fun handleSafeUrlLoading(view: WebView?, url: String): Boolean {
                     val uri = Uri.parse(url)
                     val scheme = uri.scheme?.lowercase() ?: return true
 
-                    // 1. Allow internal bundled asset navigation
+                    // 1. Allow internal bundled asset navigation (specifically index.html and its local assets)
                     if (scheme == "file" && url.startsWith("file:///android_asset/")) {
+                        // Prevent loading any readme or external docs if requested inside WebView
+                        if (url.contains("readme", ignoreCase = true) || url.endsWith(".md", ignoreCase = true)) {
+                            view?.loadUrl("file:///android_asset/index.html")
+                            return true
+                        }
                         return false
                     }
 
@@ -337,6 +343,14 @@ class MainActivity : ComponentActivity() {
                     return true
                 }
 
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    if (url != null && (url.contains("readme", ignoreCase = true) || url.endsWith(".md", ignoreCase = true))) {
+                        view?.stopLoading()
+                        view?.loadUrl("file:///android_asset/index.html")
+                    }
+                }
+
                 override fun onRenderProcessGone(view: WebView?, detail: RenderProcessGoneDetail?): Boolean {
                     view?.post {
                         try {
@@ -363,6 +377,7 @@ class MainActivity : ComponentActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             setBackgroundColor(Color.TRANSPARENT)
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }
 
         // Create Banner AdView using centralized AdManager
